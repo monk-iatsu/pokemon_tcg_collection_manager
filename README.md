@@ -11,3 +11,6 @@ A cli tool/library to manage, store and analyze a pokemon card collection
 * download code and unzip into a folder
 * open said folder in terminal/command prompt
 * run `python3 main.py`
+## Use as a library:
+* copy assets.py and config.py into the program folder
+* import assets.py into code
