@@ -4,15 +4,26 @@ import os
 import datetime as dt
 
 def init(api_key: str = None, file: str = None):
+    """
+    initilizes module
+    Args:
+    -----
+        api_key: (str, optional), the api key for pokemontcgsdk
+        file: (str, optional), the sqlite database file for collection storage
+    Returns:
+    --------
+        app: an instance of assets.StorageHandle
+        pcm: an instance of assets.PackCardHandle
+    """
     if file == None:
         file = config.DEFAULT_FILE
-    clss.init(api_key)
+    assets.init(api_key)
     pcm = clss.PackCardHandle()
     if not os.path.exists(config.DEFAULT_FILE):
-        app = clss.StorageHandle(file, pcm)
+        app = assets.StorageHandle(file, pcm)
         app.new_db_setup()
     else:
-        app = clss.StorageHandle(file, pcm)
+        app = assets.StorageHandle(file, pcm)
     return app, pcm
 
 def get_input(dt: str, msg: str):
@@ -49,14 +60,14 @@ def get_input(dt: str, msg: str):
         print("invalid data type. please try again")
         return None
 
-def get_pack_ids(pcm: clss.PackCardHandle):
+def get_pack_ids(pcm: assets.PackCardHandle):
     rc = []
     for i in pcm.get_all_packs():
         print(f"pack name: {i[1]}; pack id: {i[0]}")
         rc.append(i)
     return rc
         
-def get_pack_by_id(pcm: clss.PackCardHandle):
+def get_pack_by_id(pcm: assets.PackCardHandle):
     msg = "please enter a pack id. if you dont know it run print packs. cancel with no input."
     pid = get_input("str", msg)
     if pid == "":
@@ -70,7 +81,7 @@ def get_pack_by_id(pcm: clss.PackCardHandle):
         else:
             return pid
 
-def get_card_by_collector_num(pcm: clss.PackCardHandle, pid: str = None):
+def get_card_by_collector_num(pcm: assets.PackCardHandle, pid: str = None):
     if pid == None:
         pid = get_pack_by_id(pcm)
         if pid == None:
