@@ -2,7 +2,7 @@
 A cli tool/library to manage, store and analyze a pokemon card collection
 ## Prerequisits:
 * python3.7
-* pip in path
+* pip3 in path
 * python3.7 in path
 ## dependancies:
 * pokemontcgsdk
