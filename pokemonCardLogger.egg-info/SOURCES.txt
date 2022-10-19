@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+pokemonCardLogger/__init__.py
+pokemonCardLogger/clss.py
+pokemonCardLogger/main.py
+pokemonCardLogger/packRef.py
+pokemonCardLogger.egg-info/PKG-INFO
+pokemonCardLogger.egg-info/SOURCES.txt
+pokemonCardLogger.egg-info/dependency_links.txt
+pokemonCardLogger.egg-info/top_level.txt
