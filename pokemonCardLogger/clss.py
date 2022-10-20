@@ -242,6 +242,15 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        self.c.close()
         self.db.commit()
+        self.c.close()
         self.db.close()
+
+    def __del__(self):
+        """
+        Description:
+            Destructor Method
+        Parameters:
+            :return: None
+        """
+        self.close()

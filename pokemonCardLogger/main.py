@@ -196,7 +196,7 @@ def delete_card(db: DbHandle, rq: RqHandle):
     Parameters:
         :param db: an instance of pokemonCardLogger.clss.DbHandle
         :param rq: an instance of pokemonCardLogger.clss.RqHandle
-        :return:
+        :return: None
     """
     card_id = get_card_id(rq)
     if not card_id:
@@ -217,15 +217,18 @@ def end(db: DbHandle):
         cleanly ends the program
     Parameters:
         :param db:
-        :return:
+        :return: None
     """
-    db.close()
+    db.__del__()
     quit()
 
 
 def main():
     """
-    Main Loop
+    Description
+        Main Loop
+    Parameters:
+        :return: None
     """
     default = os.path.join(prog_data, "default.db")
     rq = RqHandle(API_KEY)
