@@ -93,7 +93,7 @@ class DbHandle:
         self.db_file = db_file
         self.psswrd = psswrd
         self.rq = rq
-        self.psswrd_hash = hashlib.md5(self.psswrd.encode("utf-8")).hexdigest()
+        self.psswrd_hash = hashlib.sha512(self.psswrd.encode("utf-8")).hexdigest()
         if os.path.exists(self.db_file):
             self.db = sqlite3.connect(self.db_file)
             self.c = self.db.cursor()
