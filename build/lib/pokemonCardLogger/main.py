@@ -223,6 +223,23 @@ def end(db: DbHandle):
     quit()
 
 
+def get_user():
+    rq = RqHandle(API_KEY)
+    print("please enter the name ot the user, 'default' for the default insecure login")
+    user = input(">>> ")
+    user_file = os.path.join(prog_data, user)
+    if not user == "default":
+        psswrd = "default"
+    else:
+        print("Please enter password for said user.")
+        psswrd = input(">>> ")
+    try:
+        db = DbHandle(user_file, psswrd, rq)
+    except ValueError:
+        print("Invalid password, try again.")
+        return db, rq
+
+
 def main():
     """
     Description
@@ -230,9 +247,7 @@ def main():
     Parameters:
         :return: None
     """
-    default = os.path.join(prog_data, "default.db")
-    rq = RqHandle(API_KEY)
-    db = DbHandle(default, "default", rq)
+    db, rq = get_user()
     while True:
         mode = get_mode()
         if mode == "add":
