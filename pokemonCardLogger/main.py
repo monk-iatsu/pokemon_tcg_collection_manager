@@ -7,19 +7,27 @@ Usage:
 """
 import sys
 # noinspection PyUnresolvedReferences
+from getpass import getpass
 import os
 from clss import *
 try:
     from config import *
 except ImportError:
-    print("please enter your api key for pokemonTcgApi")
-    API_KEY = input(">>> ")
+    API_KEY = ""
+
+
+    def init(api_key: str):
+        global API_KEY
+        API_KEY = api_key
+
 
 pltfrm = sys.platform
 home = os.environ["HOME"]
 if pltfrm == "linux":
     prog_data = os.path.join(os.path.join(home, ".config"), "POKEMON_TCG_LOG")
-elif pltfrm == "win32":
+elif pltfrm == "win32" or pltfrm == "cygwin":
+    prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
+elif pltfrm == "darwin":
     prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
 else:
     print("your system is not supported. quitting")
@@ -33,17 +41,18 @@ except FileExistsError:
 def get_card_id(rq: RqHandle):
     """
     Description:
-        asks the user for a pack id and returns the data received from the pokemonTcgApi
+        Asks the user for a card id and returns the data received from the pokemonTcgApi
     Parameters:
         :param rq: an instance of pokemonCardLogger.clss.RqHandle
-        :return: dictionary of the json data received from pokemonTcgApi or False if it errors out
+        :return: the card id from pokemonTcgApi or False if it errors out
     """
     print(
-        "please type the pack id of the card. if you dont know what that is run the 5th option from the main menu:")
+        "please type the pack id of the card. if you dont know what that is run the 5th option from the main menu:"
+    )
     pack = input(">>> ")
     try:
         _ = rq.get_pack(pack)
-    except ValueError:
+    except ConnectionError:
         print("invalid pack id. try main menu item 5")
         return False
     print("please enter the cards collectors number")
@@ -51,7 +60,7 @@ def get_card_id(rq: RqHandle):
     card_id = f"{pack}-{num}"
     try:
         _ = rq.get_card(card_id)
-    except ValueError:
+    except ConnectionError:
         print("Error. try again")
         return False
     return card_id
@@ -136,6 +145,12 @@ def get_card(db: DbHandle, rq: RqHandle):
     if not card_id:
         print("canceled")
         return
+    card_name = rq.get_card(card_id)["data"]["name"]
+    print(f"is {card_name} the name of the card?('y' or 'n')")
+    truth = input(">>> ")
+    if truth.lower() == "n":
+        print("then try again.")
+        return
     qnty = db.get_card_qnty(card_id)
     data = rq.get_card(card_id)["data"]
     name = data["name"]
@@ -156,6 +171,12 @@ def add_card(db: DbHandle, rq: RqHandle):
     if not card_id:
         print("canceled")
         return None
+    card_name = rq.get_card(card_id)["data"]["name"]
+    print(f"is {card_name} the name of the card?('y' or 'n')")
+    truth = input(">>> ")
+    if truth.lower() == "n":
+        print("then try again.")
+        return
     print("how many would you like to add")
     new_count = input(">>> ")
     try:
@@ -179,6 +200,12 @@ def remove_card(db: DbHandle, rq: RqHandle):
     if not card_id:
         print("canceled")
         return None
+    card_name = rq.get_card(card_id)["data"]["name"]
+    print(f"is {card_name} the name of the card?('y' or 'n')")
+    truth = input(">>> ")
+    if truth.lower() == "n":
+        print("then try again.")
+        return
     print("how many would you like to remove")
     new_count = input(">>> ")
     try:
@@ -202,6 +229,12 @@ def delete_card(db: DbHandle, rq: RqHandle):
     if not card_id:
         print("canceled")
         return
+    card_name = rq.get_card(card_id)["data"]["name"]
+    print(f"is {card_name} the name of the card?('y' or 'n')")
+    truth = input(">>> ")
+    if truth.lower() == "n":
+        print("then try again.")
+        return
     print(" are you sure you want to do this? it cannot be undone.")
     truth = input("(yes/no)>>> ")
     if truth == "yes":
@@ -211,33 +244,28 @@ def delete_card(db: DbHandle, rq: RqHandle):
         return
 
 
-def end(db: DbHandle):
+def get_user():
     """
     Description:
-        cleanly ends the program
-    Parameters:
-        :param db:
-        :return: None
+        Gets user data from user, and gives instances of the RqHandle and DbHandle objects
+    Parameters
+        :return: a tuple of two items consisting of instances of RqHandle and DbHandle
     """
-    db.__del__()
-    quit()
-
-
-def get_user():
     rq = RqHandle(API_KEY)
     print("please enter the name ot the user, 'default' for the default insecure login")
     user = input(">>> ")
     user_file = os.path.join(prog_data, user)
-    if not user == "default":
+    if user == "default":
         psswrd = "default"
     else:
         print("Please enter password for said user.")
-        psswrd = input(">>> ")
+        psswrd = getpass(">>> ")
     try:
         db = DbHandle(user_file, psswrd, rq)
-    except ValueError:
+    except PermissionError:
         print("Invalid password, try again.")
-        return db, rq
+        return get_user()
+    return db, rq
 
 
 def main():
@@ -264,7 +292,7 @@ def main():
             get_card_log(db, rq)
         elif mode == "end":
             break
-    end(db)
+    quit()
 
 
 if __name__ == "__main__":

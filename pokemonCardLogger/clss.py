@@ -22,7 +22,7 @@ class RqHandle:
     def __init__(self, api_key: str):
         """
         Description:
-            constructor method
+            Constructor method
         Parameters:
             :param api_key: the pokemonTcgApi api key
         """
@@ -33,7 +33,7 @@ class RqHandle:
         """
         Description:
             Requests from pokemonTcgApi the data for a specific card and returns that data as a dictionary
-            if the data is bad raises ValueError
+            If the data is bad raises ValueError
         Parameters:
             :param card_id: a string that represents the card according to pokemonTcgApi
             :return: dict of the data from pokemonTcgApi
@@ -42,13 +42,13 @@ class RqHandle:
         if data.ok:
             return data.json()
         else:
-            raise ValueError
+            raise ConnectionError
 
     def get_pack(self, pack_id: str):
         """
         Description:
             Requests from pokemonTcgApi the data for a specific pack and returns that data as a dictionary
-            if the data is bad raises ValueError
+            If the data is bad raises ValueError
         Parameters:
             :param pack_id: a string that represents the pack according to pokemonTcgApi
             :return: dict of the data from pokemonTcgApi
@@ -57,7 +57,7 @@ class RqHandle:
         if data.ok:
             return data.json()
         else:
-            raise ValueError
+            raise ConnectionError
 
     def get_all_sets(self):
         """
@@ -71,9 +71,12 @@ class RqHandle:
         if data.ok:
             pass
         else:
-            raise ValueError
+            raise ConnectionError
         for i in data.json()["data"]:
             yield i["id"], i["name"]
+
+    def __repr__(self):
+        return f"RqHandle({self.api_key}"
 
 
 class DbHandle:
@@ -84,7 +87,7 @@ class DbHandle:
     def __init__(self, db_file: str, psswrd: str, rq: RqHandle):
         """
         Description:
-            constructor method
+            Constructor method
         Parameters
             :param db_file: the path to the database file
             :param psswrd: the password for the database
@@ -107,7 +110,7 @@ class DbHandle:
     def first_run(self):
         """
         Description:
-            sets up the database if it was freshly created
+            Sets up the database if it was freshly created
         Parameters:
             :return: None
         """
@@ -126,7 +129,7 @@ class DbHandle:
         """
         self.c.execute("SELECT value FROM params WHERE key='password'")
         if not self.psswrd_hash == self.c.fetchone()[0]:
-            raise ValueError
+            raise PermissionError
 
     def login_setup(self):
         """
@@ -163,7 +166,7 @@ class DbHandle:
     def remove_card(self, card_id: str, qnty: int):
         """
         Description:
-            removes quantity from a card in the log
+            Removes quantity from a card in the log
         Parameters:
             :param card_id: the id of the card according to pokemonTcgApi
             :param qnty: the quantity of cards to remove. if there is already quantity, it subtracts from that
@@ -185,7 +188,7 @@ class DbHandle:
     def delete_card(self, card_id: str):
         """
         Description:
-            deletes a card from the log
+            Deletes a card from the log
         Parameters:
             :param card_id: the id of the card according to pokemonTcgApi
             :return: None
@@ -199,7 +202,7 @@ class DbHandle:
     def get_card_qnty(self, card_id: str):
         """
         Description:
-            gets and returns the quantity of a given card in the log
+            Gets and returns the quantity of a given card in the log
         Parameters
             :param card_id: the id of the card according to pokemonTcgApi
             :return: The quantity of the card
@@ -213,7 +216,7 @@ class DbHandle:
     def get_log(self):
         """
         Description:
-            a generator consisting of the log
+            A generator consisting of the log
         Parameters:
             :return: a generator of the rows in the log
         """
@@ -232,13 +235,13 @@ class DbHandle:
         try:
             _ = self.rq.get_card(card_id)
             return True
-        except ValueError:
+        except ConnectionError:
             return False
 
-    def close(self):
+    def __del__(self):
         """
         Description:
-            Cleanly closes the database
+            Destructor method
         Parameters:
             :return: None
         """
@@ -246,11 +249,5 @@ class DbHandle:
         self.c.close()
         self.db.close()
 
-    def __del__(self):
-        """
-        Description:
-            Destructor Method
-        Parameters:
-            :return: None
-        """
-        self.close()
+    def __repr__(self):
+        return f"DbHandle({self.db_file}, psswrd, {self.rq})"
