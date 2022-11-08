@@ -17,3 +17,6 @@ if __name__ == "__main__":
     rq = clss.RqHandle(key)
     for pack_id, pack_name in rq.get_all_sets():
         print(f"the pack {pack_name}'s id is {pack_id}")
+else:
+    print("Not importable, quitting")
+    raise NotImplementedError

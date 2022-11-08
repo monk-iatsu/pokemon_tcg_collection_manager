@@ -75,6 +75,7 @@ class RqHandle:
         for i in data.json()["data"]:
             yield i["id"], i["name"]
 
+    @property
     def __repr__(self):
         return f"RqHandle({self.api_key}"
 
@@ -249,5 +250,9 @@ class DbHandle:
         self.c.close()
         self.db.close()
 
+    @property
     def __repr__(self):
-        return f"DbHandle({self.db_file}, psswrd, {self.rq})"
+        return f"DbHandle({self.db_file}, psswrd, {self.rq.__repr__})"
+
+    def __len__(self):
+        return len(list(self.get_log()))
