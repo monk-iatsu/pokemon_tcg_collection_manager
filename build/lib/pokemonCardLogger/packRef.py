@@ -4,7 +4,7 @@ Description:
 Usage:
     Run with "python3 packRef.py" in a shell to get a list of packs and their pack ids
 """
-import clss
+import clssalt
 try:
     import config
     key = config.API_KEY

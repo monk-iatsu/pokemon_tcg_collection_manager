@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-VERSION = '0.0.3a'
+VERSION = '0.1.0'
 DESCRIPTION = 'Log Pokemon cards'
 LONG_DESCRIPTION = 'a module to log and manage a pokemon card collection'
 
@@ -18,11 +18,14 @@ setup(
     install_requires=[],
     keywords=['python', 'pokemon', 'card', 'tcg'],
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
         "Operating System :: Unix",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
+        "Environment :: Console",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Natural Language :: English"
     ]
 )

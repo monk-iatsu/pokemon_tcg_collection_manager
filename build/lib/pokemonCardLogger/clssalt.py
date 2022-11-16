@@ -1,8 +1,15 @@
+"""
+Description:
+    The library version of Pokémon Card Logger
+Usage:
+    from pokemonCardLogger import clss as pcl
+"""
+# import pdb
+import sqlite3
 import os
 import requests
 import hashlib
 import datetime as dt
-import json
 
 
 class RqHandle:
@@ -70,7 +77,7 @@ class RqHandle:
             yield i["id"], i["name"]
 
     def __repr__(self):
-        return f"RqHandle('{self.api_key}')"
+        return f"RqHandle({self.api_key}"
 
 
 class DbHandle:
@@ -92,15 +99,13 @@ class DbHandle:
         self.psswrd = psswrd
         self.rq = rq
         self.psswrd_hash = hashlib.sha512(self.psswrd.encode("utf-8")).hexdigest()
-        if self.logfile == ":memory:":
-            self.logdict = {}
-            self.first_run()
-        elif os.path.exists(self.logfile):
-            with open(self.logfile) as f:
-                self.logdict = json.load(f)
+        if os.path.exists(self.logfile) or self.logfile == ":memory:":
+            self.db = sqlite3.connect(self.logfile)
+            self.c = self.db.cursor()
             self.validate()
         else:
-            self.logdict = {}
+            self.db = sqlite3.connect(self.logfile)
+            self.c = self.db.cursor()
             self.first_run()
         self.login_setup()
 
@@ -111,10 +116,11 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        self.logdict = {"psswrd": self.psswrd_hash, "login_times": [], "log": {}}
-        if not self.logfile == ":memory:":
-            with open(self.logfile, "w") as f:
-                json.dump(self.logdict, f, indent=True)
+        self.c.execute("CREATE TABLE params(key TEXT, value TEXT)")
+        self.c.execute("CREATE TABLE card_log(card TEXT, qnty INTEGER)")
+        self.c.execute("CREATE TABLE login_log(datetime TEXT)")
+        self.c.execute("INSERT INTO params(key, value) VALUES(?,?)", ("password", self.psswrd_hash))
+        self.db.commit()
 
     def validate(self):
         """
@@ -123,7 +129,8 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        if not self.psswrd_hash == self.logdict["psswrd"]:
+        self.c.execute("SELECT value FROM params WHERE key='password'")
+        if not self.psswrd_hash == self.c.fetchone()[0]:
             raise PermissionError
 
     def login_setup(self):
@@ -133,8 +140,9 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        date = dt.datetime.now().isoformat()
-        self.logdict["login_times"].append(date)
+        login_time = dt.datetime.now().isoformat()
+        self.c.execute("INSERT INTO login_log VALUES(?)", (login_time,))
+        self.db.commit()
 
     def add_card(self, card_id: str, qnty: int):
         """
@@ -143,16 +151,20 @@ class DbHandle:
         Parameters:
             :param card_id: the id of the card according to pokemonTcgApi
             :param qnty: the quantity of cards to add. if there is already quantity, it adds to that
-            :return: None
+            :return: a bool based on if the operation was successful or not
         """
         if not self.test_card(card_id):
+            print("card does not exist")
             return False
         current_qnty = self.get_card_qnty(card_id)
         if not current_qnty:
-            self.logdict["log"].update({card_id: qnty})
+            new_qnty = qnty
+            self.c.execute("INSERT INTO card_log VALUES(?,?)", (new_qnty, card_id))
         else:
-            qnty = qnty + current_qnty
-            self.logdict["log"].update({card_id: qnty})
+            new_qnty = qnty + current_qnty
+            self.c.execute("UPDATE card_log SET qnty = ? WHERE card = ?", (new_qnty, card_id))
+        self.db.commit()
+        return True
 
     def remove_card(self, card_id: str, qnty: int):
         """
@@ -164,14 +176,16 @@ class DbHandle:
             :return: a bool based on if the operation was successful or not
         """
         if not self.test_card(card_id):
+            print("card does not exist")
             return False
         current_qnty = self.get_card_qnty(card_id)
         if not current_qnty:
             return False
-        qnty = current_qnty - qnty
-        if qnty < 0:
-            qnty = 0
-        self.logdict["log"].update({card_id: qnty})
+        new_qnty = current_qnty - qnty
+        if new_qnty < 0:
+            new_qnty = 0
+        self.c.execute("UPDATE card_log SET qnty = ? WHERE card = ?", (new_qnty, card_id))
+        self.db.commit()
         return True
 
     def delete_card(self, card_id: str):
@@ -180,11 +194,13 @@ class DbHandle:
             Deletes a card from the log
         Parameters:
             :param card_id: the id of the card according to pokemonTcgApi
-            :return: None
+            :return: a bool based on if the operation was successful or not
         """
         if not self.test_card(card_id):
+            print("card does not exist")
             return False
-        _ = self.logdict["log"].pop(card_id)
+        self.c.execute("DELETE FROM card_log WHERE card = ?", (card_id,))
+        self.db.commit()
         return True
 
     def get_card_qnty(self, card_id: str):
@@ -196,11 +212,14 @@ class DbHandle:
             :return: The quantity of the card
         """
         if not self.test_card(card_id):
+            print("card does not exist")
+            return None
+        # pdb.set_trace()
+        self.c.execute("SELECT qnty FROM card_log WHERE card = ?", (card_id,))
+        val = self.c.fetchone()
+        if val is None:
             return 0
-        try:
-            return self.logdict["log"][card_id]
-        except KeyError:
-            return 0
+        return val[0]
 
     def get_log(self):
         """
@@ -209,8 +228,9 @@ class DbHandle:
         Parameters:
             :return: a generator of the rows in the log
         """
-        for card_id, qnty in self.logdict["log"].items():
-            yield qnty, card_id
+        self.c.execute("SELECT * FROM card_log")
+        for row in self.c.fetchall():
+            yield row
 
     def test_card(self, card_id: str):
         """
@@ -233,13 +253,12 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        if self.logfile == ":memory:":
-            return
-        with open(self.logfile, "w") as f:
-            json.dump(self.logdict, f, indent=True)
+        self.db.commit()
+        self.c.close()
+        self.db.close()
 
     def __repr__(self):
-        return f"DbHandle('{self.logfile}', 'redacted', {self.rq.__repr__()})"
+        return f"DbHandle({self.logfile}, 'redacted', {self.rq.__repr__})"
 
     def __len__(self):
         length = 0
@@ -251,7 +270,7 @@ class DbHandle:
 if __name__ == "__main__":
     import config
     print("this is for testing purposes")
-    file = ":memory:"
+    file = "/home/justin/.config/POKEMON_TCG_LOG/default.db"
     psswrd = "default"
     rq = RqHandle(config.API_KEY)
     db = DbHandle(file, psswrd, rq)

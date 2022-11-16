@@ -10,16 +10,20 @@ import sys
 from getpass import getpass
 import os
 from clss import *
+
 try:
     from config import *
 except ImportError:
     API_KEY = ""
 
+    if __name__ != "__main__":
 
-    def init(api_key: str):
-        global API_KEY
-        API_KEY = api_key
-
+        def init(api_key: str):
+            global API_KEY
+            API_KEY = api_key
+    else:
+        print("Please enter you pokemontcgapi key: ")
+        API_KEY = input(">>> ")
 
 pltfrm = sys.platform
 home = os.environ["HOME"]
@@ -94,6 +98,7 @@ please select one of the following:
 4: delete card from database
 5: list packs
 6: list log
+7: log size
 """
     print(info)
     mode = input(">>> ")
@@ -111,6 +116,8 @@ please select one of the following:
         return "all_packs"
     elif mode == "6":
         return "log"
+    elif mode == "7":
+        return "len"
     else:
         print("invalid entry try again")
         return get_mode()
@@ -184,7 +191,7 @@ def add_card(db: DbHandle, rq: RqHandle):
     except ValueError:
         print("invalid entry. please try again and enter a number")
         return add_card(db, rq)
-    db.add_card(card_id=card_id, qnty=new_count)
+    _ = db.add_card(card_id=card_id, qnty=new_count)
 
 
 def remove_card(db: DbHandle, rq: RqHandle):
@@ -213,7 +220,7 @@ def remove_card(db: DbHandle, rq: RqHandle):
     except ValueError:
         print("invalid entry. please try again and enter a number")
         return remove_card(db, rq)
-    db.remove_card(card_id, new_count)
+    _ = db.remove_card(card_id, new_count)
 
 
 def delete_card(db: DbHandle, rq: RqHandle):
@@ -238,7 +245,7 @@ def delete_card(db: DbHandle, rq: RqHandle):
     print(" are you sure you want to do this? it cannot be undone.")
     truth = input("(yes/no)>>> ")
     if truth == "yes":
-        db.delete_card(card_id)
+        _ = db.delete_card(card_id)
     else:
         print("canceled")
         return
@@ -252,9 +259,9 @@ def get_user():
         :return: a tuple of two items consisting of instances of RqHandle and DbHandle
     """
     rq = RqHandle(API_KEY)
-    print("please enter the name ot the user, 'default' for the default insecure login")
+    print("please enter the name of the user, 'default' for the default insecure login")
     user = input(">>> ")
-    user_file = os.path.join(prog_data, user)
+    user_file = os.path.join(prog_data, f"{user}.json")
     if user == "default":
         psswrd = "default"
     else:
@@ -266,6 +273,10 @@ def get_user():
         print("Invalid password, try again.")
         return get_user()
     return db, rq
+
+
+def len_of_log(db: DbHandle):
+    print(f"the size of you're logged collection is {len(db)}")
 
 
 def main():
@@ -290,8 +301,11 @@ def main():
             list_packs(rq)
         elif mode == "log":
             get_card_log(db, rq)
+        elif mode == "len":
+            len_of_log(db)
         elif mode == "end":
             break
+    db.close()
     quit()
 
 

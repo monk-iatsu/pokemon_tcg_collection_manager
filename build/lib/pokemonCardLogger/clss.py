@@ -1,14 +1,8 @@
-"""
-Description:
-    The library version of Pokémon Card Logger
-Usage:
-    from pokemonCardLogger import clss as pcl
-"""
-import sqlite3
 import os
 import requests
 import hashlib
 import datetime as dt
+import json
 
 
 class RqHandle:
@@ -75,9 +69,8 @@ class RqHandle:
         for i in data.json()["data"]:
             yield i["id"], i["name"]
 
-    @property
     def __repr__(self):
-        return f"RqHandle({self.api_key}"
+        return f"RqHandle('{self.api_key}')"
 
 
 class DbHandle:
@@ -85,7 +78,8 @@ class DbHandle:
     Description:
         stores and organizes the log data in a sqlite database
     """
-    def __init__(self, db_file: str, psswrd: str, rq: RqHandle):
+
+    def __init__(self, file: str, psswrd: str, rq: RqHandle):
         """
         Description:
             Constructor method
@@ -94,17 +88,19 @@ class DbHandle:
             :param psswrd: the password for the database
             :param rq: an instance of RqHandle
         """
-        self.db_file = db_file
+        self.logfile = file
         self.psswrd = psswrd
         self.rq = rq
         self.psswrd_hash = hashlib.sha512(self.psswrd.encode("utf-8")).hexdigest()
-        if os.path.exists(self.db_file):
-            self.db = sqlite3.connect(self.db_file)
-            self.c = self.db.cursor()
+        if self.logfile == ":memory:":
+            self.logdict = {}
+            self.first_run()
+        elif os.path.exists(self.logfile):
+            with open(self.logfile) as f:
+                self.logdict = json.load(f)
             self.validate()
         else:
-            self.db = sqlite3.connect(self.db_file)
-            self.c = self.db.cursor()
+            self.logdict = {}
             self.first_run()
         self.login_setup()
 
@@ -115,11 +111,10 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        self.c.execute("CREATE TABLE params(key TEXT, value TEXT)")
-        self.c.execute("CREATE TABLE card_log(card TEXT, qnty INTEGER)")
-        self.c.execute("CREATE TABLE login_log(datetime TEXT)")
-        self.c.execute("INSERT INTO params(key, value) VALUES(?,?)", ("password", self.psswrd_hash))
-        self.db.commit()
+        self.logdict = {"psswrd": self.psswrd_hash, "login_times": [], "log": {}}
+        if not self.logfile == ":memory:":
+            with open(self.logfile, "w") as f:
+                json.dump(self.logdict, f, indent=True)
 
     def validate(self):
         """
@@ -128,8 +123,7 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        self.c.execute("SELECT value FROM params WHERE key='password'")
-        if not self.psswrd_hash == self.c.fetchone()[0]:
+        if not self.psswrd_hash == self.logdict["psswrd"]:
             raise PermissionError
 
     def login_setup(self):
@@ -139,9 +133,8 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        login_time = dt.datetime.now().isoformat()
-        self.c.execute("INSERT INTO login_log VALUES(?)", (login_time,))
-        self.db.commit()
+        date = dt.datetime.now().isoformat()
+        self.logdict["login_times"].append(date)
 
     def add_card(self, card_id: str, qnty: int):
         """
@@ -153,16 +146,13 @@ class DbHandle:
             :return: None
         """
         if not self.test_card(card_id):
-            print("card does not exist")
-            return None
+            return False
         current_qnty = self.get_card_qnty(card_id)
         if not current_qnty:
-            new_qnty = qnty
-            self.c.execute("INSERT INTO card_log VALUES(?,?)", (new_qnty, card_id))
+            self.logdict["log"].update({card_id: qnty})
         else:
-            new_qnty = qnty + current_qnty
-            self.c.execute("UPDATE card_log SET qnty = ? WHERE card = ?", (new_qnty, card_id))
-        self.db.commit()
+            qnty = qnty + current_qnty
+            self.logdict["log"].update({card_id: qnty})
 
     def remove_card(self, card_id: str, qnty: int):
         """
@@ -174,16 +164,14 @@ class DbHandle:
             :return: a bool based on if the operation was successful or not
         """
         if not self.test_card(card_id):
-            print("card does not exist")
             return False
         current_qnty = self.get_card_qnty(card_id)
         if not current_qnty:
             return False
-        new_qnty = current_qnty - qnty
-        if new_qnty < 0:
-            new_qnty = 0
-        self.c.execute("UPDATE card_log SET qnty = ? WHERE card = ?", (new_qnty, card_id))
-        self.db.commit()
+        qnty = current_qnty - qnty
+        if qnty < 0:
+            qnty = 0
+        self.logdict["log"].update({card_id: qnty})
         return True
 
     def delete_card(self, card_id: str):
@@ -195,10 +183,9 @@ class DbHandle:
             :return: None
         """
         if not self.test_card(card_id):
-            print("card does not exist")
-            return None
-        self.c.execute("DELETE FROM card_log WHERE card = ?", (card_id,))
-        self.db.commit()
+            return False
+        _ = self.logdict["log"].pop(card_id)
+        return True
 
     def get_card_qnty(self, card_id: str):
         """
@@ -209,10 +196,11 @@ class DbHandle:
             :return: The quantity of the card
         """
         if not self.test_card(card_id):
-            print("card does not exist")
-            return None
-        self.c.execute("SELECT qnty FROM card_log WHERE card = ?", (card_id,))
-        return self.c.fetchone()
+            return 0
+        try:
+            return self.logdict["log"][card_id]
+        except KeyError:
+            return 0
 
     def get_log(self):
         """
@@ -221,9 +209,8 @@ class DbHandle:
         Parameters:
             :return: a generator of the rows in the log
         """
-        self.c.execute("SELECT * FROM card_log")
-        for row in self.c.fetchall():
-            yield row
+        for card_id, qnty in self.logdict["log"].items():
+            yield qnty, card_id
 
     def test_card(self, card_id: str):
         """
@@ -239,20 +226,33 @@ class DbHandle:
         except ConnectionError:
             return False
 
-    def __del__(self):
+    def close(self):
         """
         Description:
             Destructor method
         Parameters:
             :return: None
         """
-        self.db.commit()
-        self.c.close()
-        self.db.close()
+        if self.logfile == ":memory:":
+            return
+        with open(self.logfile, "w") as f:
+            json.dump(self.logdict, f, indent=True)
 
-    @property
     def __repr__(self):
-        return f"DbHandle({self.db_file}, psswrd, {self.rq.__repr__})"
+        return f"DbHandle('{self.logfile}', 'redacted', {self.rq.__repr__()})"
 
     def __len__(self):
-        return len(list(self.get_log()))
+        length = 0
+        for count, _ in self.get_log():
+            length += int(count)
+        return length
+
+
+if __name__ == "__main__":
+    import config
+    print("this is for testing purposes")
+    file = ":memory:"
+    psswrd = "default"
+    rq = RqHandle(config.API_KEY)
+    db = DbHandle(file, psswrd, rq)
+    print(db.__repr__())
