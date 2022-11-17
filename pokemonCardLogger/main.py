@@ -9,7 +9,8 @@ import sys
 # noinspection PyUnresolvedReferences
 from getpass import getpass
 import os
-from clss import *
+import clss
+import clssalt
 
 try:
     from config import *
@@ -42,7 +43,7 @@ except FileExistsError:
     pass
 
 
-def get_card_id(rq: RqHandle):
+def get_card_id(rq: (clss.RqHandle, clssalt.RqHandle)):
     """
     Description:
         Asks the user for a card id and returns the data received from the pokemonTcgApi
@@ -70,7 +71,7 @@ def get_card_id(rq: RqHandle):
     return card_id
 
 
-def list_packs(rq: RqHandle):
+def list_packs(rq: (clss.RqHandle, clssalt.RqHandle)):
     """
         Description:
             Prints out to console, the list of packs and their pack ids
@@ -123,7 +124,7 @@ please select one of the following:
         return get_mode()
 
 
-def get_card_log(db: DbHandle, rq: RqHandle):
+def get_card_log(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
     """
     Description:
         Prints to console the list of the log data
@@ -139,7 +140,7 @@ def get_card_log(db: DbHandle, rq: RqHandle):
         print(f"card name: {name}; the pack of the card is: {pack}; count: {qnty}")
 
 
-def get_card(db: DbHandle, rq: RqHandle):
+def get_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
     """
     Description:
         Prints out to the console the data in the log of a specific card
@@ -165,7 +166,7 @@ def get_card(db: DbHandle, rq: RqHandle):
     print(f"the card {name} in pack {pack} quantity is: {qnty}")
 
 
-def add_card(db: DbHandle, rq: RqHandle):
+def add_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
     """
     Description:
         Adds more to the value of a specific card count to the log
@@ -194,7 +195,7 @@ def add_card(db: DbHandle, rq: RqHandle):
     _ = db.add_card(card_id=card_id, qnty=new_count)
 
 
-def remove_card(db: DbHandle, rq: RqHandle):
+def remove_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
     """
     Description:
         Remove from the value of a specific card count to the log
@@ -223,7 +224,7 @@ def remove_card(db: DbHandle, rq: RqHandle):
     _ = db.remove_card(card_id, new_count)
 
 
-def delete_card(db: DbHandle, rq: RqHandle):
+def delete_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
     """
     Description:
         Deletes all data from a card in the log
@@ -258,24 +259,40 @@ def get_user():
     Parameters
         :return: a tuple of two items consisting of instances of RqHandle and DbHandle
     """
-    rq = RqHandle(API_KEY)
+    print("please enter 1 for json or 2 for sqlite (sqlite is still pre alpha)")
+    mode = input(">>> ")
+    if mode == "1":
+        rq = clss.RqHandle(API_KEY)
+    elif mode == "2":
+        rq = clssalt.RqHandle(API_KEY)
+    else:
+        print("invalid input. please enter 1 or 2")
+        return get_user()
     print("please enter the name of the user, 'default' for the default insecure login")
     user = input(">>> ")
-    user_file = os.path.join(prog_data, f"{user}.json")
+    if mode == "1":
+        ext = ".json"
+    elif mode == "2":
+        ext = ".db"
+    user = f"{user}{ext}"
+    user_file = os.path.join(prog_data, user)
     if user == "default":
         psswrd = "default"
     else:
         print("Please enter password for said user.")
         psswrd = getpass(">>> ")
     try:
-        db = DbHandle(user_file, psswrd, rq)
+        if mode == "1":
+            db = clss.DbHandle(user_file, psswrd, rq)
+        elif mode == "2":
+            db = clssalt.DbHandle(user_file, psswrd, rq)
     except PermissionError:
         print("Invalid password, try again.")
         return get_user()
     return db, rq
 
 
-def len_of_log(db: DbHandle):
+def len_of_log(db: (clss.DbHandle, clssalt.DbHandle)):
     print(f"the size of you're logged collection is {len(db)}")
 
 

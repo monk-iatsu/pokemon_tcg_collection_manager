@@ -215,7 +215,7 @@ class DbHandle:
             print("card does not exist")
             return None
         # pdb.set_trace()
-        self.c.execute("SELECT qnty FROM card_log WHERE card = ?", (card_id,))
+        self.c.execute("SELECT qnty FROM card_log WHERE card=?", (card_id,))
         val = self.c.fetchone()
         if val is None:
             return 0
@@ -270,8 +270,8 @@ class DbHandle:
 if __name__ == "__main__":
     import config
     print("this is for testing purposes")
-    file = "/home/justin/.config/POKEMON_TCG_LOG/default.db"
-    psswrd = "default"
-    rq = RqHandle(config.API_KEY)
-    db = DbHandle(file, psswrd, rq)
+    _file = ":memory:"
+    _psswrd = "default"
+    _rq = RqHandle(config.API_KEY)
+    db = DbHandle(_file, _psswrd, _rq)
     print(db.__repr__())

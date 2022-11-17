@@ -234,7 +234,7 @@ class DbHandle:
             :return: None
         """
         if self.logfile == ":memory:":
-            return
+            return None
         with open(self.logfile, "w") as f:
             json.dump(self.logdict, f, indent=True)
 
@@ -242,17 +242,14 @@ class DbHandle:
         return f"DbHandle('{self.logfile}', 'redacted', {self.rq.__repr__()})"
 
     def __len__(self):
-        length = 0
-        for count, _ in self.get_log():
-            length += int(count)
-        return length
+        return len(list(self.get_log()))
 
 
 if __name__ == "__main__":
     import config
     print("this is for testing purposes")
-    file = ":memory:"
-    psswrd = "default"
-    rq = RqHandle(config.API_KEY)
-    db = DbHandle(file, psswrd, rq)
+    _file = ":memory:"
+    _psswrd = "default"
+    _rq = RqHandle(config.API_KEY)
+    db = DbHandle(_file, _psswrd, _rq)
     print(db.__repr__())
