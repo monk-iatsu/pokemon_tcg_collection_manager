@@ -10,7 +10,7 @@ import sys
 from getpass import getpass
 import os
 import clss
-import clssalt
+import clss_alt
 
 try:
     from config import *
@@ -43,12 +43,12 @@ except FileExistsError:
     pass
 
 
-def get_card_id(rq: (clss.RqHandle, clssalt.RqHandle)):
+def get_card_id(rq: (clss.RqHandle, clss_alt.RqHandle)):
     """
     Description:
         Asks the user for a card id and returns the data received from the pokemonTcgApi
     Parameters:
-        :param rq: an instance of pokemonCardLogger.clss.RqHandle
+        :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
         :return: the card id from pokemonTcgApi or False if it errors out
     """
     print(
@@ -71,12 +71,12 @@ def get_card_id(rq: (clss.RqHandle, clssalt.RqHandle)):
     return card_id
 
 
-def list_packs(rq: (clss.RqHandle, clssalt.RqHandle)):
+def list_packs(rq: (clss.RqHandle, clss_alt.RqHandle)):
     """
         Description:
             Prints out to console, the list of packs and their pack ids
         Parameters:
-            :param rq: an instance of pokemonCardLogger.clss.RqHandle
+            :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
             :return: None
     """
     for pack_id, name in rq.get_all_sets():
@@ -106,7 +106,7 @@ please select one of the following:
     if mode == "0":
         return "end"
     elif mode == "1":
-        return "get_card"
+        return "card"
     elif mode == "2":
         return "add"
     elif mode == "3":
@@ -114,7 +114,7 @@ please select one of the following:
     elif mode == "4":
         return "delete"
     elif mode == "5":
-        return "all_packs"
+        return "packs"
     elif mode == "6":
         return "log"
     elif mode == "7":
@@ -124,13 +124,13 @@ please select one of the following:
         return get_mode()
 
 
-def get_card_log(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
+def get_card_log(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_alt.RqHandle)):
     """
     Description:
         Prints to console the list of the log data
     Parameters:
         :param db: an instance of pokemonCardLogger.clss.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss.RqHandle
+        :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
         :return: None
     """
     for qnty, card_id in db.get_log():
@@ -140,13 +140,13 @@ def get_card_log(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clss
         print(f"card name: {name}; the pack of the card is: {pack}; count: {qnty}")
 
 
-def get_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
+def get_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_alt.RqHandle)):
     """
     Description:
         Prints out to the console the data in the log of a specific card
     Parameters:
         :param db: an instance of pokemonCardLogger.clss.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss.RqHandle
+        :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
         :return: None
     """
     card_id = get_card_id(rq)
@@ -166,13 +166,13 @@ def get_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.
     print(f"the card {name} in pack {pack} quantity is: {qnty}")
 
 
-def add_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
+def add_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_alt.RqHandle)):
     """
     Description:
         Adds more to the value of a specific card count to the log
     Parameters:
         :param db: an instance of pokemonCardLogger.clss.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss.RqHandle
+        :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
         :return: None
     """
     card_id = get_card_id(rq)
@@ -192,16 +192,17 @@ def add_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.
     except ValueError:
         print("invalid entry. please try again and enter a number")
         return add_card(db, rq)
-    _ = db.add_card(card_id=card_id, qnty=new_count)
+    success = db.add_card(card_id=card_id, qnty=new_count)
+    print(f"the process was successful: {success}")
 
 
-def remove_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
+def remove_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_alt.RqHandle)):
     """
     Description:
         Remove from the value of a specific card count to the log
     Parameters:
         :param db: an instance of pokemonCardLogger.clss.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss.RqHandle
+        :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
         :return: None
     """
     card_id = get_card_id(rq)
@@ -221,16 +222,17 @@ def remove_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssa
     except ValueError:
         print("invalid entry. please try again and enter a number")
         return remove_card(db, rq)
-    _ = db.remove_card(card_id, new_count)
+    success = db.remove_card(card_id, new_count)
+    print(f"the process was successful: {success}")
 
 
-def delete_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssalt.RqHandle)):
+def delete_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_alt.RqHandle)):
     """
     Description:
         Deletes all data from a card in the log
     Parameters:
         :param db: an instance of pokemonCardLogger.clss.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss.RqHandle
+        :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
         :return: None
     """
     card_id = get_card_id(rq)
@@ -246,7 +248,8 @@ def delete_card(db: (clss.DbHandle, clssalt.DbHandle), rq: (clss.RqHandle, clssa
     print(" are you sure you want to do this? it cannot be undone.")
     truth = input("(yes/no)>>> ")
     if truth == "yes":
-        _ = db.delete_card(card_id)
+        success = db.delete_card(card_id)
+        print(f"the process was successful: {success}")
     else:
         print("canceled")
         return
@@ -259,12 +262,12 @@ def get_user():
     Parameters
         :return: a tuple of two items consisting of instances of RqHandle and DbHandle
     """
-    print("please enter 1 for json or 2 for sqlite (sqlite is still pre alpha)")
+    print("please enter 1 for json or 2 for pickle (pickle is still pre alpha and experimental)")
     mode = input(">>> ")
     if mode == "1":
         rq = clss.RqHandle(API_KEY)
     elif mode == "2":
-        rq = clssalt.RqHandle(API_KEY)
+        rq = clss_alt.RqHandle(API_KEY)
     else:
         print("invalid input. please enter 1 or 2")
         return get_user()
@@ -273,10 +276,10 @@ def get_user():
     if mode == "1":
         ext = ".json"
     elif mode == "2":
-        ext = ".db"
+        ext = ".pcllog"
     user = f"{user}{ext}"
     user_file = os.path.join(prog_data, user)
-    if user == "default":
+    if user == "default.json" or user == "default.pcllog":
         psswrd = "default"
     else:
         print("Please enter password for said user.")
@@ -285,15 +288,15 @@ def get_user():
         if mode == "1":
             db = clss.DbHandle(user_file, psswrd, rq)
         elif mode == "2":
-            db = clssalt.DbHandle(user_file, psswrd, rq)
+            db = clss_alt.DbHandle(user_file, psswrd, rq)
     except PermissionError:
         print("Invalid password, try again.")
         return get_user()
     return db, rq
 
 
-def len_of_log(db: (clss.DbHandle, clssalt.DbHandle)):
-    print(f"the size of you're logged collection is {len(db)}")
+def len_of_log(db: (clss.DbHandle, clss_alt.DbHandle)):
+    print(f"the size of your logged collection is {len(db)}")
 
 
 def main():
@@ -310,11 +313,11 @@ def main():
             add_card(db, rq)
         elif mode == "remove":
             remove_card(db, rq)
-        elif mode == "get_card":
+        elif mode == "card":
             get_card(db, rq)
         elif mode == "delete":
             delete_card(db, rq)
-        elif mode == "all_packs":
+        elif mode == "packs":
             list_packs(rq)
         elif mode == "log":
             get_card_log(db, rq)
@@ -323,7 +326,6 @@ def main():
         elif mode == "end":
             break
     db.close()
-    quit()
 
 
 if __name__ == "__main__":

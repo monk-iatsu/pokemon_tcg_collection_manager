@@ -3,8 +3,9 @@ README.md
 setup.py
 pokemonCardLogger/__init__.py
 pokemonCardLogger/clss.py
-pokemonCardLogger/clssalt.py
+pokemonCardLogger/clss_alt.py
 pokemonCardLogger/main.py
+pokemonCardLogger/migrate.py
 pokemonCardLogger/packRef.py
 pokemonCardLogger.egg-info/PKG-INFO
 pokemonCardLogger.egg-info/SOURCES.txt

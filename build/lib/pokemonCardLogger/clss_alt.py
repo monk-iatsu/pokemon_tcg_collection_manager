@@ -1,15 +1,16 @@
 """
 Description:
-    The library version of Pokémon Card Logger
+    The alternate library version of Pokémon Card Logger using sqlite
+    FYI this module is pre alpha and experimental
 Usage:
-    from pokemonCardLogger import clss as pcl
+    from pokemonCardLogger import clssalt as pcl
 """
-# import pdb
-import sqlite3
+import pickle
 import os
 import requests
 import hashlib
 import datetime as dt
+# import pdb
 
 
 class RqHandle:
@@ -99,13 +100,15 @@ class DbHandle:
         self.psswrd = psswrd
         self.rq = rq
         self.psswrd_hash = hashlib.sha512(self.psswrd.encode("utf-8")).hexdigest()
-        if os.path.exists(self.logfile) or self.logfile == ":memory:":
-            self.db = sqlite3.connect(self.logfile)
-            self.c = self.db.cursor()
+        if self.logfile == ":memory:":
+            self.logdict = {}
+            self.first_run()
+        elif os.path.exists(self.logfile):
+            with open(self.logfile, "b") as f:
+                self.logdict = pickle.load(f)
             self.validate()
         else:
-            self.db = sqlite3.connect(self.logfile)
-            self.c = self.db.cursor()
+            self.logdict = {}
             self.first_run()
         self.login_setup()
 
@@ -116,11 +119,8 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        self.c.execute("CREATE TABLE params(key TEXT, value TEXT)")
-        self.c.execute("CREATE TABLE card_log(card TEXT, qnty INTEGER)")
-        self.c.execute("CREATE TABLE login_log(datetime TEXT)")
-        self.c.execute("INSERT INTO params(key, value) VALUES(?,?)", ("password", self.psswrd_hash))
-        self.db.commit()
+        self.logdict = {"psswrd": self.psswrd_hash, "login_times": [], "log": {}}
+        self.save()
 
     def validate(self):
         """
@@ -129,8 +129,7 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        self.c.execute("SELECT value FROM params WHERE key='password'")
-        if not self.psswrd_hash == self.c.fetchone()[0]:
+        if not self.psswrd_hash == self.logdict["psswrd"]:
             raise PermissionError
 
     def login_setup(self):
@@ -140,9 +139,9 @@ class DbHandle:
         Parameters:
             :return: None
         """
-        login_time = dt.datetime.now().isoformat()
-        self.c.execute("INSERT INTO login_log VALUES(?)", (login_time,))
-        self.db.commit()
+        date = dt.datetime.now().isoformat()
+        self.logdict["login_times"].append(date)
+        self.save()
 
     def add_card(self, card_id: str, qnty: int):
         """
@@ -151,19 +150,17 @@ class DbHandle:
         Parameters:
             :param card_id: the id of the card according to pokemonTcgApi
             :param qnty: the quantity of cards to add. if there is already quantity, it adds to that
-            :return: a bool based on if the operation was successful or not
+            :return: None
         """
         if not self.test_card(card_id):
-            print("card does not exist")
             return False
         current_qnty = self.get_card_qnty(card_id)
         if not current_qnty:
-            new_qnty = qnty
-            self.c.execute("INSERT INTO card_log VALUES(?,?)", (new_qnty, card_id))
+            self.logdict["log"].update({card_id: qnty})
         else:
-            new_qnty = qnty + current_qnty
-            self.c.execute("UPDATE card_log SET qnty = ? WHERE card = ?", (new_qnty, card_id))
-        self.db.commit()
+            qnty = qnty + current_qnty
+            self.logdict["log"].update({card_id: qnty})
+        self.save()
         return True
 
     def remove_card(self, card_id: str, qnty: int):
@@ -176,16 +173,15 @@ class DbHandle:
             :return: a bool based on if the operation was successful or not
         """
         if not self.test_card(card_id):
-            print("card does not exist")
             return False
         current_qnty = self.get_card_qnty(card_id)
         if not current_qnty:
             return False
-        new_qnty = current_qnty - qnty
-        if new_qnty < 0:
-            new_qnty = 0
-        self.c.execute("UPDATE card_log SET qnty = ? WHERE card = ?", (new_qnty, card_id))
-        self.db.commit()
+        qnty = current_qnty - qnty
+        if qnty < 0:
+            qnty = 0
+        self.logdict["log"].update({card_id: qnty})
+        self.save()
         return True
 
     def delete_card(self, card_id: str):
@@ -194,13 +190,12 @@ class DbHandle:
             Deletes a card from the log
         Parameters:
             :param card_id: the id of the card according to pokemonTcgApi
-            :return: a bool based on if the operation was successful or not
+            :return: None
         """
         if not self.test_card(card_id):
-            print("card does not exist")
             return False
-        self.c.execute("DELETE FROM card_log WHERE card = ?", (card_id,))
-        self.db.commit()
+        _ = self.logdict["log"].pop(card_id)
+        self.save()
         return True
 
     def get_card_qnty(self, card_id: str):
@@ -212,14 +207,11 @@ class DbHandle:
             :return: The quantity of the card
         """
         if not self.test_card(card_id):
-            print("card does not exist")
-            return None
-        # pdb.set_trace()
-        self.c.execute("SELECT qnty FROM card_log WHERE card=?", (card_id,))
-        val = self.c.fetchone()
-        if val is None:
             return 0
-        return val[0]
+        try:
+            return self.logdict["log"][card_id]
+        except KeyError:
+            return 0
 
     def get_log(self):
         """
@@ -228,9 +220,8 @@ class DbHandle:
         Parameters:
             :return: a generator of the rows in the log
         """
-        self.c.execute("SELECT * FROM card_log")
-        for row in self.c.fetchall():
-            yield row
+        for card_id, qnty in self.logdict["log"].items():
+            yield qnty, card_id
 
     def test_card(self, card_id: str):
         """
@@ -247,28 +238,37 @@ class DbHandle:
             return False
 
     def close(self):
+        self.save()
+        quit()
+
+    def save(self):
         """
         Description:
-            Destructor method
+            cleanly closes the log by saving the log to a file
         Parameters:
             :return: None
         """
-        self.db.commit()
-        self.c.close()
-        self.db.close()
+        pop_items = []
+        for card, qnty in self.logdict["log"].items():
+            if qnty == 0:
+                pop_items.append(card)
+        for i in pop_items:
+            _ = self.logdict["log"].pop(i)
+        if self.logfile == ":memory:":
+            return None
+        with open(self.logfile, "wb") as f:
+            pickle.dump(self.logdict, f)
 
     def __repr__(self):
-        return f"DbHandle({self.logfile}, 'redacted', {self.rq.__repr__})"
+        return f"DbHandle('{self.logfile}', 'redacted', {self.rq.__repr__()})"
 
     def __len__(self):
-        length = 0
-        for count, _ in self.get_log():
-            length += int(count)
-        return length
+        return len(list(self.get_log()))
 
 
 if __name__ == "__main__":
     import config
+
     print("this is for testing purposes")
     _file = ":memory:"
     _psswrd = "default"

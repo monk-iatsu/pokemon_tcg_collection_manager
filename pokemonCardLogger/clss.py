@@ -1,3 +1,9 @@
+"""
+Description:
+    The library version of Pokémon Card Logger using json
+Usage:
+    from pokemonCardLogger import clss as pcl
+"""
 import os
 import requests
 import hashlib
@@ -112,9 +118,7 @@ class DbHandle:
             :return: None
         """
         self.logdict = {"psswrd": self.psswrd_hash, "login_times": [], "log": {}}
-        if not self.logfile == ":memory:":
-            with open(self.logfile, "w") as f:
-                json.dump(self.logdict, f, indent=True)
+        self.save()
 
     def validate(self):
         """
@@ -135,6 +139,7 @@ class DbHandle:
         """
         date = dt.datetime.now().isoformat()
         self.logdict["login_times"].append(date)
+        self.save()
 
     def add_card(self, card_id: str, qnty: int):
         """
@@ -153,6 +158,8 @@ class DbHandle:
         else:
             qnty = qnty + current_qnty
             self.logdict["log"].update({card_id: qnty})
+        self.save()
+        return True
 
     def remove_card(self, card_id: str, qnty: int):
         """
@@ -172,6 +179,7 @@ class DbHandle:
         if qnty < 0:
             qnty = 0
         self.logdict["log"].update({card_id: qnty})
+        self.save()
         return True
 
     def delete_card(self, card_id: str):
@@ -185,6 +193,7 @@ class DbHandle:
         if not self.test_card(card_id):
             return False
         _ = self.logdict["log"].pop(card_id)
+        self.save()
         return True
 
     def get_card_qnty(self, card_id: str):
@@ -227,12 +236,22 @@ class DbHandle:
             return False
 
     def close(self):
+        self.save()
+        quit()
+
+    def save(self):
         """
         Description:
-            Destructor method
+            cleanly closes the log by saving the log to a file
         Parameters:
             :return: None
         """
+        pop_items = []
+        for card, qnty in self.logdict["log"].items():
+            if qnty == 0:
+                pop_items.append(card)
+        for i in pop_items:
+            _ = self.logdict["log"].pop(i)
         if self.logfile == ":memory:":
             return None
         with open(self.logfile, "w") as f:
