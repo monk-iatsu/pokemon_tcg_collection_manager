@@ -52,6 +52,9 @@ def main():
     new_file_user = f"{user}{other}"
     new_file_user = os.path.join(prog_data, new_file_user)
     active_file_user = os.path.join(prog_data, active_file_user)
+    if not os.path.exists(active_file_user):
+        print("file not found. try again")
+        return main()
     if mode == ".pcllog":
         migrate_to_json(active_file_user, new_file_user)
     else:
