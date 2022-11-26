@@ -65,7 +65,11 @@ def get_card_id(rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
     truth = input(">>> ")
     if truth.lower() in ("n", "0", "no"):
         print("then try again")
-        return get_card_id(rq)
+        try:
+            return get_card_id(rq)
+        except RecursionError:
+            print("too many invalid entries, try again")
+            return False, False
     print("please enter the cards collectors number")
     num = input(">>> ")
     card_id = f"{pack}-{num}"
@@ -83,12 +87,20 @@ def get_card_id(rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
         index = int(index)
     except ValueError:
         print("invalid entry. enter a number. try again")
-        return get_card_id(rq)
+        try:
+            return get_card_id(rq)
+        except RecursionError:
+            print("too many invalid entries, try again")
+            return False, False
     try:
         print_type = card_print_types[index]
     except IndexError:
         print("invalid entry. enter a number in the given range. try again")
-        return get_card_id(rq)
+        try:
+            return get_card_id(rq)
+        except RecursionError:
+            print("too many invalid entries, try again")
+            return False, False
     return card_id, print_type
 
 
@@ -145,7 +157,11 @@ please select one of the following:
         return "value"
     else:
         print("invalid entry try again")
-        return get_mode()
+        try:
+            return get_mode()
+        except RecursionError:
+            print("too many invalid entries, quitting")
+            return "end"
 
 
 def get_card_log(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
@@ -157,11 +173,12 @@ def get_card_log(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, cls
         :param rq: an instance of pokemonCardLogger.clss.RqHandle or pokemonCardLogger.clss_alt.RqHandle
         :return: None
     """
-    for qnty, card_id in db.get_log():
+    print("this may take some time")
+    for card_id, print_type, qnty in db.get_log():
         data = rq.get_card(card_id)["data"]
         name = data["name"]
         pack = data["set"]["name"]
-        print(f"card name: {name}; the pack of the card is: {pack}; count: {qnty}")
+        print(f"card name: {name} with print type: {print_type}; the pack of the card is: {pack}; count: {qnty}")
 
 
 def get_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
@@ -224,7 +241,11 @@ def add_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_al
         new_count = int(new_count)
     except ValueError:
         print("invalid entry. please try again and enter a number")
-        return add_card(db, rq)
+        try:
+            return add_card(db, rq)
+        except RecursionError:
+            print("too many invalid entries, try again")
+            return None
     success = db.add_card(card_id, new_count, print_type)
     print(f"the process was successful: {success}")
 
@@ -254,7 +275,11 @@ def remove_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss
         new_count = int(new_count)
     except ValueError:
         print("invalid entry. please try again and enter a number")
-        return remove_card(db, rq)
+        try:
+            return remove_card(db, rq)
+        except RecursionError:
+            print("too many invalid entries, try again")
+            return None
     success = db.remove_card(card_id, new_count, print_type)
     print(f"the process was successful: {success}")
 
@@ -305,7 +330,11 @@ def get_user():
         rq = clss_alt.RqHandle(API_KEY)
     else:
         print("invalid input. please enter 1 or 2")
-        return get_user()
+        try:
+            return get_user()
+        except RecursionError:
+            print("too many invalid entries, quitting")
+            quit()
     print("please enter the name of the user, 'default' for the default insecure login")
     user = input(">>> ")
     if mode == "1":
@@ -326,7 +355,11 @@ def get_user():
             db = clss_alt.DbHandle(user_file, psswrd, rq)
     except PermissionError:
         print("Invalid password, try again.")
-        return get_user()
+        try:
+            return get_user()
+        except RecursionError:
+            print("too many invalid entries, quitting")
+            quit()
     return db, rq
 
 
@@ -337,12 +370,13 @@ def len_of_log(db: (clss.DbHandle, clss_alt.DbHandle)):
 def get_collection_value(
         db: (clss.DbHandle, clss_alt.DbHandle),
         rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
+    print("this may take some time")
     value = 0.00
     for card_id, print_type, qnty in db.get_log():
         data = rq.get_card(card_id)
-        price = data["data"]["price"][print_type]["market"]
-        value += price
-    print(f"the value of your collection is {value}")
+        price = data["data"]["tcgplayer"]["prices"][print_type]["market"]
+        value = round((value + price), 2)
+    print(f"the value of your collection is ${value}")
 
 
 def main():
@@ -378,3 +412,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    quit()

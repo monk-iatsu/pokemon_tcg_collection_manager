@@ -228,7 +228,7 @@ class DbHandleBase:
             gets all cards in collection that match card_id, and creates a generator for each entry where
             print_type is the print type of the entry, and qnty is the quantity of the card
         Parameters:
-            :param card_id:
+            :param card_id: the id of the card according to pokemonTcgApi
             :return: generator of tuple print_type and qnty
         """
         for card_id_print_type in self.logdict["log"].keys():

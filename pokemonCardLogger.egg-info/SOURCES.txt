@@ -8,6 +8,7 @@ pokemonCardLogger/clss_base.py
 pokemonCardLogger/main.py
 pokemonCardLogger/migrate.py
 pokemonCardLogger/packRef.py
+pokemonCardLogger/test_api_status.py
 pokemonCardLogger.egg-info/PKG-INFO
 pokemonCardLogger.egg-info/SOURCES.txt
 pokemonCardLogger.egg-info/dependency_links.txt
