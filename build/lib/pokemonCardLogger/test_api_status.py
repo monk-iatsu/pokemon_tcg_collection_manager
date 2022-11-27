@@ -1,6 +1,8 @@
 import time
 from clss_base import RqHandle
 
+SLEEP_TIME = 1
+
 
 def init(api_key: str):
     global API_KEY
@@ -22,7 +24,7 @@ def main_with_output():
         try:
             _ = rq.get_card("swsh1-1")
         except ConnectionError:
-            time.sleep(10)
+            time.sleep(SLEEP_TIME)
             print("connection is down")
             continue
         print("connection is up")
@@ -35,7 +37,7 @@ def main_without_output():
         try:
             _ = rq.get_card("swsh1-1")
         except ConnectionError:
-            time.sleep(5)
+            time.sleep(SLEEP_TIME)
             continue
         break
 
