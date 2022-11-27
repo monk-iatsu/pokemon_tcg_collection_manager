@@ -20,14 +20,13 @@ def init(api_key: str):
     API_KEY = api_key
 
 
+import contextlib
 try:
     from config import *
 except ImportError:
     API_KEY = ""
 
-    if __name__ != "__main__":
-        pass
-    else:
+    if __name__ == "__main__":
         print("Please enter you pokemontcgapi key: ")
         API_KEY = input(">>> ")
 
@@ -35,17 +34,13 @@ pltfrm = sys.platform
 home = os.environ["HOME"]
 if pltfrm == "linux":
     prog_data = os.path.join(os.path.join(home, ".config"), "POKEMON_TCG_LOG")
-elif pltfrm == "win32" or pltfrm == "cygwin":
-    prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
-elif pltfrm == "darwin":
+elif pltfrm in ["win32", "cygwin", "darwin"]:
     prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
 else:
     print("your system is not supported. quitting")
     quit(1)
-try:
+with contextlib.suppress(FileExistsError):
     os.makedirs(prog_data)
-except FileExistsError:
-    pass
 
 
 def get_card_id(rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
@@ -353,7 +348,7 @@ def get_user():
         ext = ".pcllog"
     user = f"{user}{ext}"
     user_file = os.path.join(prog_data, user)
-    if user == "default.json" or user == "default.pcllog":
+    if user in ["default.json", "default.pcllog"]:
         psswrd = "default"
     else:
         print("Please enter password for said user.")

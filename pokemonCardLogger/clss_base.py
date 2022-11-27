@@ -61,9 +61,7 @@ class RqHandle:
             :return: generator consisting of a tuple of pack id and pack name
         """
         data = requests.get(self.pack_url, headers=self.headers)
-        if data.ok:
-            pass
-        else:
+        if not data.ok:
             raise ConnectionError
         for i in data.json()["data"]:
             yield i["id"], i["name"]
@@ -119,7 +117,7 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        if not self.psswrd_hash == self.logdict["psswrd"]:
+        if self.psswrd_hash != self.logdict["psswrd"]:
             raise PermissionError
 
     def login_setup(self):
@@ -146,12 +144,9 @@ class DbHandleBase:
         card_id_print_type = f"{card_id}.{print_type}"
         if not self.test_card(card_id):
             return False
-        current_qnty = self.get_card_qnty(card_id, print_type)
-        if not current_qnty:
-            self.logdict["log"].update({card_id_print_type: qnty})
-        else:
-            qnty = qnty + current_qnty
-            self.logdict["log"].update({card_id_print_type: qnty})
+        if current_qnty := self.get_card_qnty(card_id, print_type):
+            qnty += current_qnty
+        self.logdict["log"].update({card_id_print_type: qnty})
         self.save()
         return True
 
@@ -172,8 +167,7 @@ class DbHandleBase:
         if not current_qnty:
             return False
         qnty = current_qnty - qnty
-        if qnty < 0:
-            qnty = 0
+        qnty = max(qnty, 0)
         self.logdict["log"].update({card_id_print_type: qnty})
         self.save()
         return True

@@ -7,9 +7,7 @@ pltfrm = sys.platform
 home = os.environ["HOME"]
 if pltfrm == "linux":
     prog_data = os.path.join(os.path.join(home, ".config"), "POKEMON_TCG_LOG")
-elif pltfrm == "win32" or pltfrm == "cygwin":
-    prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
-elif pltfrm == "darwin":
+elif pltfrm in ["win32", "cygwin", "darwin"]:
     prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
 else:
     print("your system is not supported. quitting")

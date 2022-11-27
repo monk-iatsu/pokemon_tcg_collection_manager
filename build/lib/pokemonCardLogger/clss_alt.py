@@ -26,10 +26,7 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: None
         """
-        pop_items = []
-        for card, qnty in self.logdict["log"].items():
-            if qnty == 0:
-                pop_items.append(card)
+        pop_items = [card for card, qnty in self.logdict["log"].items() if qnty == 0]
         for i in pop_items:
             _ = self.logdict["log"].pop(i)
         if self.logfile == ":memory:":

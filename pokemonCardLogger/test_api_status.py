@@ -43,5 +43,6 @@ def main_without_output():
 
 
 if __name__ == "__main__":
+    # main_without_output()
     main_with_output()
     quit()
