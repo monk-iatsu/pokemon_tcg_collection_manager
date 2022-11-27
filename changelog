@@ -1,0 +1,35 @@
+version 0.0.0:
+    first version
+version 0.0.1:
+    + multi user
+    - bug fixes
+version 0.0.2:
+    - bug fixes
+    + quality of life fixes
+version 0.0.3:    
+    - bug fixes
+    + quality of life fixes
+version 0.1.1:
+    * alpha release
+    - bug fixes
+    + quality of life fixes
+    + added json as a storage option
+version 0.1.2:
+    + added pack referance side program    
+    - bug fixes
+    + quality of life fixes
+version 0.2.3:
+    * beta release
+    * if you had sqlite, your log is obsolete and needs to start over
+    - removed sqlite as a storage option
+    + added pickle as a storage option
+    + added collection value feature    
+    - bug fixes
+    + quality of life fixes
+version 0.2.4:
+    - bug fixes
+    + quality of life fixes
+version 0.2.5a:
+    - bug fixes
+    + quality of life fixes
+

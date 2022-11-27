@@ -12,6 +12,13 @@ import os
 import clss
 import clss_alt
 import clss_base
+import test_api_status
+
+
+def init(api_key: str):
+    global API_KEY
+    API_KEY = api_key
+
 
 try:
     from config import *
@@ -19,10 +26,7 @@ except ImportError:
     API_KEY = ""
 
     if __name__ != "__main__":
-
-        def init(api_key: str):
-            global API_KEY
-            API_KEY = api_key
+        pass
     else:
         print("Please enter you pokemontcgapi key: ")
         API_KEY = input(">>> ")
@@ -60,6 +64,9 @@ def get_card_id(rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
         pack_name = rq.get_pack(pack)["data"]["name"]
     except ConnectionError:
         print("invalid pack id. try main menu item 5")
+        return False, False
+    except TypeError:
+        print("canceled.")
         return False, False
     print(f"is the pack name {pack_name}? ('n' or 'y')")
     truth = input(">>> ")
@@ -134,27 +141,30 @@ please select one of the following:
 6: list log
 7: log size
 8: collection value
+9: card value
 """
     print(info)
     mode = input(">>> ")
     if mode == "0":
-        return "end"
+        return "end prog"
     elif mode == "1":
-        return "card"
+        return "get card"
     elif mode == "2":
-        return "add"
+        return "add card"
     elif mode == "3":
-        return "remove"
+        return "remove card"
     elif mode == "4":
-        return "delete"
+        return "delete entry"
     elif mode == "5":
-        return "packs"
+        return "list packs"
     elif mode == "6":
-        return "log"
+        return "list log"
     elif mode == "7":
-        return "len"
+        return "log len"
     elif mode == "8":
-        return "value"
+        return "collection value"
+    elif mode == "9":
+        return "card value"
     else:
         print("invalid entry try again")
         try:
@@ -202,7 +212,7 @@ def get_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_al
         print("then try again.")
         return
     print("would you like to use print type as well?('y' or 'n')")
-    if truth.lower() == "n":
+    if truth.lower() in ("n", "0", "no"):
         total_qnty = 0
         for print_type, qnty in db.get_card_by_id_only(card_id):
             print(f"\tfor {print_type}, you have {qnty}")
@@ -232,7 +242,7 @@ def add_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss_al
     card_name = rq.get_card(card_id)["data"]["name"]
     print(f"is {card_name} the name of the card?('y' or 'n')")
     truth = input(">>> ")
-    if truth.lower() == "n":
+    if truth.lower() in ("n", "0", "no"):
         print("then try again.")
         return
     print("how many would you like to add")
@@ -300,12 +310,12 @@ def delete_card(db: (clss.DbHandle, clss_alt.DbHandle), rq: (clss.RqHandle, clss
     card_name = rq.get_card(card_id)["data"]["name"]
     print(f"is {card_name} the name of the card?('y' or 'n')")
     truth = input(">>> ")
-    if truth.lower() == "n":
+    if truth.lower() in ("n", "0", "no"):
         print("then try again.")
         return
     print(" are you sure you want to do this? it cannot be undone.")
     truth = input("(yes/no)>>> ")
-    if truth == "yes":
+    if truth.lower() not in ("n", "0", "no"):
         success = db.delete_card(card_id, print_type)
         print(f"the process was successful: {success}")
     else:
@@ -376,7 +386,20 @@ def get_collection_value(
         data = rq.get_card(card_id)
         price = data["data"]["tcgplayer"]["prices"][print_type]["market"]
         value = round((value + price), 2)
+        card_name = data["data"]["name"]
+        msg1 = f"the value of {card_id} who's name is {card_name} with print type of {print_type} is ${price} times the"
+        msg2 = f"quantity of {qnty} the value is {round((price * qnty), 2)}"
+        msg = f"{msg1} {msg2}"
+        print(msg)
     print(f"the value of your collection is ${value}")
+
+
+def get_card_value(rq: (clss.RqHandle, clss_alt.RqHandle, clss_base.RqHandle)):
+    card_id, print_type = get_card_id(rq)
+    data = rq.get_card(card_id)
+    card_name = data["data"]["name"]
+    price = data["data"]["tcgplayer"]["prices"][print_type]["market"]
+    print(f"the value of {card_id} who's name is {card_name} with print type of {print_type} is ${price}")
 
 
 def main():
@@ -386,26 +409,31 @@ def main():
     Parameters:
         :return: None
     """
+    print("waitting for api connection")
+    test_api_status.init(API_KEY)
+    test_api_status.main_without_output()
     db, rq = get_user()
     while True:
         mode = get_mode()
-        if mode == "add":
+        if mode == "add card":
             add_card(db, rq)
-        elif mode == "remove":
+        elif mode == "remove card":
             remove_card(db, rq)
-        elif mode == "card":
+        elif mode == "get card":
             get_card(db, rq)
-        elif mode == "delete":
+        elif mode == "delete entry":
             delete_card(db, rq)
-        elif mode == "packs":
+        elif mode == "list packs":
             list_packs(rq)
-        elif mode == "log":
+        elif mode == "list log":
             get_card_log(db, rq)
-        elif mode == "len":
+        elif mode == "log len":
             len_of_log(db)
-        elif mode == "value":
+        elif mode == "collection value":
             get_collection_value(db, rq)
-        elif mode == "end":
+        elif mode == "card value":
+            get_card_value(rq)
+        elif mode == "end prog":
             break
     db.close()
 
