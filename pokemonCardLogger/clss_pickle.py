@@ -1,17 +1,12 @@
 """
 Description:
-    The library version of Pokémon Card Logger using json
+    The alternate library version of Pokémon Card Logger using sqlite
+    FYI this module is pre alpha and experimental
 Usage:
-    from pokemonCardLogger import clss as pcl
+    from pokemonCardLogger import clss_pickle as pcl
 """
-import os
-import requests
-import hashlib
-import datetime as dt
-import json
+import pickle
 from clss_base import *
-
-print("depreciated use clss_json")
 
 
 class DbHandle(DbHandleBase):
@@ -27,34 +22,34 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: None
         """
-        pop_items = [card for card, qnty in self.logdict["log"].items() if qnty == 0]
-        for i in pop_items:
+        for i in [card for card, qnty in self.logdict["log"].items() if qnty == 0]:
             _ = self.logdict["log"].pop(i)
         if self.logfile == ":memory:":
             return None
-        with open(self.logfile, "w") as f:
-            json.dump(self.logdict, f, indent=True)
+        with open(self.logfile, "wb") as f:
+            pickle.dump(self.logdict, f)
 
     def read(self):
         """
         Description:
-            reads the data from json and returns the log dictionary
+            reads the data from pickle and returns the log dictionary
         Parameters:
-            :return: dictionary consisting of the log
+            :return: dictionary consisting of the log data
         """
         if self.logfile == ":memory:":
             return None
-        with open(self.logfile, "r") as f:
-            ld = json.load(f)
+        with open(self.logfile, "rb") as f:
+            ld = pickle.load(f)
         return ld
-
-    def close(self):
-        self.close()
 
 
 if __name__ == "__main__":
     print("this is for testing purposes")
-    import config
+    try:
+        import config
+    except ImportError:
+        print("no api key found quitting.")
+        quit()
     _file = ":memory:"
     _psswrd = "default"
     _rq = RqHandle(config.API_KEY)

@@ -4,8 +4,10 @@ Description:
 Usage:
     Run with "python3 packRef.py" in a shell to get a list of packs and their pack ids
 """
-import clss
+import clss_base
+import test_api_status
 try:
+    # noinspection PyUnresolvedReferences
     import config
     key = config.API_KEY
 except ImportError:
@@ -14,7 +16,9 @@ except ImportError:
 
 
 if __name__ == "__main__":
-    rq = clss.RqHandle(key)
+    print("waiting for api connection")
+    test_api_status.main_without_output()
+    rq = clss_base.RqHandle(key)
     for pack_id, pack_name in rq.get_all_sets():
         print(f"the pack {pack_name}'s id is {pack_id}")
 else:

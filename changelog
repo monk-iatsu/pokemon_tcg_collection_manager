@@ -10,7 +10,7 @@ version 0.0.3:
     - bug fixes
     + quality of life fixes
 version 0.1.1:
-    * alpha release
+    + alpha release
     - bug fixes
     + quality of life fixes
     + added json as a storage option
@@ -19,8 +19,8 @@ version 0.1.2:
     - bug fixes
     + quality of life fixes
 version 0.2.3:
-    * beta release
-    * if you had sqlite, your log is obsolete and needs to start over
+    + beta release
+    + if you had sqlite, your log is obsolete and needs to start over
     - removed sqlite as a storage option
     + added pickle as a storage option
     + added collection value feature    
@@ -36,5 +36,10 @@ version 0.2.5b:
     - bug fixes
     + quality of life fixes
 version 0.2.5c:
-    * readability changes
-    
+    + readability changes
+version 0.2.6:
+    + added csv export
+    + added login history output
+    + added log list with price in the log
+    - bug fixes
+    + quality of life fixes

@@ -5,6 +5,7 @@ SLEEP_TIME = 1
 
 
 def init(api_key: str):
+    # noinspection PyGlobalUndefined
     global API_KEY
     API_KEY = api_key
 

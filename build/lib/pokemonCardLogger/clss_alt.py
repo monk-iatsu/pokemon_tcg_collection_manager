@@ -1,7 +1,6 @@
 """
 Description:
-    The alternate library version of Pokémon Card Logger using sqlite
-    FYI this module is pre alpha and experimental
+    The alternate library version of Pokémon Card Logger using pickle
 Usage:
     from pokemonCardLogger import clssalt as pcl
 """
@@ -11,6 +10,8 @@ import requests
 import hashlib
 import datetime as dt
 from clss_base import *
+
+print("depreciated use clss_pickle")
 
 
 class DbHandle(DbHandleBase):

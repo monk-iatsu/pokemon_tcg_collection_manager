@@ -2,6 +2,7 @@ import os
 import hashlib
 import requests
 import datetime as dt
+import csv
 
 
 class RqHandle:
@@ -81,7 +82,7 @@ class DbHandleBase:
         Description:
             Constructor method
         Parameters
-            :param db_file: the path to the database file
+            :param file: the path to the database file
             :param psswrd: the password for the database
             :param rq: an instance of RqHandle
         """
@@ -107,7 +108,8 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        self.logdict = {"psswrd": self.psswrd_hash, "login_times": [], "log": {}}
+        self.logdict = {"psswrd": self.psswrd_hash, "failed_login": [], "login_times": [], "log": {}}
+        self.login_setup()
         self.save()
 
     def validate(self):
@@ -118,6 +120,9 @@ class DbHandleBase:
             :return: None
         """
         if self.psswrd_hash != self.logdict["psswrd"]:
+            d = dt.datetime.now().isoformat()
+            self.logdict["failed_login"].append(d)
+            self.save()
             raise PermissionError
 
     def login_setup(self):
@@ -257,6 +262,48 @@ class DbHandleBase:
         """
         pass
 
+    def list_failed_logins(self):
+        """
+        Description:
+            a generator of all unsuccessful logins
+        Parameters:
+            :return: a generator of a tuple consisting of the datetime data (day, month, year, hour, minute, second)
+        """
+        if not self.logdict["failed_login"]:
+            return None, None, None, None, None, None
+        for i in self.logdict["failed_login"]:
+            d = dt.datetime.fromisoformat(i)
+            date = d.date()
+            time = d.time()
+            day = date.day
+            month = date.month
+            year = date.year
+            hour = time.hour
+            minute = time.minute
+            second = time.second
+            yield day, month, year, hour, minute, second
+
+    def list_login(self):
+        """
+        Description:
+            a generator of all successful logins
+        Parameters:
+            :return: a generator of a tuple consisting of the datetime data (day, month, year, hour, minute, second)
+        """
+        if not self.logdict["login_times"]:
+            return None, None, None, None, None, None
+        for i in self.logdict["login_times"]:
+            d = dt.datetime.fromisoformat(i)
+            date = d.date()
+            time = d.time()
+            day = date.day
+            month = date.month
+            year = date.year
+            hour = time.hour
+            minute = time.minute
+            second = time.second
+            yield day, month, year, hour, minute, second
+
     def read(self):
         """
         Description:
@@ -264,4 +311,57 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        return {}
+        return {"psswrd": self.psswrd_hash, "failed_login": [], "login_times": [], "log": {}}
+
+    @staticmethod
+    def sort_log_total(item: iter):
+        """
+        Description:
+            sorting function for the prepared log
+        Parameters:
+            :param item: the item to organize
+            :return: the price for which the sort function can sort the log with
+        """
+        return item[3]
+
+    def sort_log_total_pre(self, log_list: iter):
+        """
+        Descriptions:
+            sorts the log and presents it in the form of a generator
+        Parameters:
+            :param log_list: a reference to the log
+            :return: generator of a tuple of card_id, print_type, qnty, and price
+        """
+        for row in log_list:
+            card_id, print_type, qnty = row
+            price = self.rq.get_card(card_id)["data"]["tcgplayer"]["prices"][print_type]["market"] * qnty
+            # print(f"card id = {card_id}, print type = {print_type}, qnty = {qnty}, price = {price}")
+            yield card_id, print_type, qnty, price
+
+    def get_log_by_total_value(self):
+        """
+        Description:
+            a generator that yields the log in order of price
+        Parameters:
+            :return: generator of a tuple of card_id, print_type, qnty, and price
+        """
+        yield from list(list(self.sort_log_total_pre(self.get_log()))).sort(key=self.sort_log_total)
+
+    def export_csv(self, output_file: str):
+        """
+        Description:
+            exports log to a csv file.
+        Parameters:
+            :param output_file: a path to the file you wish to write to
+            :return: None
+        """
+        data = [{"card_id": card_id, "print_type": print_type, "qnty": qnty, "price": price} for card_id, print_type, qnty, price in self.sort_log_total_pre(self.get_log())]
+        with open(output_file, "w") as f:
+            field_name = ["card_id", "print_type", "qnty", "price"]
+            csv_writer = csv.DictWriter(f, field_name)
+            csv_writer.writeheader()
+            for row in data:
+                csv_writer.writerow(row)
+
+    def close(self):
+        self.save()

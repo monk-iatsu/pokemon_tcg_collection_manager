@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-VERSION = '0.2.5c'
+VERSION = '0.2.6'
 DESCRIPTION = 'Log Pokemon cards'
 LONG_DESCRIPTION = 'a module to log and manage a pokemon card collection'
 

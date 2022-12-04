@@ -2,16 +2,10 @@
 Description:
     The library version of Pokémon Card Logger using json
 Usage:
-    from pokemonCardLogger import clss as pcl
+    from pokemonCardLogger import clss_json as pcl
 """
-import os
-import requests
-import hashlib
-import datetime as dt
 import json
 from clss_base import *
-
-print("depreciated use clss_json")
 
 
 class DbHandle(DbHandleBase):
@@ -27,8 +21,7 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: None
         """
-        pop_items = [card for card, qnty in self.logdict["log"].items() if qnty == 0]
-        for i in pop_items:
+        for i in [card for card, qnty in self.logdict["log"].items() if qnty == 0]:
             _ = self.logdict["log"].pop(i)
         if self.logfile == ":memory:":
             return None
@@ -40,7 +33,7 @@ class DbHandle(DbHandleBase):
         Description:
             reads the data from json and returns the log dictionary
         Parameters:
-            :return: dictionary consisting of the log
+            :return: dictionary consisting of the log data
         """
         if self.logfile == ":memory:":
             return None
@@ -48,13 +41,14 @@ class DbHandle(DbHandleBase):
             ld = json.load(f)
         return ld
 
-    def close(self):
-        self.close()
-
 
 if __name__ == "__main__":
     print("this is for testing purposes")
-    import config
+    try:
+        import config
+    except ImportError:
+        print("no api key found quitting.")
+        quit()
     _file = ":memory:"
     _psswrd = "default"
     _rq = RqHandle(config.API_KEY)

@@ -26,22 +26,23 @@ def migrate_to_pickle(json_file: str, pickle_file: str):
 def migrate_to_json(pickle_file: str, json_file: str):
     if not os.path.exists(pickle_file):
         raise FileNotFoundError
-    with open(json_file, "rb") as f:
+    with open(pickle_file, "rb") as f:
         log_dict = pickle.load(f)
-    with open(pickle_file, "w") as f:
+    with open(json_file, "w") as f:
         json.dump(log_dict, f)
 
 
 def main():
     print("will you migrate from pickle or json, 1 for pickle 2 for json")
     mode = input(">>> ")
+    other = ""
     if mode not in ("1", "2"):
         print("invalid input. try again")
         return main()
     if mode == "1":
         mode = ".pcllog"
         other = ".json"
-    else:
+    elif mode == "2":
         mode = ".json"
         other = ".pcllog"
     print("please enter the name of the user you wish to migrate")

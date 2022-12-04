@@ -11,6 +11,8 @@ import datetime as dt
 import json
 from clss_base import *
 
+print("depreciated use clss_json")
+
 
 class DbHandle(DbHandleBase):
     """
