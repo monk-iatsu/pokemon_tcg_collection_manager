@@ -21,6 +21,8 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: None
         """
+        if self.has_encryption:
+            self.encrypt()
         for i in [card for card, qnty in self.logdict["log"].items() if qnty == 0]:
             _ = self.logdict["log"].pop(i)
         if self.logfile == ":memory:":
@@ -35,6 +37,8 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: dictionary consisting of the log data
         """
+        if self.has_encryption:
+            self.decrypt()
         if self.logfile == ":memory:":
             return None
         with open(self.logfile, "r") as f:

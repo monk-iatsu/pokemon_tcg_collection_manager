@@ -86,7 +86,11 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
     except ConnectionError:
         print("Error. try again")
         return False, False
-    card_print_types = list(card_data["data"]["tcgplayer"]["prices"].keys())
+    try:
+        card_print_types = list(card_data["data"]["tcgplayer"]["prices"].keys())
+    except KeyError:
+        print("sorry, but that card cannot be logged.")
+        return False, False
     card_name = card_data["data"]["name"]
     print("select one of the following for valid print types")
     for index, print_type in enumerate(card_print_types):
@@ -373,6 +377,10 @@ def get_user():
     Parameters
         :return: a tuple of two items consisting of instances of RqHandle and DbHandle
     """
+    if clss_json.API_KEY == "":
+        clss_json.init(API_KEY)
+    if clss_pickle.API_KEY == "":
+        clss_pickle.init(API_KEY)
     msg1 = "please enter 1 for json or 2 for pickle (pickle is binary and unreadable outside the program, while json "
     msg2 = "is not)"
     msg = f"{msg1}{msg2}"
@@ -405,11 +413,14 @@ def get_user():
     else:
         print("Please enter password for said user.")
         psswrd = getpass(">>> ")
+    print("is this an encrypted user? ('y' or 'n')")
+    enc = input(">>> ")
+    enc = enc not in NO_RESPONSE
     try:
         if mode == "1":
-            db = clss_json.DbHandle(user_file, psswrd, rq)
+            db = clss_json.DbHandle(user_file, psswrd, rq, has_encryption=enc)
         elif mode == "2":
-            db = clss_pickle.DbHandle(user_file, psswrd, rq)
+            db = clss_pickle.DbHandle(user_file, psswrd, rq, has_encryption=enc)
     except PermissionError:
         print("Invalid password, try again.")
         try:

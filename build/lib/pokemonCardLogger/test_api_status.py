@@ -1,3 +1,10 @@
+"""
+Description:
+    a module to test if pokemontcg api can be accessed
+Usage:
+    as module: "from pokemonCardLogger import test_api_status as pcl_test"
+    as program: "python3 test_api_status.py"
+"""
 import time
 from clss_base import RqHandle
 

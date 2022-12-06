@@ -1,8 +1,45 @@
 import os
-import hashlib
 import requests
 import datetime as dt
 import csv
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import base64
+import sys
+import hashlib
+
+ITERATIONS = 1000000
+
+
+# noinspection PyGlobalUndefined
+def init(api_key: str):
+    global API_KEY
+    API_KEY = api_key
+
+
+try:
+    from config import *
+except ImportError:
+
+    if __name__ == "__main__":
+        print("Please enter you pokemontcgapi key: ")
+        API_KEY = input(">>> ")
+
+pltfrm = sys.platform
+home = os.environ["HOME"]
+documents_dir = os.path.join(home, "Documents")
+prog_data = ""
+if pltfrm == "linux":
+    prog_data = os.path.join(os.path.join(home, ".config"), "POKEMON_TCG_LOG")
+elif pltfrm in ["win32", "cygwin", "darwin"]:
+    prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
+else:
+    print("your system is not supported. quitting")
+    quit(1)
+with open(os.path.join(prog_data, "salt.salt"), "rb") as f:
+    SALT = f.read()
 
 
 class RqHandle:
@@ -77,7 +114,7 @@ class DbHandleBase:
         stores and organizes the log data in a pickle file
     """
 
-    def __init__(self, file: str, psswrd: str, rq: RqHandle):
+    def __init__(self, file: str, psswrd: str, rq: RqHandle, has_encryption: bool = True):
         """
         Description:
             Constructor method
@@ -86,10 +123,20 @@ class DbHandleBase:
             :param psswrd: the password for the database
             :param rq: an instance of RqHandle
         """
+        self.has_encryption = has_encryption
+        self.is_encrypted = True
         self.logfile = file
         self.psswrd = psswrd
         self.rq = rq
-        self.psswrd_hash = hashlib.sha512(self.psswrd.encode("utf-8")).hexdigest()
+        self.kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256,
+            length=32,
+            salt=SALT,
+            iterations=ITERATIONS,
+            backend=default_backend()
+        )
+        self.key = base64.urlsafe_b64encode(self.kdf.derive(self.psswrd.encode("utf-8")))
+        self.key_hash = hashlib.sha512(self.key).hexdigest()
         if self.logfile == ":memory:":
             self.logdict = {}
             self.first_run()
@@ -108,7 +155,7 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        self.logdict = {"psswrd": self.psswrd_hash, "failed_login": [], "login_times": [], "log": {}}
+        self.logdict = {"psswrd": self.key_hash, "failed_login": [], "login_times": [], "log": {}}
         self.login_setup()
         self.save()
 
@@ -119,7 +166,7 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        if self.psswrd_hash != self.logdict["psswrd"]:
+        if self.key_hash != self.logdict["psswrd"]:
             d = dt.datetime.now().isoformat()
             self.logdict["failed_login"].append(d)
             self.save()
@@ -365,3 +412,17 @@ class DbHandleBase:
 
     def close(self):
         self.save()
+
+    def encrypt(self):
+        with open(self.logfile, "rb") as f:
+            contents = f.read()
+        output = Fernet(self.key).encrypt(contents)
+        with open(self.logfile, "wb") as f:
+            f.write(output)
+
+    def decrypt(self):
+        with open(self.logfile, "rb") as f:
+            contents = f.read()
+        output = Fernet(self.key).decrypt(contents)
+        with open(self.logfile, "wb") as f:
+            f.write(output)

@@ -10,8 +10,10 @@ pokemonCardLogger/clss_pickle.py
 pokemonCardLogger/main.py
 pokemonCardLogger/migrate.py
 pokemonCardLogger/packRef.py
+pokemonCardLogger/post_encrypt.py
 pokemonCardLogger/test_api_status.py
 pokemonCardLogger.egg-info/PKG-INFO
 pokemonCardLogger.egg-info/SOURCES.txt
 pokemonCardLogger.egg-info/dependency_links.txt
+pokemonCardLogger.egg-info/requires.txt
 pokemonCardLogger.egg-info/top_level.txt

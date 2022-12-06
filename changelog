@@ -43,3 +43,7 @@ version 0.2.6:
     + added log list with price in the log
     - bug fixes
     + quality of life fixes
+version 0.2.7:
+    + security fixes
+    + quality of life fixes
+    - bug fixes

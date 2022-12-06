@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 import os
 
-VERSION = '0.2.6'
+VERSION = '0.2.7'
 DESCRIPTION = 'Log Pokemon cards'
 LONG_DESCRIPTION = 'a module to log and manage a pokemon card collection'
 
-# Setting up
+
 setup(
     name="pokemonCardLogger",
     version=VERSION,
@@ -15,7 +15,7 @@ setup(
     long_description_content_type="text/markdown",
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    install_requires=[],
+    install_requires=["requests", ],
     keywords=['python', 'pokemon', 'card', 'tcg'],
     classifiers=[
         "Development Status :: 4 - Beta",
