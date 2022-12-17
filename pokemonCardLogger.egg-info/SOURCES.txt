@@ -2,9 +2,6 @@ LICENSE
 README.md
 setup.py
 pokemonCardLogger/__init__.py
-pokemonCardLogger/clss.py
-pokemonCardLogger/clss_alt.py
-pokemonCardLogger/clss_base.py
 pokemonCardLogger/clss_json.py
 pokemonCardLogger/clss_pickle.py
 pokemonCardLogger/main.py

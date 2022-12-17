@@ -21,14 +21,15 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: None
         """
-        if self.has_encryption:
-            self.encrypt()
         for i in [card for card, qnty in self.logdict["log"].items() if qnty == 0]:
             _ = self.logdict["log"].pop(i)
         if self.logfile == ":memory:":
             return None
         with open(self.logfile, "w") as f:
             json.dump(self.logdict, f, indent=True)
+        if self.has_encryption and not self.is_encrypted:
+            self.encrypt()
+            self.is_encrypted = not self.is_encrypted
 
     def read(self):
         """
@@ -37,12 +38,17 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: dictionary consisting of the log data
         """
-        if self.has_encryption:
+        if self.has_encryption and self.is_encrypted:
             self.decrypt()
+            self.is_encrypted = False
         if self.logfile == ":memory:":
             return None
-        with open(self.logfile, "r") as f:
-            ld = json.load(f)
+        try:
+            with open(self.logfile, "r") as f:
+                ld = json.load(f)
+        except Exception:
+            self.encrypt()
+            raise PermissionError
         return ld
 
 

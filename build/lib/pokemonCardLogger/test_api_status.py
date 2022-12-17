@@ -8,13 +8,21 @@ Usage:
 import time
 from clss_base import RqHandle
 
-SLEEP_TIME = 1
+SLEEP_TIME = 0.1
 
 
-def init(api_key: str):
+def init(api_key: str, sleep_time: (int, float) = 0.1):
+    """
+    Description:
+        sets the module global variables, so it can be used
+    :param api_key: string containing the api key for pokemon tcg api
+    :param sleep_time: the time to sleep between retries
+    :return: None
+    """
     # noinspection PyGlobalUndefined
-    global API_KEY
+    global API_KEY, SLEEP_TIME
     API_KEY = api_key
+    SLEEP_TIME = sleep_time
 
 
 try:
@@ -27,6 +35,11 @@ except ImportError:
 
 
 def main_with_output():
+    """
+    Description:
+        tests whether the api can be accessed, with output to console
+    :return: None
+    """
     rq = RqHandle(API_KEY)
     while True:
         try:
@@ -40,6 +53,11 @@ def main_with_output():
 
 
 def main_without_output():
+    """
+    Description:
+        tests whether the api can be accessed, without output to console
+    :return: None
+    """
     rq = RqHandle(API_KEY)
     while True:
         try:

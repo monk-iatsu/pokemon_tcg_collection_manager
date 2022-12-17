@@ -49,7 +49,7 @@ with contextlib.suppress(FileExistsError):
     os.makedirs(prog_data)
 
 
-def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         Asks the user for a card id and returns the data received from the pokemonTcgApi
@@ -74,7 +74,7 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
     if truth.lower() in NO_RESPONSE:
         print("then try again")
         try:
-            return get_card_id_and_print_type(rq)
+            return get_card_id_and_print_type(rq, args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return False, False
@@ -92,6 +92,11 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
         print("sorry, but that card cannot be logged.")
         return False, False
     card_name = card_data["data"]["name"]
+    print(f"is {card_name} the name of the card?('y' or 'n')")
+    truth = input(">>> ")
+    if truth.lower() in NO_RESPONSE:
+        print("then try again.")
+        return False, False
     print("select one of the following for valid print types")
     for index, print_type in enumerate(card_print_types):
         print(f"{index} = {print_type}")
@@ -101,7 +106,7 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
     except ValueError:
         print("invalid entry. enter a number. try again")
         try:
-            return get_card_id_and_print_type(rq)
+            return get_card_id_and_print_type(rq, args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return False, False
@@ -110,26 +115,18 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
     except IndexError:
         print("invalid entry. enter a number in the given range. try again")
         try:
-            return get_card_id_and_print_type(rq)
+            return get_card_id_and_print_type(rq, args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return False, False
-    print(f"is {card_name} the name of the card?('y' or 'n')")
-    truth = input(">>> ")
-    if truth.lower() in NO_RESPONSE:
-        print("then try again.")
-        return False, False
     return card_id, print_type
 
 
-def list_packs(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def list_packs(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         Prints out to console, the list of packs and their pack ids
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
@@ -159,9 +156,11 @@ please select one of the following:
 10: list login
 11: test card validity
 12: export to csv
+13: import from csv
 """
     print(info)
     mode = input(">>> ")
+    print("")
     switch = {
         "0": "end prog",
         "1": "get card",
@@ -175,7 +174,8 @@ please select one of the following:
         "9": "card value",
         "10": "list login",
         "11": "test card",
-        "12": "export csv"
+        "12": "to csv",
+        "13": "from csv"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
@@ -189,12 +189,13 @@ please select one of the following:
 
 
 def get_card_log(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                 rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+                 rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+                 *args, **kwargs):
     """
     Description:
         Prints to console the list of the log data
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
@@ -207,19 +208,19 @@ def get_card_log(db: (clss_json.DbHandle, clss_pickle.DbHandle),
 
 
 def get_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-             rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+             rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+             *args, **kwargs):
     """
     Description:
         Prints out to the console the data in the log of a specific card
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
     print("if you wish to get a card by card id only, enter '0' for print type")
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
-        print("canceled")
         return
     card_name = rq.get_card(card_id)["data"]["name"]
     print("would you like to use print type as well?('y' or 'n')")
@@ -239,18 +240,18 @@ def get_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
 
 
 def add_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-             rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+             rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+             *args, **kwargs):
     """
     Description:
         Adds more to the value of a specific card count to the log
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
-        print("canceled")
         return None
     print("how many would you like to add")
     new_count = input(">>> ")
@@ -259,7 +260,7 @@ def add_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     except ValueError:
         print("invalid entry. please try again and enter a number")
         try:
-            return add_card(db, rq)
+            return add_card(db, rq, args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return None
@@ -267,14 +268,11 @@ def add_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     print(f"the process was successful: {success}")
 
 
-def test_card_validity(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def test_card_validity(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         asks user for a suspected card id and tests if it is valid
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
@@ -288,14 +286,13 @@ def test_card_validity(
         print("invalid pack id. try main menu item 5")
         return
     except TypeError:
-        print("canceled.")
         return
     print(f"is the pack name {pack_name}? ('n' or 'y')")
     truth = input(">>> ")
     if truth.lower() in NO_RESPONSE:
         print("then try again")
         try:
-            return test_card_validity(rq)
+            return test_card_validity(rq, args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return
@@ -312,18 +309,18 @@ def test_card_validity(
 
 
 def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+                rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+                *args, **kwargs):
     """
     Description:
         Remove from the value of a specific card count to the log
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
-        print("canceled")
         return None
     print("how many would you like to remove")
     new_count = input(">>> ")
@@ -332,7 +329,7 @@ def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     except ValueError:
         print("invalid entry. please try again and enter a number")
         try:
-            return remove_card(db, rq)
+            return remove_card(db, rq. args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return None
@@ -341,18 +338,18 @@ def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
 
 
 def delete_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+                rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+                *args, **kwargs):
     """
     Description:
         Deletes all data from a card in the log
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
-        print("canceled")
         return
     card_name = rq.get_card(card_id)["data"]["name"]
     print(f"is {card_name} the name of the card?('y' or 'n')")
@@ -431,32 +428,29 @@ def get_user():
     return db, rq
 
 
-def len_of_log(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def len_of_log(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     """
     Description:
         prints the length of the log
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
     print(f"the size of your logged collection is {len(db)}")
 
 
-def get_collection_value(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def get_collection_value(db: (clss_json.DbHandle, clss_pickle.DbHandle),
+                         rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+                         *args, **kwargs):
     """
     Description:
         prints the log and value of each card as well as the value of the entire collection
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
-    print("this may take some time")
+    print("this may take some time. please wait.")
     value = 0.00
     for card_id, print_type, qnty in db.get_log():
         data = rq.get_card(card_id)
@@ -464,20 +458,20 @@ def get_collection_value(
         value = round((value + price), 2)
         card_name = data["data"]["name"]
         msg1 = f"the value of {card_id} who's name is {card_name} with print type of {print_type} is ${price} times the"
-        msg2 = f"quantity of {qnty} the value is {round((price * qnty), 2)}"
+        temp = 0
+        for _ in range(qnty):
+            temp = temp + price
+        msg2 = f"quantity of {qnty} the value is ${round(temp, 2)}"
         msg = f"{msg1} {msg2}"
         print(msg)
-    print(f"the value of your collection is ${value}")
+    print(f"\nthe value of your collection is ${value}")
 
 
-def get_card_value(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def get_card_value(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         prints the value of a card
     Parameter:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
@@ -492,31 +486,27 @@ def get_card_value(
     print(f"the value of {card_id} who's name is {card_name} with print type of {print_type} is ${price}")
 
 
-def list_login(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def list_login(db: (clss_json.DbHandle, clss_pickle.DbHandle),
+               *args, **kwargs):
     """
     Description:
         prints out to the user all prior login attempts
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
-    for day, month, year, hour, minute, second in db.list_failed_logins():
-        print(f"an unsuccessful login on {month} / {day} / {year} at {hour} : {minute} : {second}")
     for day, month, year, hour, minute, second in db.list_login():
         print(f"a successful login on {month} / {day} / {year} at {hour} : {minute} : {second}")
 
 
-def get_log_by_price(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def get_log_by_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
+                     rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+                     *args, **kwargs):
     """
     Description:
         gets and prints the log by price. not fully implemented.
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
@@ -528,38 +518,57 @@ def get_log_by_price(
         print(f"card name: {name} with print type: {print_type}; the pack of the card is: {pack}; count: {qnty}")
 
 
-def to_csv(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def to_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     """
     Description:
         exports log to csv.
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
     print("this may take a while. please wait.")
     _, lf = os.path.split(db.logfile)
     user, _ = lf.split(".")
-    csv_file = f"{dt.datetime.now().isoformat()}-{user}.csv"
+    csv_file = f"pcllog-{user}.csv"
     db.export_csv(os.path.join(documents_dir, csv_file))
-    print(f"the location for the output file is in Documents. it is called: {csv_file}")
+    print(f"\nthe location for the output file is in Documents. it is called: {csv_file}")
 
 
-def end(
-        db: (clss_json.DbHandle, clss_pickle.DbHandle),
-        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle)):
+def end(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     """
     Description:
         cleanly ends the program
     Parameters:
-        :param db: an instance of pokemonCardLogger.clss_json.DbHandle
-        :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
     db.close()
     quit()
+
+
+def from_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
+    """
+    Description:
+        imports data to the log from csv
+    Parameters:
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :return: None
+    """
+    print("importing data from csv overwrites existing data. if there is a card that you already have in the log, it will be deleted.")
+    print("please enter the full path to the csv file containing the data.")
+    path = input(">>> ")
+    if path == "":
+        print("canceled")
+        return
+    if not os.path.exists(path):
+        print("invalid path. try again.")
+        try:
+            return from_csv(db, args, kwargs)
+        except RecursionError:
+            print("to many retries try, try again.")
+            return
+    print("this may take a while. please wait.")
+    print(f"the process was successful: {db.import_csv(path, output=True)}")
 
 
 def main():
@@ -586,12 +595,13 @@ def main():
         "card value": get_card_value,
         "list login": list_login,
         "test card": test_card_validity,
-        "export csv": to_csv
+        "to csv": to_csv,
+        "from csv": from_csv
     }
     while True:
         mode = get_mode()
         func = switch[mode]
-        func(db, rq)
+        func(db=db, rq=rq)
 
 
 if __name__ == "__main__":

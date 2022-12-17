@@ -21,9 +21,17 @@ ITERATIONS = 1000000
 
 
 # noinspection PyGlobalUndefined
-def init(api_key: str):
-    global API_KEY
+def init(api_key: str, iterations: int = 1000000):
+    """
+    Description:
+        sets the module global variables, so it can be used
+    :param api_key: string containing the api key for pokemon tcg api
+    :param iterations: iterations used for the password encryption
+    :return: None
+    """
+    global API_KEY, ITERATIONS
     API_KEY = api_key
+    ITERATIONS = iterations
 
 
 try:
@@ -45,7 +53,14 @@ else:
     quit(1)
 
 
-def migrate_to_pickle(json_file: str, pickle_file: str, enc: bool = True):
+def migrate_to_pickle(json_file: str, pickle_file: str):
+    """
+    Description:
+        migrates a log from json format to pickle format
+    :param pickle_file: path to the new pickle file
+    :param json_file: path to the existing json file
+    :return: None
+    """
     if not os.path.exists(json_file):
         raise FileNotFoundError
     with open(json_file) as f:
@@ -54,7 +69,14 @@ def migrate_to_pickle(json_file: str, pickle_file: str, enc: bool = True):
         pickle.dump(log_dict, f)
 
 
-def migrate_to_json(pickle_file: str, json_file: str, enc: bool = True):
+def migrate_to_json(pickle_file: str, json_file: str):
+    """
+    Description:
+        migrates a log from pickle format to json format
+    :param pickle_file: path to the existing pickle file
+    :param json_file: path to the new json file
+    :return: None
+    """
     if not os.path.exists(pickle_file):
         raise FileNotFoundError
     with open(pickle_file, "rb") as f:
@@ -102,7 +124,7 @@ def main():
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256,
             length=32,
-            salt=SALT,
+            salt="a".encode("utf-8"),
             iterations=ITERATIONS,
             backend=default_backend()
         )
@@ -113,7 +135,7 @@ def main():
         if mode == ".pcllog":
             try:
                 _ = pickle.loads(content)
-            except:
+            except Exception:
                 print("password was invalid. try again.")
                 return main()
         elif mode == ".json":
@@ -122,7 +144,7 @@ def main():
             with open("temp.json") as f:
                 try:
                     _ = json.load(f)
-                except:
+                except Exception:
                     print("invalid password. try again.")
                     return main()
         with open(active_file_user, "wb") as f:

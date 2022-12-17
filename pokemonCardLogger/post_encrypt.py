@@ -26,9 +26,17 @@ ITERATIONS = 1000000
 
 
 # noinspection PyGlobalUndefined
-def init(api_key: str):
-    global API_KEY
+def init(api_key: str, iterations: int = 1000000):
+    """
+    Description:
+        sets the module global variables, so it can be used
+    :param api_key: string containing the api key for pokemon tcg api
+    :param iterations: iterations used for the password encryption
+    :return: None
+    """
+    global API_KEY, ITERATIONS
     API_KEY = api_key
+    ITERATIONS = iterations
 
 
 try:
@@ -50,8 +58,6 @@ elif pltfrm in ["win32", "cygwin", "darwin"]:
 else:
     print("your system is not supported. quitting")
     quit(1)
-with open(os.path.join(prog_data, "salt.salt"), "rb") as f:
-    SALT = f.read()
 
 
 def main():
@@ -90,7 +96,7 @@ def main():
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256,
         length=32,
-        salt=SALT,
+        salt="a".encode("utf-8"),
         iterations=ITERATIONS,
         backend=default_backend()
     )
