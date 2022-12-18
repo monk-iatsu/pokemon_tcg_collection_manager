@@ -17,7 +17,7 @@ except ImportError:
 
 if __name__ == "__main__":
     print("waiting for api connection")
-    test_api_status.main_without_output()
+    test_api_status.without_output()
     rq = clss_base.RqHandle(key)
     for pack_id, pack_name in rq.get_all_sets():
         print(f"the pack {pack_name}'s id is {pack_id}")

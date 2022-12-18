@@ -144,11 +144,11 @@ def get_mode():
     info = """
 please select one of the following:
 0:  quit
-1:  get card count
-2:  add card
-3:  remove a card from count
-4:  delete card from database
-5:  list packs
+1:  add card
+2:  remove a card from count
+3:  delete card from database
+4:  list packs
+5:  get card count
 6:  list log
 7:  log size
 8:  collection value
@@ -157,17 +157,20 @@ please select one of the following:
 11: test card validity
 12: export to csv
 13: import from csv
+14: get a cards full price data
+15: get full price data on all cards in collection
+16: trade with another user
 """
     print(info)
     mode = input(">>> ")
     print("")
     switch = {
         "0": "end prog",
-        "1": "get card",
-        "2": "add card",
-        "3": "remove card",
-        "4": "delete entry",
-        "5": "list packs",
+        "1": "add card",
+        "2": "remove card",
+        "3": "delete entry",
+        "4": "list packs",
+        "5": "get card",
         "6": "list log",
         "7": "log len",
         "8": "collection value",
@@ -175,7 +178,10 @@ please select one of the following:
         "10": "list login",
         "11": "test card",
         "12": "to csv",
-        "13": "from csv"
+        "13": "from csv",
+        "14": "full price",
+        "15": "full collection",
+        "16": "csv trade"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
@@ -329,7 +335,7 @@ def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     except ValueError:
         print("invalid entry. please try again and enter a number")
         try:
-            return remove_card(db, rq. args, kwargs)
+            return remove_card(db, rq.args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return None
@@ -554,7 +560,8 @@ def from_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
         :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
-    print("importing data from csv overwrites existing data. if there is a card that you already have in the log, it will be deleted.")
+    print(
+        "importing data from csv overwrites existing data. if there is a card that you already have in the log, it will be deleted.")
     print("please enter the full path to the csv file containing the data.")
     path = input(">>> ")
     if path == "":
@@ -571,16 +578,99 @@ def from_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     print(f"the process was successful: {db.import_csv(path, output=True)}")
 
 
+def get_card_full_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
+                        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+                        *args, **kwargs):
+    card_id, print_type = get_card_id_and_print_type(rq)
+    cd = rq.get_card(card_id)["data"]
+    card_name = cd["name"]
+    print("")
+    for key, price in db.get_full_price_data(card_id, print_type):
+        msg = f"the card with card id {card_id} with the card name {card_name}, the price data for {key} is ${price}."
+        print(msg)
+
+
+def get_full_price_in_collection(db: (clss_json.DbHandle, clss_pickle.DbHandle),
+                                 rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+                                 *args, **kwargs):
+    print("")
+    for row in db.get_log():
+        card_id = row[0]
+        print_type = row[1]
+        qnty = row[2]
+        card_data = rq.get_card(card_id)["data"]
+        card_name = card_data["name"]
+        msg = f"the card id of the card is {card_id} card name is {card_name}, the current print type is {print_type}:"
+        print(msg)
+        for key, price in db.get_full_price_data(card_id, print_type):
+            msg = f"\tthe price data is {key} has a price of ${price} with a quantity of {qnty} the value of this card is ${round((price * qnty), 2)}"
+            print(msg)
+
+
+def trade(db: (clss_json.DbHandle, clss_pickle.DbHandle),
+          rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+          *args, **kwargs):
+    other_db = clss_pickle.DbHandle(":memory:", "default", rq, False)
+    print("please enter the path to the user two's csv file. enter nothing to try again later")
+    csv_path = input(">>> ")
+    if csv_path == "":
+        return
+    if not os.path.exists(csv_path) or os.path.isdir(csv_path):
+        print("invalid path. try using full path.")
+        return
+    print("adding csv to memory. this may take a while. please wait")
+    other_db.import_csv(csv_path)
+    print("select a card for user one")
+    card_id, print_type = get_card_id_and_print_type(rq)
+    print("how many?")
+    qnty = input(">>> ")
+    try:
+        qnty = int(qnty)
+    except ValueError:
+        print("invalid input. try again.")
+        return
+    print("select a card for user two")
+    other_card_id, other_print_type = get_card_id_and_print_type(rq)
+    print("how many?")
+    other_qnty = input(">>> ")
+    try:
+        other_qnty = int(other_qnty)
+    except ValueError:
+        print("invalid input. try again.")
+        return
+    other_card_data = rq.get_card(other_card_id)["data"]
+    card_data = rq.get_card(card_id)["data"]
+    other_price_data = other_card_data["tcgplayer"]["prices"][print_type]["market"]
+    price_data = card_data["tcgplayer"]["prices"][print_type]["market"]
+    trade_value = round((price_data - other_price_data), 2)
+    if trade_value < 0:
+        trade_value = round((other_price_data - price_data), 2)
+        print(f"the trade value is tipped in favor of user two by ${trade_value}")
+    else:
+        print(f"the trade value is tipped in favor of user one by ${trade_value}")
+    print("do you wish to continue? ")
+    truth = input(">>> ")
+    if truth in NO_RESPONSE:
+        print("canceled.")
+        return
+    trade_code = db.trade(other_db, other_card_id, other_print_type, other_qnty, card_id, print_type, qnty, csv_path)
+    if trade_code != clss_base.TRADE_SUCCESS:
+        print(f"process failed. fail code {trade_code}")
+    else:
+        print("process successful. saving updated csv.")
+        other_db.export_csv(csv_path)
+
+
 def main():
     """
-    Description
+    Description:
         Main Loop
     Parameters:
         :return: None
     """
     print("waiting for api connection")
     test_api_status.init(API_KEY)
-    test_api_status.main_without_output()
+    test_api_status.without_output()
     db, rq = get_user()
     switch = {
         "end prog": end,
@@ -596,7 +686,10 @@ def main():
         "list login": list_login,
         "test card": test_card_validity,
         "to csv": to_csv,
-        "from csv": from_csv
+        "from csv": from_csv,
+        "full price": get_card_full_price,
+        "full collection": get_full_price_in_collection,
+        "csv trade": trade
     }
     while True:
         mode = get_mode()

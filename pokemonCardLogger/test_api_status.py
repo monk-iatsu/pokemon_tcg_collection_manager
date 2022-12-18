@@ -34,7 +34,7 @@ except ImportError:
         API_KEY = input(">>> ")
 
 
-def main_with_output():
+def with_output():
     """
     Description:
         tests whether the api can be accessed, with output to console
@@ -52,7 +52,7 @@ def main_with_output():
         break
 
 
-def main_without_output():
+def without_output():
     """
     Description:
         tests whether the api can be accessed, without output to console
@@ -70,5 +70,5 @@ def main_without_output():
 
 if __name__ == "__main__":
     # main_without_output()
-    main_with_output()
+    with_output()
     quit()

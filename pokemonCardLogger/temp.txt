@@ -1,0 +1,1290 @@
+the card id of the card is pl2-53 card name is Vibrava, the current print type is normal:
+	the price data is low has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is mid has a price of $0.4 with a quantity of 1 the value of this card is 0.4
+	the price data is high has a price of $19.99 with a quantity of 1 the value of this card is 19.99
+	the price data is market has a price of $0.41 with a quantity of 1 the value of this card is 0.41
+	the price data is directLow has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+the card id of the card is sm12-39 card name is Alolan Vulpix, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.2 with a quantity of 1 the value of this card is 1.2
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is xy10-65 card name is Jigglypuff, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is directLow has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+the card id of the card is sm11-39 card name is Finneon, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is sm11-31 card name is Fletchinder, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is bw1-45 card name is Joltik, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+the card id of the card is bw2-10 card name is Cottonee, the current print type is normal:
+	the price data is low has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is mid has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is sm11-46 card name is Cryogonal, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is sm12-100 card name is Cosmog, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is bw2-82 card name is Unfezant, the current print type is reverseHolofoil:
+	the price data is low has a price of $1.25 with a quantity of 1 the value of this card is 1.25
+	the price data is mid has a price of $1.9 with a quantity of 1 the value of this card is 1.9
+	the price data is high has a price of $4.0 with a quantity of 1 the value of this card is 4.0
+	the price data is market has a price of $2.27 with a quantity of 1 the value of this card is 2.27
+the card id of the card is xy8-52 card name is Magnemite, the current print type is normal:
+	the price data is low has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is directLow has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+the card id of the card is xy8-56 card name is Stunfisk, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is mid has a price of $0.44 with a quantity of 1 the value of this card is 0.44
+	the price data is high has a price of $1.95 with a quantity of 1 the value of this card is 1.95
+	the price data is market has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is directLow has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+the card id of the card is sm11-21 card name is Magmar, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is sm4-39 card name is Misdreavus, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is high has a price of $1.15 with a quantity of 1 the value of this card is 1.15
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is xy8-122 card name is Ursaring, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is directLow has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is xy5-73 card name is Starmie, the current print type is normal:
+	the price data is low has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $1.23 with a quantity of 1 the value of this card is 1.23
+	the price data is market has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is directLow has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is xy8-116 card name is Doduo, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is directLow has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+the card id of the card is sm12-42 card name is Vaporeon, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.99 with a quantity of 1 the value of this card is 0.99
+	the price data is mid has a price of $1.65 with a quantity of 1 the value of this card is 1.65
+	the price data is high has a price of $2.39 with a quantity of 1 the value of this card is 2.39
+	the price data is market has a price of $1.67 with a quantity of 1 the value of this card is 1.67
+the card id of the card is swsh1-164 card name is Great Ball, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 2 the value of this card is 0.02
+	the price data is mid has a price of $0.2 with a quantity of 2 the value of this card is 0.4
+	the price data is high has a price of $5.0 with a quantity of 2 the value of this card is 10.0
+	the price data is market has a price of $0.07 with a quantity of 2 the value of this card is 0.14
+	the price data is directLow has a price of $0.04 with a quantity of 2 the value of this card is 0.08
+the card id of the card is sm6-16 card name is Braixen, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.37 with a quantity of 1 the value of this card is 3.37
+	the price data is market has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is directLow has a price of $0.32 with a quantity of 1 the value of this card is 0.32
+the card id of the card is xy2-93 card name is Pokémon Center Lady, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 3 the value of this card is 0.27
+	the price data is mid has a price of $0.25 with a quantity of 3 the value of this card is 0.75
+	the price data is high has a price of $5.0 with a quantity of 3 the value of this card is 15.0
+	the price data is market has a price of $0.17 with a quantity of 3 the value of this card is 0.51
+	the price data is directLow has a price of $0.25 with a quantity of 3 the value of this card is 0.75
+the card id of the card is dp2-84 card name is Geodude, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.25 with a quantity of 1 the value of this card is 1.25
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is sm4-53 card name is Regirock, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is mid has a price of $0.37 with a quantity of 1 the value of this card is 0.37
+	the price data is high has a price of $4.03 with a quantity of 1 the value of this card is 4.03
+	the price data is market has a price of $0.31 with a quantity of 1 the value of this card is 0.31
+	the price data is directLow has a price of $0.32 with a quantity of 1 the value of this card is 0.32
+the card id of the card is xy12-20 card name is Magmar, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is directLow has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+the card id of the card is bw3-40 card name is Eelektrik, the current print type is normal:
+	the price data is low has a price of $0.19 with a quantity of 2 the value of this card is 0.38
+	the price data is mid has a price of $0.72 with a quantity of 2 the value of this card is 1.44
+	the price data is high has a price of $2.0 with a quantity of 2 the value of this card is 4.0
+	the price data is market has a price of $0.67 with a quantity of 2 the value of this card is 1.34
+	the price data is directLow has a price of $1.0 with a quantity of 2 the value of this card is 2.0
+the card id of the card is xy11-63 card name is Pawniard, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is xy1-106 card name is Bidoof, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is directLow has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+the card id of the card is xy5-17 card name is Volbeat, the current print type is normal:
+	the price data is low has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $1.25 with a quantity of 1 the value of this card is 1.25
+	the price data is market has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is directLow has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+the card id of the card is dp2-111 card name is Fossil Excavator, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 2 the value of this card is 0.04
+	the price data is mid has a price of $0.26 with a quantity of 2 the value of this card is 0.52
+	the price data is high has a price of $1.25 with a quantity of 2 the value of this card is 2.5
+	the price data is market has a price of $0.22 with a quantity of 2 the value of this card is 0.44
+	the price data is directLow has a price of $0.1 with a quantity of 2 the value of this card is 0.2
+the card id of the card is xy11-63 card name is Pawniard, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is mid has a price of $0.36 with a quantity of 1 the value of this card is 0.36
+	the price data is high has a price of $1.0 with a quantity of 1 the value of this card is 1.0
+	the price data is market has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+the card id of the card is sm6-32 card name is Dewpider, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is high has a price of $1.05 with a quantity of 1 the value of this card is 1.05
+	the price data is market has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is bw1-16 card name is Tepig, the current print type is normal:
+	the price data is low has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is mid has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is directLow has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+the card id of the card is xy9-55 card name is Sigilyph, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is xy6-28 card name is Natu, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $1.67 with a quantity of 1 the value of this card is 1.67
+	the price data is market has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is directLow has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+the card id of the card is pl2-55 card name is Aerodactyl GL, the current print type is normal:
+	the price data is low has a price of $0.25 with a quantity of 2 the value of this card is 0.5
+	the price data is mid has a price of $0.47 with a quantity of 2 the value of this card is 0.94
+	the price data is high has a price of $1.35 with a quantity of 2 the value of this card is 2.7
+	the price data is market has a price of $0.45 with a quantity of 2 the value of this card is 0.9
+the card id of the card is sm10-123 card name is Aron, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.25 with a quantity of 1 the value of this card is 1.25
+	the price data is market has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is directLow has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+the card id of the card is dp2-39 card name is Walrein, the current print type is normal:
+	the price data is low has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is mid has a price of $0.5 with a quantity of 1 the value of this card is 0.5
+	the price data is high has a price of $1.99 with a quantity of 1 the value of this card is 1.99
+	the price data is market has a price of $0.57 with a quantity of 1 the value of this card is 0.57
+	the price data is directLow has a price of $0.6 with a quantity of 1 the value of this card is 0.6
+the card id of the card is xy9-1 card name is Chikorita, the current print type is normal:
+	the price data is low has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.3 with a quantity of 1 the value of this card is 3.3
+	the price data is market has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+the card id of the card is xy10-68 card name is Snubbull, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $1.56 with a quantity of 1 the value of this card is 1.56
+	the price data is market has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is directLow has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+the card id of the card is xy7-9 card name is Combee, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is high has a price of $1.19 with a quantity of 1 the value of this card is 1.19
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is sm12-149 card name is Flabébé, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 2 the value of this card is 0.06
+	the price data is mid has a price of $0.19 with a quantity of 2 the value of this card is 0.38
+	the price data is high has a price of $1.1 with a quantity of 2 the value of this card is 2.2
+	the price data is market has a price of $0.08 with a quantity of 2 the value of this card is 0.16
+	the price data is directLow has a price of $0.08 with a quantity of 2 the value of this card is 0.16
+the card id of the card is dp1-117 card name is Energy Search, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 2 the value of this card is 0.04
+	the price data is mid has a price of $0.24 with a quantity of 2 the value of this card is 0.48
+	the price data is high has a price of $1.49 with a quantity of 2 the value of this card is 2.98
+	the price data is market has a price of $0.21 with a quantity of 2 the value of this card is 0.42
+	the price data is directLow has a price of $0.08 with a quantity of 2 the value of this card is 0.16
+the card id of the card is xy8-58 card name is Gastly, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is high has a price of $1.41 with a quantity of 1 the value of this card is 1.41
+	the price data is market has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is directLow has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is sm12-108 card name is Trapinch, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is directLow has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+the card id of the card is pl1-102 card name is Vulpix, the current print type is normal:
+	the price data is low has a price of $0.19 with a quantity of 2 the value of this card is 0.38
+	the price data is mid has a price of $0.44 with a quantity of 2 the value of this card is 0.88
+	the price data is high has a price of $1.3 with a quantity of 2 the value of this card is 2.6
+	the price data is market has a price of $0.44 with a quantity of 2 the value of this card is 0.88
+the card id of the card is dp2-117 card name is Skull Fossil, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is directLow has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is xy4-42 card name is Lampent, the current print type is normal:
+	the price data is low has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is mid has a price of $0.42 with a quantity of 1 the value of this card is 0.42
+	the price data is high has a price of $1.78 with a quantity of 1 the value of this card is 1.78
+	the price data is market has a price of $0.28 with a quantity of 1 the value of this card is 0.28
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is bw5-45 card name is Tynamo, the current print type is normal:
+	the price data is low has a price of $0.24 with a quantity of 3 the value of this card is 0.72
+	the price data is mid has a price of $0.35 with a quantity of 3 the value of this card is 1.05
+	the price data is high has a price of $2.9 with a quantity of 3 the value of this card is 8.7
+	the price data is market has a price of $0.35 with a quantity of 3 the value of this card is 1.05
+the card id of the card is bw1-41 card name is Blitzle, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is sm5-53 card name is Spiritomb, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is mid has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+	the price data is high has a price of $1.95 with a quantity of 1 the value of this card is 1.95
+	the price data is market has a price of $0.32 with a quantity of 1 the value of this card is 0.32
+	the price data is directLow has a price of $0.34 with a quantity of 1 the value of this card is 0.34
+the card id of the card is swsh1-13 card name is Thwackey, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is sm10-86 card name is Dugtrio, the current print type is normal:
+	the price data is low has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $1.17 with a quantity of 1 the value of this card is 1.17
+	the price data is market has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is xy10-42 card name is Pupitar, the current print type is normal:
+	the price data is low has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $3.43 with a quantity of 1 the value of this card is 3.43
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is sm12-14 card name is Kricketune, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is xy7-1 card name is Oddish, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is high has a price of $40.0 with a quantity of 1 the value of this card is 40.0
+	the price data is market has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is directLow has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is xy6-94 card name is Wally, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 2 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 2 the value of this card is 0.5
+	the price data is high has a price of $5.0 with a quantity of 2 the value of this card is 10.0
+	the price data is market has a price of $0.21 with a quantity of 2 the value of this card is 0.42
+the card id of the card is xy9-63 card name is Skrelp, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is high has a price of $1.86 with a quantity of 1 the value of this card is 1.86
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is xy6-54 card name is Bagon, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is bw2-84 card name is Minccino, the current print type is normal:
+	the price data is low has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.4 with a quantity of 1 the value of this card is 3.4
+	the price data is market has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is xy11-38 card name is Mareep, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is sm2-62 card name is Machop, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is swsh1-5 card name is Cottonee, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 2 the value of this card is 0.02
+	the price data is mid has a price of $0.1 with a quantity of 2 the value of this card is 0.2
+	the price data is high has a price of $5.0 with a quantity of 2 the value of this card is 10.0
+	the price data is market has a price of $0.03 with a quantity of 2 the value of this card is 0.06
+	the price data is directLow has a price of $0.03 with a quantity of 2 the value of this card is 0.06
+the card id of the card is bw2-24 card name is Basculin, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+the card id of the card is sm11-48 card name is Dewpider, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is xy1-40 card name is Frogadier, the current print type is normal:
+	the price data is low has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is mid has a price of $0.33 with a quantity of 1 the value of this card is 0.33
+	the price data is high has a price of $2.75 with a quantity of 1 the value of this card is 2.75
+	the price data is market has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is directLow has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+the card id of the card is xy8-147 card name is Reserved Ticket, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.09 with a quantity of 1 the value of this card is 1.09
+	the price data is market has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+the card id of the card is sm9-9 card name is Pinsir, the current print type is normal:
+	the price data is low has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $1.36 with a quantity of 1 the value of this card is 1.36
+	the price data is market has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is directLow has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is sm11-109 card name is Meditite, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+the card id of the card is xy7-40 card name is Regirock, the current print type is normal:
+	the price data is low has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is mid has a price of $0.33 with a quantity of 1 the value of this card is 0.33
+	the price data is high has a price of $1.29 with a quantity of 1 the value of this card is 1.29
+	the price data is market has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is directLow has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+the card id of the card is sm10-60 card name is Zeraora, the current print type is normal:
+	the price data is low has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is mid has a price of $0.47 with a quantity of 1 the value of this card is 0.47
+	the price data is high has a price of $1.41 with a quantity of 1 the value of this card is 1.41
+	the price data is market has a price of $0.41 with a quantity of 1 the value of this card is 0.41
+	the price data is directLow has a price of $0.41 with a quantity of 1 the value of this card is 0.41
+the card id of the card is bw2-71 card name is Ferroseed, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is directLow has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+the card id of the card is xy10-111 card name is Shauna, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is sm5-92 card name is Morelull, the current print type is normal:
+	the price data is low has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is directLow has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+the card id of the card is xy1-83 card name is Honedge, the current print type is normal:
+	the price data is low has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+the card id of the card is sm2-121 card name is Choice Band, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 2 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 2 the value of this card is 0.5
+	the price data is high has a price of $5.0 with a quantity of 2 the value of this card is 10.0
+	the price data is market has a price of $0.17 with a quantity of 2 the value of this card is 0.34
+	the price data is directLow has a price of $0.05 with a quantity of 2 the value of this card is 0.1
+the card id of the card is xy10-53 card name is Zygarde, the current print type is normal:
+	the price data is low has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is mid has a price of $0.39 with a quantity of 1 the value of this card is 0.39
+	the price data is high has a price of $3.8 with a quantity of 1 the value of this card is 3.8
+	the price data is market has a price of $0.34 with a quantity of 1 the value of this card is 0.34
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is sm11-158 card name is Noibat, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is directLow has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+the card id of the card is sm12-78 card name is Natu, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is high has a price of $1.03 with a quantity of 1 the value of this card is 1.03
+	the price data is market has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is pl2-50 card name is Starmie, the current print type is normal:
+	the price data is low has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is mid has a price of $0.32 with a quantity of 1 the value of this card is 0.32
+	the price data is high has a price of $3.12 with a quantity of 1 the value of this card is 3.12
+	the price data is market has a price of $0.28 with a quantity of 1 the value of this card is 0.28
+	the price data is directLow has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+the card id of the card is xy10-71 card name is Whimsicott, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is directLow has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+the card id of the card is bw1-92 card name is Energy Retrieval, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.78 with a quantity of 1 the value of this card is 1.78
+	the price data is market has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is directLow has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+the card id of the card is xy5-129 card name is Fresh Water Set, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is sm12-196 card name is Lillie's Full Force, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+	the price data is high has a price of $1.34 with a quantity of 1 the value of this card is 1.34
+	the price data is market has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is xy6-70 card name is Taillow, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $25.0 with a quantity of 1 the value of this card is 25.0
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+the card id of the card is xy7-24 card name is Regice, the current print type is normal:
+	the price data is low has a price of $0.15 with a quantity of 2 the value of this card is 0.3
+	the price data is mid has a price of $0.25 with a quantity of 2 the value of this card is 0.5
+	the price data is high has a price of $5.0 with a quantity of 2 the value of this card is 10.0
+	the price data is market has a price of $0.21 with a quantity of 2 the value of this card is 0.42
+	the price data is directLow has a price of $0.26 with a quantity of 2 the value of this card is 0.52
+the card id of the card is xy7-5 card name is Spinarak, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+the card id of the card is bw1-55 card name is Solosis, the current print type is normal:
+	the price data is low has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is mid has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is high has a price of $19.99 with a quantity of 1 the value of this card is 19.99
+	the price data is market has a price of $0.27 with a quantity of 1 the value of this card is 0.27
+	the price data is directLow has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+the card id of the card is dp2-103 card name is Spinarak, the current print type is normal:
+	the price data is low has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.15 with a quantity of 1 the value of this card is 1.15
+	the price data is market has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+the card id of the card is xy8-131 card name is Noibat, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $2.16 with a quantity of 1 the value of this card is 2.16
+	the price data is market has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+the card id of the card is xy11-84 card name is Deino, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $999.99 with a quantity of 1 the value of this card is 999.99
+	the price data is market has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is pl3-20 card name is Charizard G, the current print type is reverseHolofoil:
+	the price data is low has a price of $39.53 with a quantity of 1 the value of this card is 39.53
+	the price data is mid has a price of $46.0 with a quantity of 1 the value of this card is 46.0
+	the price data is high has a price of $89.99 with a quantity of 1 the value of this card is 89.99
+	the price data is market has a price of $49.31 with a quantity of 1 the value of this card is 49.31
+the card id of the card is sm2-21 card name is Alolan Vulpix, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 2 the value of this card is 0.1
+	the price data is mid has a price of $0.33 with a quantity of 2 the value of this card is 0.66
+	the price data is high has a price of $5.0 with a quantity of 2 the value of this card is 10.0
+	the price data is market has a price of $0.35 with a quantity of 2 the value of this card is 0.7
+the card id of the card is xy8-68 card name is Ralts, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is directLow has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+the card id of the card is dp7-93 card name is Switch, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $2.0 with a quantity of 1 the value of this card is 2.0
+	the price data is market has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is xy5-121 card name is Bunnelby, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 2 the value of this card is 0.2
+	the price data is mid has a price of $0.25 with a quantity of 2 the value of this card is 0.5
+	the price data is high has a price of $1.96 with a quantity of 2 the value of this card is 3.92
+	the price data is market has a price of $0.25 with a quantity of 2 the value of this card is 0.5
+	the price data is directLow has a price of $0.2 with a quantity of 2 the value of this card is 0.4
+the card id of the card is xy4-90 card name is Furfrou, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is directLow has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is xy7-73 card name is Faded Town, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $1.03 with a quantity of 1 the value of this card is 1.03
+	the price data is market has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is directLow has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+the card id of the card is dp2-116 card name is Armor Fossil, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+the card id of the card is xy7-76 card name is Level Ball, the current print type is normal:
+	the price data is low has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is mid has a price of $0.39 with a quantity of 1 the value of this card is 0.39
+	the price data is high has a price of $4.35 with a quantity of 1 the value of this card is 4.35
+	the price data is market has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+	the price data is directLow has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+the card id of the card is xy6-51 card name is Dragonite, the current print type is normal:
+	the price data is low has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is mid has a price of $1.0 with a quantity of 1 the value of this card is 1.0
+	the price data is high has a price of $3.98 with a quantity of 1 the value of this card is 3.98
+	the price data is market has a price of $0.95 with a quantity of 1 the value of this card is 0.95
+	the price data is directLow has a price of $0.6 with a quantity of 1 the value of this card is 0.6
+the card id of the card is sm6-46 card name is Honedge, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $3.62 with a quantity of 1 the value of this card is 3.62
+	the price data is market has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is xy7-72 card name is Energy Recycler, the current print type is normal:
+	the price data is low has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is bw2-78 card name is Patrat, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is xy8-25 card name is Fennekin, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.91 with a quantity of 1 the value of this card is 3.91
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is directLow has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+the card id of the card is bw2-91 card name is Cheren, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is sm11-13 card name is Foongus, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 2 the value of this card is 0.04
+	the price data is mid has a price of $0.2 with a quantity of 2 the value of this card is 0.4
+	the price data is high has a price of $4.99 with a quantity of 2 the value of this card is 9.98
+	the price data is market has a price of $0.14 with a quantity of 2 the value of this card is 0.28
+	the price data is directLow has a price of $0.09 with a quantity of 2 the value of this card is 0.18
+the card id of the card is xy10-10 card name is Fennekin, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+the card id of the card is xy2-22 card name is Feebas, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is directLow has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+the card id of the card is sm12-70 card name is Jolteon, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.28 with a quantity of 1 the value of this card is 0.28
+	the price data is high has a price of $1.24 with a quantity of 1 the value of this card is 1.24
+	the price data is market has a price of $0.31 with a quantity of 1 the value of this card is 0.31
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is xy8-106 card name is Aromatisse, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.77 with a quantity of 1 the value of this card is 3.77
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is col1-21 card name is Smeargle, the current print type is holofoil:
+	the price data is low has a price of $3.5 with a quantity of 1 the value of this card is 3.5
+	the price data is mid has a price of $5.21 with a quantity of 1 the value of this card is 5.21
+	the price data is high has a price of $8.44 with a quantity of 1 the value of this card is 8.44
+	the price data is market has a price of $7.4 with a quantity of 1 the value of this card is 7.4
+	the price data is directLow has a price of $4.31 with a quantity of 1 the value of this card is 4.31
+the card id of the card is pl1-52 card name is Lombre, the current print type is normal:
+	the price data is low has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is mid has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is high has a price of $1.09 with a quantity of 1 the value of this card is 1.09
+	the price data is market has a price of $0.45 with a quantity of 1 the value of this card is 0.45
+	the price data is directLow has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is xy6-3 card name is Wurmple, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $4.16 with a quantity of 1 the value of this card is 4.16
+	the price data is market has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is sm11-118 card name is Drilbur, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is xyp-XY56 card name is Blissey, the current print type is holofoil:
+	the price data is low has a price of $0.49 with a quantity of 1 the value of this card is 0.49
+	the price data is mid has a price of $1.01 with a quantity of 1 the value of this card is 1.01
+	the price data is high has a price of $4.0 with a quantity of 1 the value of this card is 4.0
+	the price data is market has a price of $1.66 with a quantity of 1 the value of this card is 1.66
+the card id of the card is xy11-98 card name is Armor Fossil Shieldon, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is directLow has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+the card id of the card is dp2-106 card name is Totodile, the current print type is normal:
+	the price data is low has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is mid has a price of $0.32 with a quantity of 1 the value of this card is 0.32
+	the price data is high has a price of $2.99 with a quantity of 1 the value of this card is 2.99
+	the price data is market has a price of $0.37 with a quantity of 1 the value of this card is 0.37
+	the price data is directLow has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is xy10-48 card name is Hawlucha, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is directLow has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is sm11-22 card name is Magmortar, the current print type is normal:
+	the price data is low has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+the card id of the card is xy10-75 card name is Kangaskhan, the current print type is normal:
+	the price data is low has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is mid has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+	the price data is high has a price of $1.87 with a quantity of 1 the value of this card is 1.87
+	the price data is market has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is mcd22-4 card name is Growlithe, the current print type is holofoil:
+	the price data is low has a price of $0.75 with a quantity of 1 the value of this card is 0.75
+	the price data is mid has a price of $1.52 with a quantity of 1 the value of this card is 1.52
+	the price data is high has a price of $19.99 with a quantity of 1 the value of this card is 19.99
+	the price data is market has a price of $1.29 with a quantity of 1 the value of this card is 1.29
+the card id of the card is xy7-11 card name is Vespiquen, the current print type is normal:
+	the price data is low has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is mid has a price of $0.32 with a quantity of 1 the value of this card is 0.32
+	the price data is high has a price of $1.24 with a quantity of 1 the value of this card is 1.24
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+the card id of the card is xy8-101 card name is Flabébé, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is directLow has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+the card id of the card is xy2-1 card name is Caterpie, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.61 with a quantity of 1 the value of this card is 1.61
+	the price data is market has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is directLow has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+the card id of the card is sm7-127 card name is Copycat, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.5 with a quantity of 1 the value of this card is 1.5
+	the price data is market has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is base1-8 card name is Machamp, the current print type is 1stEditionHolofoil:
+	the price data is low has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is mid has a price of $12.45 with a quantity of 1 the value of this card is 12.45
+	the price data is high has a price of $49.99 with a quantity of 1 the value of this card is 49.99
+	the price data is market has a price of $14.37 with a quantity of 1 the value of this card is 14.37
+the card id of the card is swsh1-15 card name is Rillaboom, the current print type is normal:
+	the price data is low has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is mid has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+	the price data is high has a price of $4.26 with a quantity of 1 the value of this card is 4.26
+	the price data is market has a price of $0.27 with a quantity of 1 the value of this card is 0.27
+the card id of the card is swsh1-140 card name is Snorlax, the current print type is normal:
+	the price data is low has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is mid has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is high has a price of $1.28 with a quantity of 1 the value of this card is 1.28
+	the price data is market has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is directLow has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+the card id of the card is sm11-110 card name is Medicham, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $4.21 with a quantity of 1 the value of this card is 4.21
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is xy8-56 card name is Stunfisk, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is xyp-XY43 card name is Diancie-EX, the current print type is holofoil:
+	the price data is low has a price of $1.99 with a quantity of 1 the value of this card is 1.99
+	the price data is mid has a price of $3.1 with a quantity of 1 the value of this card is 3.1
+	the price data is high has a price of $9.95 with a quantity of 1 the value of this card is 9.95
+	the price data is market has a price of $2.77 with a quantity of 1 the value of this card is 2.77
+the card id of the card is xy4-11 card name is Litleo, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.11 with a quantity of 1 the value of this card is 1.11
+	the price data is market has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is xy8-49 card name is Raichu, the current print type is normal:
+	the price data is low has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is mid has a price of $0.5 with a quantity of 1 the value of this card is 0.5
+	the price data is high has a price of $3.77 with a quantity of 1 the value of this card is 3.77
+	the price data is market has a price of $0.51 with a quantity of 1 the value of this card is 0.51
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is swsh1-183 card name is Switch, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+the card id of the card is dp2-74 card name is Bronzor, the current print type is normal:
+	the price data is low has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is mid has a price of $0.27 with a quantity of 1 the value of this card is 0.27
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is bw2-20 card name is Darumaka, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+the card id of the card is sm11-28 card name is Litwick, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is xy10-46 card name is Riolu, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 2 the value of this card is 0.04
+	the price data is mid has a price of $0.15 with a quantity of 2 the value of this card is 0.3
+	the price data is high has a price of $5.0 with a quantity of 2 the value of this card is 10.0
+	the price data is market has a price of $0.07 with a quantity of 2 the value of this card is 0.14
+	the price data is directLow has a price of $0.03 with a quantity of 2 the value of this card is 0.06
+the card id of the card is bw2-51 card name is Boldore, the current print type is normal:
+	the price data is low has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is sm12-168 card name is Igglybuff, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is bw8-123 card name is Hypnotoxic Laser, the current print type is normal:
+	the price data is low has a price of $1.74 with a quantity of 1 the value of this card is 1.74
+	the price data is mid has a price of $3.18 with a quantity of 1 the value of this card is 3.18
+	the price data is high has a price of $9.95 with a quantity of 1 the value of this card is 9.95
+	the price data is market has a price of $3.55 with a quantity of 1 the value of this card is 3.55
+	the price data is directLow has a price of $1.74 with a quantity of 1 the value of this card is 1.74
+the card id of the card is xy7-56 card name is Whimsicott, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is directLow has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+the card id of the card is sm12-43 card name is Sneasel, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is directLow has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is bw10-76 card name is Ursaring, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is mid has a price of $0.5 with a quantity of 1 the value of this card is 0.5
+	the price data is high has a price of $3.34 with a quantity of 1 the value of this card is 3.34
+	the price data is market has a price of $0.48 with a quantity of 1 the value of this card is 0.48
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is swsh12-34 card name is Alolan Vulpix VSTAR, the current print type is holofoil:
+	the price data is low has a price of $1.85 with a quantity of 1 the value of this card is 1.85
+	the price data is mid has a price of $3.0 with a quantity of 1 the value of this card is 3.0
+	the price data is high has a price of $9.95 with a quantity of 1 the value of this card is 9.95
+	the price data is market has a price of $2.78 with a quantity of 1 the value of this card is 2.78
+the card id of the card is sm2-119 card name is Aqua Patch, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.5 with a quantity of 1 the value of this card is 1.5
+	the price data is market has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is directLow has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is pl2-42 card name is Hippowdon E4, the current print type is normal:
+	the price data is low has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $3.43 with a quantity of 1 the value of this card is 3.43
+	the price data is market has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is directLow has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+the card id of the card is dp2-63 card name is Shieldon, the current print type is normal:
+	the price data is low has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.36 with a quantity of 1 the value of this card is 0.36
+	the price data is directLow has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+the card id of the card is dp2-33 card name is Rampardos, the current print type is normal:
+	the price data is low has a price of $0.76 with a quantity of 1 the value of this card is 0.76
+	the price data is mid has a price of $1.5 with a quantity of 1 the value of this card is 1.5
+	the price data is high has a price of $4.0 with a quantity of 1 the value of this card is 4.0
+	the price data is market has a price of $1.95 with a quantity of 1 the value of this card is 1.95
+	the price data is directLow has a price of $0.95 with a quantity of 1 the value of this card is 0.95
+the card id of the card is xy10-89 card name is Cinccino, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is high has a price of $1.31 with a quantity of 1 the value of this card is 1.31
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is sm8-188 card name is Professor Elm's Lecture, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is directLow has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is hgss4-87 card name is Junk Arm, the current print type is normal:
+	the price data is low has a price of $2.81 with a quantity of 1 the value of this card is 2.81
+	the price data is mid has a price of $4.03 with a quantity of 1 the value of this card is 4.03
+	the price data is high has a price of $19.99 with a quantity of 1 the value of this card is 19.99
+	the price data is market has a price of $3.53 with a quantity of 1 the value of this card is 3.53
+	the price data is directLow has a price of $2.5 with a quantity of 1 the value of this card is 2.5
+the card id of the card is xy3-87 card name is Noibat, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+the card id of the card is swsh1-20 card name is Gossifleur, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+	the price data is directLow has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+the card id of the card is xy4-37 card name is Gulpin, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.03 with a quantity of 1 the value of this card is 3.03
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is xy6-12 card name is Tropius, the current print type is normal:
+	the price data is low has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is sm5-46 card name is Shinx, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is mid has a price of $0.34 with a quantity of 1 the value of this card is 0.34
+	the price data is high has a price of $1.95 with a quantity of 1 the value of this card is 1.95
+	the price data is market has a price of $0.27 with a quantity of 1 the value of this card is 0.27
+	the price data is directLow has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is xy5-78 card name is Nosepass, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is high has a price of $1.25 with a quantity of 1 the value of this card is 1.25
+	the price data is market has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is directLow has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+the card id of the card is sm11-16 card name is Lurantis, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+	the price data is directLow has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is sm9-157 card name is Water Memory, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.15 with a quantity of 1 the value of this card is 1.15
+	the price data is market has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is directLow has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is xy7-16 card name is Larvesta, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is sm5-61 card name is Cosmoem, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.39 with a quantity of 1 the value of this card is 3.39
+	the price data is market has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+the card id of the card is bw10-74 card name is Porygon-Z, the current print type is holofoil:
+	the price data is low has a price of $0.6 with a quantity of 1 the value of this card is 0.6
+	the price data is mid has a price of $1.02 with a quantity of 1 the value of this card is 1.02
+	the price data is high has a price of $5.48 with a quantity of 1 the value of this card is 5.48
+	the price data is market has a price of $1.24 with a quantity of 1 the value of this card is 1.24
+	the price data is directLow has a price of $0.78 with a quantity of 1 the value of this card is 0.78
+the card id of the card is xy9-72 card name is Nuzleaf, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is xy10-21 card name is White Kyurem, the current print type is holofoil:
+	the price data is low has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is mid has a price of $0.5 with a quantity of 1 the value of this card is 0.5
+	the price data is high has a price of $4.0 with a quantity of 1 the value of this card is 4.0
+	the price data is market has a price of $0.37 with a quantity of 1 the value of this card is 0.37
+	the price data is directLow has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is pl2-32 card name is Rhyperior E4, the current print type is normal:
+	the price data is low has a price of $0.49 with a quantity of 1 the value of this card is 0.49
+	the price data is mid has a price of $0.66 with a quantity of 1 the value of this card is 0.66
+	the price data is high has a price of $1.49 with a quantity of 1 the value of this card is 1.49
+	the price data is market has a price of $0.66 with a quantity of 1 the value of this card is 0.66
+	the price data is directLow has a price of $0.62 with a quantity of 1 the value of this card is 0.62
+the card id of the card is xy11-9 card name is Seedot, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is directLow has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+the card id of the card is sm11-167 card name is Slakoth, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is directLow has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+the card id of the card is xy10-5 card name is Snivy, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $2.1 with a quantity of 1 the value of this card is 2.1
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+the card id of the card is xy11-104 card name is Pokémon Ranger, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is mcd22-12 card name is Bewear, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is high has a price of $1.5 with a quantity of 1 the value of this card is 1.5
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+the card id of the card is xy11-101 card name is Gardevoir Spirit Link, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is high has a price of $1.28 with a quantity of 1 the value of this card is 1.28
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is bw1-36 card name is Ducklett, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.17 with a quantity of 1 the value of this card is 1.17
+	the price data is market has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is xy10-97 card name is Energy Pouch, the current print type is normal:
+	the price data is low has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $3.82 with a quantity of 1 the value of this card is 3.82
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is sm8-167 card name is Adventure Bag, the current print type is normal:
+	the price data is low has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is mid has a price of $0.37 with a quantity of 1 the value of this card is 0.37
+	the price data is high has a price of $5.99 with a quantity of 1 the value of this card is 5.99
+	the price data is market has a price of $0.38 with a quantity of 1 the value of this card is 0.38
+	the price data is directLow has a price of $0.5 with a quantity of 1 the value of this card is 0.5
+the card id of the card is bw2-94 card name is Max Potion, the current print type is normal:
+	the price data is low has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+	the price data is mid has a price of $0.61 with a quantity of 1 the value of this card is 0.61
+	the price data is high has a price of $14.95 with a quantity of 1 the value of this card is 14.95
+	the price data is market has a price of $0.56 with a quantity of 1 the value of this card is 0.56
+	the price data is directLow has a price of $0.42 with a quantity of 1 the value of this card is 0.42
+the card id of the card is dp2-86 card name is Kricketot, the current print type is normal:
+	the price data is low has a price of $0.08 with a quantity of 1 the value of this card is 0.08
+	the price data is mid has a price of $0.27 with a quantity of 1 the value of this card is 0.27
+	the price data is high has a price of $1.25 with a quantity of 1 the value of this card is 1.25
+	the price data is market has a price of $0.28 with a quantity of 1 the value of this card is 0.28
+	the price data is directLow has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+the card id of the card is xy8-146 card name is Professor's Letter, the current print type is normal:
+	the price data is low has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+	the price data is mid has a price of $0.49 with a quantity of 1 the value of this card is 0.49
+	the price data is high has a price of $2.0 with a quantity of 1 the value of this card is 2.0
+	the price data is market has a price of $0.47 with a quantity of 1 the value of this card is 0.47
+	the price data is directLow has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+the card id of the card is xy8-112 card name is Noivern, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 2 the value of this card is 0.2
+	the price data is mid has a price of $0.4 with a quantity of 2 the value of this card is 0.8
+	the price data is high has a price of $3.91 with a quantity of 2 the value of this card is 7.82
+	the price data is market has a price of $0.35 with a quantity of 2 the value of this card is 0.7
+the card id of the card is sm11-3 card name is Yanmega, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is xy3-53 card name is Trapinch, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 2 the value of this card is 0.06
+	the price data is mid has a price of $0.23 with a quantity of 2 the value of this card is 0.46
+	the price data is high has a price of $1.1 with a quantity of 2 the value of this card is 2.2
+	the price data is market has a price of $0.14 with a quantity of 2 the value of this card is 0.28
+the card id of the card is hgss4-65 card name is Kricketot, the current print type is normal:
+	the price data is low has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+	the price data is mid has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is high has a price of $3.31 with a quantity of 1 the value of this card is 3.31
+	the price data is market has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is directLow has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+the card id of the card is bw3-86 card name is Axew, the current print type is normal:
+	the price data is low has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is mid has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is high has a price of $2.0 with a quantity of 1 the value of this card is 2.0
+	the price data is market has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is directLow has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is xy10-87 card name is Minccino, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is sm7-24 card name is Magcargo, the current print type is normal:
+	the price data is low has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+	the price data is mid has a price of $0.75 with a quantity of 1 the value of this card is 0.75
+	the price data is high has a price of $2.0 with a quantity of 1 the value of this card is 2.0
+	the price data is market has a price of $0.56 with a quantity of 1 the value of this card is 0.56
+the card id of the card is xy7-61 card name is Meowth, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is sm12-10 card name is Lileep, the current print type is normal:
+	the price data is low has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.13 with a quantity of 1 the value of this card is 1.13
+	the price data is market has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+	the price data is directLow has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is bw1-85 card name is Tranquill, the current print type is normal:
+	the price data is low has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is mid has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is high has a price of $1.81 with a quantity of 1 the value of this card is 1.81
+	the price data is market has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is xy10-74 card name is Meowth, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 2 the value of this card is 0.04
+	the price data is mid has a price of $0.15 with a quantity of 2 the value of this card is 0.3
+	the price data is high has a price of $1.1 with a quantity of 2 the value of this card is 2.2
+	the price data is market has a price of $0.09 with a quantity of 2 the value of this card is 0.18
+	the price data is directLow has a price of $0.05 with a quantity of 2 the value of this card is 0.1
+the card id of the card is xy6-91 card name is Switch, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $2.35 with a quantity of 1 the value of this card is 2.35
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is xy8-142 card name is Houndoom Spirit Link, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is mid has a price of $0.4 with a quantity of 1 the value of this card is 0.4
+	the price data is high has a price of $3.33 with a quantity of 1 the value of this card is 3.33
+	the price data is market has a price of $0.37 with a quantity of 1 the value of this card is 0.37
+	the price data is directLow has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is xy10-40 card name is Larvitar, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is swsh2-118 card name is Garbodor, the current print type is normal:
+	the price data is low has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is mid has a price of $1.0 with a quantity of 1 the value of this card is 1.0
+	the price data is high has a price of $2.0 with a quantity of 1 the value of this card is 2.0
+	the price data is market has a price of $0.96 with a quantity of 1 the value of this card is 0.96
+	the price data is directLow has a price of $1.0 with a quantity of 1 the value of this card is 1.0
+the card id of the card is xy9-81 card name is Clefairy, the current print type is normal:
+	the price data is low has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+the card id of the card is bw10-17 card name is Lapras, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $2.93 with a quantity of 1 the value of this card is 2.93
+	the price data is market has a price of $0.33 with a quantity of 1 the value of this card is 0.33
+	the price data is directLow has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+the card id of the card is bw5-99 card name is Random Receiver, the current print type is normal:
+	the price data is low has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is mid has a price of $0.4 with a quantity of 1 the value of this card is 0.4
+	the price data is high has a price of $0.99 with a quantity of 1 the value of this card is 0.99
+	the price data is market has a price of $0.37 with a quantity of 1 the value of this card is 0.37
+	the price data is directLow has a price of $0.37 with a quantity of 1 the value of this card is 0.37
+the card id of the card is bw1-37 card name is Swanna, the current print type is normal:
+	the price data is low has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is mid has a price of $0.46 with a quantity of 1 the value of this card is 0.46
+	the price data is high has a price of $2.0 with a quantity of 1 the value of this card is 2.0
+	the price data is market has a price of $0.41 with a quantity of 1 the value of this card is 0.41
+	the price data is directLow has a price of $0.43 with a quantity of 1 the value of this card is 0.43
+the card id of the card is xy2-94 card name is Pokémon Fan Club, the current print type is normal:
+	the price data is low has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is directLow has a price of $0.16 with a quantity of 1 the value of this card is 0.16
+the card id of the card is dp2-110 card name is Dusk Ball, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is high has a price of $19.99 with a quantity of 1 the value of this card is 19.99
+	the price data is market has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is xy10-109 card name is Random Receiver, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is pl2-83 card name is Staryu, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.26 with a quantity of 1 the value of this card is 0.26
+	the price data is high has a price of $1.13 with a quantity of 1 the value of this card is 1.13
+	the price data is market has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+	the price data is directLow has a price of $0.21 with a quantity of 1 the value of this card is 0.21
+the card id of the card is sm5-22 card name is Monferno, the current print type is normal:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is directLow has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+the card id of the card is xy1-3 card name is Weedle, the current print type is normal:
+	the price data is low has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is swsh1-165 card name is Hop, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $1.35 with a quantity of 1 the value of this card is 1.35
+	the price data is market has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is directLow has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+the card id of the card is sm10-134 card name is Jigglypuff, the current print type is normal:
+	the price data is low has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is directLow has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+the card id of the card is sm10-93 card name is Rhyhorn, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.28 with a quantity of 1 the value of this card is 1.28
+	the price data is market has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is xy11-12 card name is Foongus, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is directLow has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+the card id of the card is xy7-59 card name is Sliggoo, the current print type is normal:
+	the price data is low has a price of $0.03 with a quantity of 1 the value of this card is 0.03
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+the card id of the card is xy10-15 card name is Seel, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is directLow has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+the card id of the card is xy2-90 card name is Lysandre, the current print type is normal:
+	the price data is low has a price of $0.18 with a quantity of 1 the value of this card is 0.18
+	the price data is mid has a price of $0.41 with a quantity of 1 the value of this card is 0.41
+	the price data is high has a price of $2.45 with a quantity of 1 the value of this card is 2.45
+	the price data is market has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is directLow has a price of $0.35 with a quantity of 1 the value of this card is 0.35
+the card id of the card is sm12-12 card name is Tropius, the current print type is normal:
+	the price data is low has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+	the price data is mid has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.15 with a quantity of 1 the value of this card is 0.15
+	the price data is directLow has a price of $0.14 with a quantity of 1 the value of this card is 0.14
+the card id of the card is sm5-26 card name is Salazzle, the current print type is normal:
+	the price data is low has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+	the price data is mid has a price of $0.3 with a quantity of 1 the value of this card is 0.3
+	the price data is high has a price of $1.93 with a quantity of 1 the value of this card is 1.93
+	the price data is market has a price of $0.27 with a quantity of 1 the value of this card is 0.27
+	the price data is directLow has a price of $0.17 with a quantity of 1 the value of this card is 0.17
+the card id of the card is xy4-89 card name is Fletchling, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is high has a price of $1.4 with a quantity of 1 the value of this card is 1.4
+	the price data is market has a price of $0.12 with a quantity of 1 the value of this card is 0.12
+the card id of the card is xy7-63 card name is Eevee, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $5.0 with a quantity of 1 the value of this card is 5.0
+	the price data is market has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is directLow has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is xy6-1 card name is Exeggcute, the current print type is normal:
+	the price data is low has a price of $0.01 with a quantity of 1 the value of this card is 0.01
+	the price data is mid has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+	the price data is high has a price of $1.29 with a quantity of 1 the value of this card is 1.29
+	the price data is market has a price of $0.13 with a quantity of 1 the value of this card is 0.13
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is xy6-19 card name is Pelipper, the current print type is reverseHolofoil:
+	the price data is low has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is mid has a price of $0.29 with a quantity of 1 the value of this card is 0.29
+	the price data is high has a price of $1.95 with a quantity of 1 the value of this card is 1.95
+	the price data is market has a price of $0.22 with a quantity of 1 the value of this card is 0.22
+	the price data is directLow has a price of $0.19 with a quantity of 1 the value of this card is 0.19
+the card id of the card is sm11-161 card name is Lickitung, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.1 with a quantity of 1 the value of this card is 0.1
+	the price data is directLow has a price of $0.09 with a quantity of 1 the value of this card is 0.09
+the card id of the card is sm11-145 card name is Dedenne, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.25 with a quantity of 1 the value of this card is 0.25
+	the price data is high has a price of $4.99 with a quantity of 1 the value of this card is 4.99
+	the price data is market has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+	the price data is directLow has a price of $0.24 with a quantity of 1 the value of this card is 0.24
+the card id of the card is bw1-19 card name is Emboar, the current print type is holofoil:
+	the price data is low has a price of $1.29 with a quantity of 1 the value of this card is 1.29
+	the price data is mid has a price of $2.05 with a quantity of 1 the value of this card is 2.05
+	the price data is high has a price of $8.49 with a quantity of 1 the value of this card is 8.49
+	the price data is market has a price of $2.28 with a quantity of 1 the value of this card is 2.28
+the card id of the card is bw1-71 card name is Zoroark, the current print type is holofoil:
+	the price data is low has a price of $2.25 with a quantity of 1 the value of this card is 2.25
+	the price data is mid has a price of $2.97 with a quantity of 1 the value of this card is 2.97
+	the price data is high has a price of $5.98 with a quantity of 1 the value of this card is 5.98
+	the price data is market has a price of $3.1 with a quantity of 1 the value of this card is 3.1
+the card id of the card is col1-78 card name is Dual Ball, the current print type is normal:
+	the price data is low has a price of $0.23 with a quantity of 1 the value of this card is 0.23
+	the price data is mid has a price of $0.5 with a quantity of 1 the value of this card is 0.5
+	the price data is high has a price of $1.22 with a quantity of 1 the value of this card is 1.22
+	the price data is market has a price of $0.38 with a quantity of 1 the value of this card is 0.38
+the card id of the card is sm10-124 card name is Lairon, the current print type is normal:
+	the price data is low has a price of $0.04 with a quantity of 1 the value of this card is 0.04
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.29 with a quantity of 1 the value of this card is 1.29
+	the price data is market has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is directLow has a price of $0.06 with a quantity of 1 the value of this card is 0.06
+the card id of the card is xy8-43 card name is Vanillite, the current print type is normal:
+	the price data is low has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $1.1 with a quantity of 1 the value of this card is 1.1
+	the price data is market has a price of $0.11 with a quantity of 1 the value of this card is 0.11
+	the price data is directLow has a price of $0.05 with a quantity of 1 the value of this card is 0.05
+the card id of the card is sm6-37 card name is Helioptile, the current print type is normal:
+	the price data is low has a price of $0.02 with a quantity of 1 the value of this card is 0.02
+	the price data is mid has a price of $0.2 with a quantity of 1 the value of this card is 0.2
+	the price data is high has a price of $2.4 with a quantity of 1 the value of this card is 2.4
+	the price data is market has a price of $0.07 with a quantity of 1 the value of this card is 0.07
+	the price data is directLow has a price of $0.04 with a quantity of 1 the value of this card is 0.04

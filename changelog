@@ -51,3 +51,10 @@ version 0.2.8:
     + readability changes
     + quality of life fixes
     - bug fixes
+version 0.2.9:
+    + readability changes
+    + quality of life fixes
+    - bug fixes
+    + trade support
+    + full tcgplayer price data for cards
+    + full tcgplayer price data for collection
