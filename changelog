@@ -58,3 +58,6 @@ version 0.2.9:
     + trade support
     + full tcgplayer price data for cards
     + full tcgplayer price data for collection
+version 0.2.9a:
+    + readability changes
+    + code cleanup
