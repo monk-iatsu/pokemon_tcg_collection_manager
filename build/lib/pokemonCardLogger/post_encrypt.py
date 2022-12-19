@@ -73,7 +73,6 @@ def main():
     msg = f"{msg1}{msg2}"
     print(msg)
     mode = input(">>> ")
-    rq = clss_base.RqHandle(API_KEY)
     if mode not in ("1", "2"):
         print("invalid input. please enter 1 or 2")
         try:

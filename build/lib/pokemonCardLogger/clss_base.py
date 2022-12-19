@@ -90,7 +90,7 @@ class RqHandle:
         else:
             raise ConnectionError
 
-    def get_pack(self, pack_id: str):
+    def get_pack(self, pack_id: str):  # sourcery skip: raise-from-previous-error
         """
         Description:
             Requests from pokemonTcgApi the data for a specific pack and returns that data as a dictionary
@@ -108,7 +108,7 @@ class RqHandle:
         else:
             raise ConnectionError
 
-    def get_all_sets(self):
+    def get_all_sets(self):  # sourcery skip: raise-from-previous-error
         """
         Description:
             Requests a list of packs from pokemonTcgApi and returns a generator
@@ -355,23 +355,12 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        return {"psswrd": self.psswrd_hash, "failed_login": [], "login_times": [], "log": {}}
+        return {"psswrd": self.psswrd_hash, "login_times": [], "log": {}}
 
-    @staticmethod
-    def sort_log_total(item: iter):
-        """
-        Description:
-            sorting function for the prepared log
-        Parameters:
-            :param item: the item to organize
-            :return: the price for which the sort function can sort the log with
-        """
-        return item[3]
-
-    def sort_log_total_pre(self, log_list: iter):
+    def log_with_prices(self, log_list: iter):
         """
         Descriptions:
-            sorts the log and presents it in the form of a generator
+            parses the log and adds prices and presents it in the form of a generator
         Parameters:
             :param log_list: a reference to the log
             :return: generator of a tuple of card_id, print_type, qnty, and price
@@ -381,15 +370,6 @@ class DbHandleBase:
             price = round((self.rq.get_card(card_id)["data"]["tcgplayer"]["prices"][print_type]["market"] * qnty), 2)
             # print(f"card id = {card_id}, print type = {print_type}, qnty = {qnty}, price = {price}")
             yield card_id, print_type, qnty, price
-
-    def get_log_by_total_value(self):
-        """
-        Description:
-            a generator that yields the log in order of price
-        Parameters:
-            :return: generator of a tuple of card_id, print_type, qnty, and price
-        """
-        yield from list(list(self.sort_log_total_pre(self.get_log()))).sort(key=self.sort_log_total)
 
     def export_csv(self, output_file: str, output: bool = True):
         """
@@ -403,7 +383,7 @@ class DbHandleBase:
         if output:
             print("loading cards from log...")
         data = []
-        for card_id, print_type, qnty, price in self.sort_log_total_pre(self.get_log()):
+        for card_id, print_type, qnty, price in self.log_with_prices(self.get_log()):
             if output:
                 msg = f"loading card id {card_id} with print type {print_type} and quantity of {qnty} with a price of"
                 msg2 = f"${price}"
@@ -415,14 +395,25 @@ class DbHandleBase:
             csv_writer.writeheader()
             for row in data:
                 if output:
-                    print(
-                        f"adding card with card id {row['card_id']} and print type {row['print_type']}, and quantity of {row['qnty']} to the csv file {output_file}")
+                    print(f"adding card with card id {row['card_id']} and print type {row['print_type']}, and quantity of {row['qnty']} to the csv file {output_file}")
                 csv_writer.writerow(row)
 
     def close(self):
+        """
+        Description:
+            cleanly closes the log
+        Parameters:
+            :return: None
+        """
         self.save()
 
     def encrypt(self):
+        """
+        Description:
+            Encrypts the file using the stored key
+        Parameters:
+            :return: None
+        """
         with open(self.logfile, "rb") as f:
             contents = f.read()
         output = Fernet(self.key).encrypt(contents)
@@ -430,6 +421,12 @@ class DbHandleBase:
             f.write(output)
 
     def decrypt(self):
+        """
+        Description:
+            Decrypts the file using the stored key
+        Parameters:
+            :return: None
+        """
         with open(self.logfile, "rb") as f:
             contents = f.read()
         output = Fernet(self.key).decrypt(contents)
@@ -437,6 +434,14 @@ class DbHandleBase:
             f.write(output)
 
     def import_csv(self, input_file: str, output: bool = True):
+        """
+        Description:
+            Import to the log from csv
+        Parameters:
+            :param input_file:
+            :param output:
+            :return:
+        """
         if not os.path.exists(input_file):
             return False
         with open(input_file, "r") as f:
@@ -457,11 +462,32 @@ class DbHandleBase:
         return True
 
     def get_full_price_data(self, card_id: str, print_type: str):
+        """
+        Description:
+            gets the full prices of a given card
+        Parameters:
+            :param card_id: the id of the card according to pokemonTcgApi
+            :param print_type: the print type of the card to return
+            :return: generator consisting of a tuple containing the price key and the price
+        """
         cd = self.rq.get_card(card_id)["data"]
         price_data = cd["tcgplayer"]["prices"][print_type]
         yield from price_data.items()
 
-    def trade(self, other, other_card_id: str, other_print_type: str, other_qnty: int, card_id: str, print_type: str, qnty: int, export_file: str):
+    def trade(self, other, other_card_id: str, other_print_type: str, other_qnty: int, card_id: str, print_type: str, qnty: int):
+        """
+        Description:
+            trades with another user
+        Parameters:
+            :param other: a reference to another instance of DbHandleBase or its subclasses of the other user
+            :param other_card_id: card id of user two as is according to pokemonTcgApi
+            :param other_print_type: the print type of the user twos card
+            :param other_qnty: the quantity of user two's card to trade
+            :param card_id: card id of user one as is according to pokemonTcgApi
+            :param print_type: the print type of the user one's card
+            :param qnty: the quantity of user one's card to trade
+            :return: int of the trade success status
+        """
         self.test_card(card_id)
         if not self.test_card(other_card_id) and not self.test_card(card_id):
             return TRADE_CODE_CARD_DOES_NOT_EXIST
