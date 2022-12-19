@@ -64,3 +64,5 @@ version 0.2.9a:
 version 0.2.9b:
     + readability changes
     + code cleanup
+version 0.2.10:
+    - major bug fix

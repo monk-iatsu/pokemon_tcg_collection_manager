@@ -421,9 +421,25 @@ def get_user():
     enc = enc not in NO_RESPONSE
     try:
         if mode == "1":
-            db = clss_json.DbHandle(user_file, psswrd, rq, has_encryption=enc)
+            try:
+                db = clss_json.DbHandle(user_file, psswrd, rq, has_encryption=enc)
+            except Exception:
+                print("invalid password. try again.")
+                try:
+                    return get_user()
+                except RecursionError:
+                    print("too many invalid entries, quitting")
+                    quit()
         elif mode == "2":
-            db = clss_pickle.DbHandle(user_file, psswrd, rq, has_encryption=enc)
+            try:
+                db = clss_pickle.DbHandle(user_file, psswrd, rq, has_encryption=enc)
+            except Exception:
+                print("invalid password. try again.")
+                try:
+                    return get_user()
+                except RecursionError:
+                    print("too many invalid entries, quitting")
+                    quit()
     except PermissionError:
         print("Invalid password, try again.")
         try:
