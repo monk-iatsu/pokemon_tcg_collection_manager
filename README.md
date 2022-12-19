@@ -7,4 +7,4 @@ A cli tool/library to manage, store and analyze a pokemon card collection
 ## Installation:
 * run `pip3 install pokemonCardLogger`
 ## Use as a library:
-* `from pokemonCardLogger import clss as pcl`
+* `from pokemonCardLogger import clss_pickle as pcl` or `from pokemonCardLogger import clss_json as pcl`
