@@ -5,6 +5,7 @@ Usage:
     To run as a program "python3 main.py"
     Fill out the prompts to use.
 """
+import cliTextTools as ctt
 import contextlib
 import os
 import sys
@@ -32,7 +33,7 @@ except ImportError:
 
     if __name__ == "__main__":
         print("Please enter you pokemontcgapi key: ")
-        API_KEY = input(">>> ")
+        API_KEY = ctt.get_user_input(">>> ", ctt.STR_TYPE, can_cancel=False)
 
 pltfrm = sys.platform
 home = os.environ["HOME"]
@@ -57,67 +58,52 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: the card id from pokemonTcgApi or False if it errors out
     """
-    print(
-        "please type the pack id of the card. if you dont know what that is run the 5th option from the main menu:"
-    )
-    pack = input(">>> ")
+    msg = "Please type the pack id of the card. If you dont know what that is run the 5th option from the main menu:\n>>> "
+    pack_id = ctt.get_user_input(msg, ctt.STR_TYPE)
+    if pack_id is None:
+        return False, False
     try:
-        pack_name = rq.get_pack(pack)["data"]["name"]
+        pack_name = rq.get_pack(pack_id)["data"]["name"]
     except ConnectionError:
-        print("invalid pack id. try main menu item 5")
-        return False, False
-    except TypeError:
-        print("canceled.")
-        return False, False
-    print(f"is the pack name {pack_name}? ('n' or 'y')")
-    truth = input(">>> ")
-    if truth.lower() in NO_RESPONSE:
-        print("then try again")
+        print("Either the pack is invalid, or your connection to the api has failed. Try again.")
+    msg = f"Ts the pack name {pack_name}? ('n' or 'y')\n>>> "
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
+        print("Then try again.")
         try:
-            return get_card_id_and_print_type(rq, args, kwargs)
+            return get_card_id_and_print_type(rq)
         except RecursionError:
-            print("too many invalid entries, try again")
+            print("Too many retries. Try again.")
             return False, False
-    print("please enter the cards collectors number")
-    num = input(">>> ")
-    card_id = f"{pack}-{num}"
+    msg = "Please enter the cards collectors number\n>>> "
+    card_num = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
+    card_id = f"{pack_id}-{card_num}"
     try:
         card_data = rq.get_card(card_id)
     except ConnectionError:
-        print("Error. try again")
+        print("Either the card is invalid, or your connection to the api has failed. Try again.")
+        return False, False
+    card_name = card_data["data"]["name"]
+    msg = f"Is {card_name} the name of the card?('y' or 'n')\n>>> "
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
+        print("Then try again.")
         return False, False
     try:
         card_print_types = list(card_data["data"]["tcgplayer"]["prices"].keys())
     except KeyError:
-        print("sorry, but that card cannot be logged.")
+        print("Sorry but that card cannot be logged.")
         return False, False
-    card_name = card_data["data"]["name"]
-    print(f"is {card_name} the name of the card?('y' or 'n')")
-    truth = input(">>> ")
-    if truth.lower() in NO_RESPONSE:
-        print("then try again.")
-        return False, False
-    print("select one of the following for valid print types")
+    msg = "Select one of the following for valid print types"
     for index, print_type in enumerate(card_print_types):
-        print(f"{index} = {print_type}")
-    index = input(">>> ")
-    try:
-        index = int(index)
-    except ValueError:
-        print("invalid entry. enter a number. try again")
-        try:
-            return get_card_id_and_print_type(rq, args, kwargs)
-        except RecursionError:
-            print("too many invalid entries, try again")
-            return False, False
+        msg = f"{msg}\n{index} = {print_type}"
+    index = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
     try:
         print_type = card_print_types[index]
     except IndexError:
-        print("invalid entry. enter a number in the given range. try again")
+        print("Invalid entry. Enter a number in the given range. Try again.")
         try:
-            return get_card_id_and_print_type(rq, args, kwargs)
+            return get_card_id_and_print_type(rq)
         except RecursionError:
-            print("too many invalid entries, try again")
+            print("Too many retries. Try again.")
             return False, False
     return card_id, print_type
 
@@ -160,36 +146,35 @@ please select one of the following:
 14: get a cards full price data
 15: get full price data on all cards in collection
 16: trade with another user
+>>> 
 """
-    print(info)
-    mode = input(">>> ")
-    print("")
+    mode = ctt.get_user_input(info, ctt.INT_TYPE)
     switch = {
-        "0": "end prog",
-        "1": "add card",
-        "2": "remove card",
-        "3": "delete entry",
-        "4": "list packs",
-        "5": "get card",
-        "6": "list log",
-        "7": "log len",
-        "8": "collection value",
-        "9": "card value",
-        "10": "list login",
-        "11": "test card",
-        "12": "to csv",
-        "13": "from csv",
-        "14": "full price",
-        "15": "full collection",
-        "16": "csv trade"
+        0: "end prog",
+        1: "add card",
+        2: "remove card",
+        3: "delete entry",
+        4: "list packs",
+        5: "get card",
+        6: "list log",
+        7: "log len",
+        8: "collection value",
+        9: "card value",
+        10: "list login",
+        11: "test card",
+        12: "to csv",
+        13: "from csv",
+        14: "full price",
+        15: "full collection",
+        16: "csv trade"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
-        print("invalid entry try again")
+        print("Invalid entry try again")
         try:
             return get_mode()
         except RecursionError:
-            print("too many invalid entries, quitting")
+            print("Too many invalid entries. Quitting.")
             return "end"
     return mode
 
@@ -205,7 +190,7 @@ def get_card_log(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
-    print("this may take some time")
+    print("This may take some time")
     for card_id, print_type, qnty in db.get_log():
         data = rq.get_card(card_id)["data"]
         name = data["name"]
@@ -224,14 +209,13 @@ def get_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
-    print("if you wish to get a card by card id only, enter '0' for print type")
+    print("If you wish to get a card by card id only, enter '0' for print type, otherwise enter the correct print type")
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
         return
     card_name = rq.get_card(card_id)["data"]["name"]
-    print("would you like to use print type as well?('y' or 'n')")
-    truth = input(">>> ")
-    if truth.lower() in NO_RESPONSE:
+    msg = "Would you like to use print type as well?('y' or 'n')\n>>> "
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
         total_qnty = 0
         for print_type, qnty in db.get_card_by_id_only(card_id):
             print(f"\tfor {print_type}, you have {qnty}")
@@ -259,19 +243,9 @@ def add_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
         return None
-    print("how many would you like to add")
-    new_count = input(">>> ")
-    try:
-        new_count = int(new_count)
-    except ValueError:
-        print("invalid entry. please try again and enter a number")
-        try:
-            return add_card(db, rq, args, kwargs)
-        except RecursionError:
-            print("too many invalid entries, try again")
-            return None
-    success = db.add_card(card_id, new_count, print_type)
-    print(f"the process was successful: {success}")
+    msg = "how many would you like to add.\n>>> "
+    new_count = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    print(f"the process was successful: {db.add_card(card_id, new_count, print_type)}")
 
 
 def test_card_validity(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
@@ -282,36 +256,37 @@ def test_card_validity(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
-    print(
-        "please type the pack id of the card. if you dont know what that is run the 5th option from the main menu:"
-    )
-    pack = input(">>> ")
+    msg = "Please type the pack id of the card. If you dont know what that is run the 5th option from the main menu:\n>>> "
+    pack_id = ctt.get_user_input(msg, ctt.STR_TYPE)
+    if pack_id is None:
+        print("Canceled.")
+        return
     try:
-        pack_name = rq.get_pack(pack)["data"]["name"]
+        pack_name = rq.get_pack(pack_id)["data"]["name"]
     except ConnectionError:
-        print("invalid pack id. try main menu item 5")
+        print("Either the pack is invalid, or your connection to the api has failed. Try again.")
         return
-    except TypeError:
-        return
-    print(f"is the pack name {pack_name}? ('n' or 'y')")
-    truth = input(">>> ")
-    if truth.lower() in NO_RESPONSE:
-        print("then try again")
+    msg = f"Is the pack name {pack_name}? ('n' or 'y')\n>>> "
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
+        print("Then try again")
         try:
             return test_card_validity(rq, args, kwargs)
         except RecursionError:
             print("too many invalid entries, try again")
             return
-    print("please enter the cards collectors number")
-    num = input(">>> ")
+    msg = "Please enter the cards collectors number\n>>> "
+    num = ctt.get_user_input(msg, ctt.STR_TYPE)
+    if num is None:
+        print("Canceled.")
+        return
     card_id = f"{pack}-{num}"
     card_data = {}
     try:
         card_data = rq.get_card(card_id)
     except ConnectionError:
-        print("that is not a valid card.")
+        print("Either the card is invalid, or your connection to the api has failed. Try again.")
         return
-    print(f"that is a valid card. the card name is {card_data['data']['name']}")
+    print(f"That is a valid card. the card name is {card_data['data']['name']}")
 
 
 def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
@@ -327,20 +302,11 @@ def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     """
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
-        return None
-    print("how many would you like to remove")
-    new_count = input(">>> ")
-    try:
-        new_count = int(new_count)
-    except ValueError:
-        print("invalid entry. please try again and enter a number")
-        try:
-            return remove_card(db, rq.args, kwargs)
-        except RecursionError:
-            print("too many invalid entries, try again")
-            return None
-    success = db.remove_card(card_id, new_count, print_type)
-    print(f"the process was successful: {success}")
+        print("Canceled.")
+        return
+    msg = "How many would you like to remove\n>>> "
+    new_count = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    print(f"the process was successful: {db.remove_card(card_id, new_count, print_type)}")
 
 
 def delete_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
@@ -356,20 +322,21 @@ def delete_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     """
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
+        print("Canceled")
         return
-    card_name = rq.get_card(card_id)["data"]["name"]
-    print(f"is {card_name} the name of the card?('y' or 'n')")
-    truth = input(">>> ")
-    if truth.lower() in NO_RESPONSE:
-        print("then try again.")
+    try:
+        card_name = rq.get_card(card_id)["data"]["name"]
+    except ConnectionError:
+        print("Your connection to the api has failed. Try again.")
+    msg = f"is {card_name} the name of the card?('y' or 'n')\n>>> "
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
+        print("Then try again.")
         return
-    print(" are you sure you want to do this? it cannot be undone.")
-    truth = input("(yes/no)>>> ")
-    if truth.lower() not in NO_RESPONSE:
-        success = db.delete_card(card_id, print_type)
-        print(f"the process was successful: {success}")
+    msg = "are you sure you want to do this? it cannot be undone.\n>>> "
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
+        print(f"the process was successful: {db.delete_card(card_id, print_type)}")
     else:
-        print("canceled")
+        print("Canceled.")
         return
 
 
@@ -384,26 +351,25 @@ def get_user():
         clss_json.init(API_KEY)
     if clss_pickle.API_KEY == "":
         clss_pickle.init(API_KEY)
-    msg1 = "please enter 1 for json or 2 for pickle (pickle is binary and unreadable outside the program, while json "
+    msg1 = "Please enter 1 for json or 2 for pickle (pickle is binary and unreadable outside the program, while json"
     msg2 = "is not)"
-    msg = f"{msg1}{msg2}"
-    print(msg)
-    mode = input(">>> ")
+    msg = f"{msg1} {msg2}"
+    mode = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
     rq = None
     db = None
-    if mode == "1":
+    if mode == 1:
         rq = clss_json.RqHandle(API_KEY)
-    elif mode == "2":
+    elif mode == 2:
         rq = clss_pickle.RqHandle(API_KEY)
     else:
-        print("invalid input. please enter 1 or 2")
+        print("Invalid input. Please enter 1 or 2")
         try:
             return get_user()
         except RecursionError:
-            print("too many invalid entries, quitting")
+            print("Too many invalid entries. Quitting")
             quit()
-    print("please enter the name of the user, 'default' for the default insecure no password login")
-    user = input(">>> ")
+    msg = "Please enter the name of the user. Enter 'default' for the default insecure no password login\n>>> "
+    ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
     ext = ""
     if mode == "1":
         ext = ".json"
@@ -416,37 +382,28 @@ def get_user():
     else:
         print("Please enter password for said user.")
         psswrd = getpass(">>> ")
-    print("is this an encrypted user? ('y' or 'n')")
-    enc = input(">>> ")
-    enc = enc not in NO_RESPONSE
-    try:
-        if mode == "1":
-            try:
-                db = clss_json.DbHandle(user_file, psswrd, rq, has_encryption=enc)
-            except Exception:
-                print("invalid password. try again.")
-                try:
-                    return get_user()
-                except RecursionError:
-                    print("too many invalid entries, quitting")
-                    quit()
-        elif mode == "2":
-            try:
-                db = clss_pickle.DbHandle(user_file, psswrd, rq, has_encryption=enc)
-            except Exception:
-                print("invalid password. try again.")
-                try:
-                    return get_user()
-                except RecursionError:
-                    print("too many invalid entries, quitting")
-                    quit()
-    except PermissionError:
-        print("Invalid password, try again.")
+    msg = "is this an encrypted user? ('y' or 'n')\n>>> "
+    enc = ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False)
+    if mode == 1:
         try:
-            return get_user()
-        except RecursionError:
-            print("too many invalid entries, quitting")
-            quit()
+            db = clss_json.DbHandle(user_file, psswrd, rq, has_encryption=enc)
+        except Exception:
+            print("Invalid password. Try again.")
+            try:
+                return get_user()
+            except RecursionError:
+                print("Too many invalid entries Quitting")
+                quit()
+    elif mode == 2:
+        try:
+            db = clss_pickle.DbHandle(user_file, psswrd, rq, has_encryption=enc)
+        except Exception:
+            print("Invalid password. Try again.")
+            try:
+                return get_user()
+            except RecursionError:
+                print("Too many invalid entries. Quitting")
+                quit()
     return db, rq
 
 
@@ -458,7 +415,7 @@ def len_of_log(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
         :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
-    print(f"the size of your logged collection is {len(db)}")
+    print(f"The size of your logged collection is {len(db)}")
 
 
 def get_collection_value(db: (clss_json.DbHandle, clss_pickle.DbHandle),
@@ -472,21 +429,21 @@ def get_collection_value(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
-    print("this may take some time. please wait.")
+    print("This may take some time. Please wait.")
     value = 0.00
     for card_id, print_type, qnty in db.get_log():
         data = rq.get_card(card_id)
         price = data["data"]["tcgplayer"]["prices"][print_type]["market"]
         value = round((value + price), 2)
         card_name = data["data"]["name"]
-        msg1 = f"the value of {card_id} who's name is {card_name} with print type of {print_type} is ${price} times the"
+        msg1 = f"The value of {card_id} who's name is {card_name} with print type of {print_type} is ${price} times the"
         temp = 0
         for _ in range(qnty):
             temp = temp + price
-        msg2 = f"quantity of {qnty} the value is ${round(temp, 2)}"
+        msg2 = f"Quantity of {qnty} the value is ${round(temp, 2)}"
         msg = f"{msg1} {msg2}"
         print(msg)
-    print(f"\nthe value of your collection is ${value}")
+    print(f"\nThe value of your collection is ${value}")
 
 
 def get_card_value(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
@@ -499,13 +456,13 @@ def get_card_value(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHa
     """
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id and not print_type:
-        print("canceled")
+        print("Canceled.")
         return None
     # noinspection PyUnreachableCode
     data = rq.get_card(card_id)
     card_name = data["data"]["name"]
     price = data["data"]["tcgplayer"]["prices"][print_type]["market"]
-    print(f"the value of {card_id} who's name is {card_name} with print type of {print_type} is ${price}")
+    print(f"The value of {card_id} who's name is {card_name} with print type of {print_type} is ${price}")
 
 
 def list_login(db: (clss_json.DbHandle, clss_pickle.DbHandle),
@@ -518,7 +475,7 @@ def list_login(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         :return: None
     """
     for day, month, year, hour, minute, second in db.list_login():
-        print(f"a successful login on {month} / {day} / {year} at {hour} : {minute} : {second}")
+        print(f"A successful login on {month} / {day} / {year} at {hour} : {minute} : {second}")
 
 
 def get_log_by_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
@@ -532,7 +489,7 @@ def get_log_by_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         :param rq: an instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
-    print("this may take a while. please be patient")
+    print("This may take a while. Please be patient")
     for card_id, print_type, qnty in db.get_log_by_total_value():
         data = rq.get_card(card_id)["data"]
         name = data["name"]
@@ -548,12 +505,12 @@ def to_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
         :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
-    print("this may take a while. please wait.")
+    print("This may take a while. Please wait.")
     _, lf = os.path.split(db.logfile)
     user, _ = lf.split(".")
     csv_file = f"pcllog-{user}.csv"
     db.export_csv(os.path.join(documents_dir, csv_file))
-    print(f"\nthe location for the output file is in Documents. it is called: {csv_file}")
+    print(f"\nThe location for the output file is in Documents. it is called: {csv_file}")
 
 
 def end(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
@@ -577,21 +534,21 @@ def from_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
         :return: None
     """
     print(
-        "importing data from csv overwrites existing data. if there is a card that you already have in the log, it will be deleted.")
-    print("please enter the full path to the csv file containing the data.")
-    path = input(">>> ")
-    if path == "":
-        print("canceled")
+        "Importing data from csv overwrites existing data. if there is a card that you already have in the log, it will be deleted.")
+    msg = "please enter the full path to the csv file containing the data.\n>>> "
+    path = ctt.get_user_input(msg, ctt.STR_TYPE)
+    if path is None:
+        print("Canceled.")
         return
     if not os.path.exists(path):
-        print("invalid path. try again.")
+        print("Invalid path. Try again.")
         try:
             return from_csv(db, args, kwargs)
         except RecursionError:
-            print("to many retries try, try again.")
+            print("To many retries. Try again.")
             return
-    print("this may take a while. please wait.")
-    print(f"the process was successful: {db.import_csv(path, output=True)}")
+    print("This may take a while. Please wait.")
+    print(f"The process was successful: {db.import_csv(path, output=True)}")
 
 
 def get_card_full_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
@@ -602,7 +559,7 @@ def get_card_full_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     card_name = cd["name"]
     print("")
     for key, price in db.get_full_price_data(card_id, print_type):
-        msg = f"the card with card id {card_id} with the card name {card_name}, the price data for {key} is ${price}."
+        msg = f"The card with card id {card_id} with the card name {card_name}, the price data for {key} is ${price}."
         print(msg)
 
 
@@ -616,10 +573,10 @@ def get_full_price_in_collection(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         qnty = row[2]
         card_data = rq.get_card(card_id)["data"]
         card_name = card_data["name"]
-        msg = f"the card id of the card is {card_id} card name is {card_name}, the current print type is {print_type}:"
+        msg = f"The card id of the card is {card_id} card name is {card_name}, the current print type is {print_type}:"
         print(msg)
         for key, price in db.get_full_price_data(card_id, print_type):
-            msg = f"\tthe price data is {key} has a price of ${price} with a quantity of {qnty} the value of this card is ${round((price * qnty), 2)}"
+            msg = f"\tThe price data is {key} has a price of ${price} with a quantity of {qnty} the value of this card is ${round((price * qnty), 2)}"
             print(msg)
 
 
@@ -627,33 +584,23 @@ def trade(db: (clss_json.DbHandle, clss_pickle.DbHandle),
           rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
           *args, **kwargs):
     other_db = clss_pickle.DbHandle(":memory:", "default", rq, False)
-    print("please enter the path to the user two's csv file. enter nothing to try again later")
-    csv_path = input(">>> ")
-    if csv_path == "":
+    msg = "Please enter the path to the user two's csv file. Enter nothing to try again later.\n>>> "
+    csv_path = ctt.get_user_input(msg, ctt.STR_TYPE)
+    if csv_path is None:
+        print("Canceled.")
         return
     if not os.path.exists(csv_path) or os.path.isdir(csv_path):
-        print("invalid path. try using full path.")
+        print("Invalid path. Try using full path. Try again.")
         return
-    print("adding csv to memory. this may take a while. please wait")
+    print("Adding csv to memory. This may take a while. Please wait")
     other_db.import_csv(csv_path)
-    print("select a card for user one")
+    print("Select a card for user one")
     card_id, print_type = get_card_id_and_print_type(rq)
-    print("how many?")
-    qnty = input(">>> ")
-    try:
-        qnty = int(qnty)
-    except ValueError:
-        print("invalid input. try again.")
-        return
-    print("select a card for user two")
+    msg = "How many?\n>>> "
+    qnty = ctt.get_user_input(msg, ctt.INT_TYPE)
+    print("Select a card for user two")
     other_card_id, other_print_type = get_card_id_and_print_type(rq)
-    print("how many?")
-    other_qnty = input(">>> ")
-    try:
-        other_qnty = int(other_qnty)
-    except ValueError:
-        print("invalid input. try again.")
-        return
+    other_qnty = ctt.get_user_input(msg, ctt.INT_TYPE)
     other_card_data = rq.get_card(other_card_id)["data"]
     card_data = rq.get_card(card_id)["data"]
     other_price_data = other_card_data["tcgplayer"]["prices"][print_type]["market"]
@@ -664,16 +611,16 @@ def trade(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         print(f"the trade value is tipped in favor of user two by ${trade_value}")
     else:
         print(f"the trade value is tipped in favor of user one by ${trade_value}")
-    print("do you wish to continue? ")
-    truth = input(">>> ")
-    if truth in NO_RESPONSE:
-        print("canceled.")
+    msg = "do you wish to continue?\n>>> "
+
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE):
+        print("Canceled.")
         return
     trade_code = db.trade(other_db, other_card_id, other_print_type, other_qnty, card_id, print_type, qnty, csv_path)
     if trade_code != clss_base.TRADE_SUCCESS:
-        print(f"process failed. fail code {trade_code}")
+        print(f"Process failed. Fail code {trade_code}")
     else:
-        print("process successful. saving updated csv.")
+        print("Process successful. Saving updated csv.")
         other_db.export_csv(csv_path)
 
 

@@ -66,3 +66,7 @@ version 0.2.9b:
     + code cleanup
 version 0.2.10:
     - major bug fix
+version 0.2.11:
+    + code rework
+    + readability changes
+    + code cleanup
