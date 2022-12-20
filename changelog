@@ -70,3 +70,5 @@ version 0.2.11:
     + code rework
     + readability changes
     + code cleanup
+version 0.2.11a:
+    - major bug fix
