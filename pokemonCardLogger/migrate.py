@@ -1,6 +1,7 @@
 """
 Description:
     use to migrate from pickle to json and vise versa
+    (Depreciated)
 Usage:
     python3 migrate.py
 """
@@ -14,14 +15,15 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
+from assets import *
+print(" this feature is depreciated. will be removed in the future")
 
 API_KEY = ""
 NO_RESPONSE = ("n", "0", "no", "")
-ITERATIONS = 1000000
 
 
 # noinspection PyGlobalUndefined
-def init(api_key: str, iterations: int = 1000000):
+def init(api_key: str, iterations: int = ITERATIONS):
     """
     Description:
         sets the module global variables, so it can be used

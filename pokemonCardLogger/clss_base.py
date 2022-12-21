@@ -8,8 +8,10 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
-import sys
 import hashlib
+import sys
+from assets import *
+from version_test_and_update import update
 
 TRADE_SUCCESS = 0
 TRADE_CODE_CARD_NOT_IN_LOG = 1
@@ -17,7 +19,6 @@ TRADE_CODE_CARD_DOES_NOT_EXIST = 2
 TRADE_CODE_CARD_NOT_IN_LOG_QNTY = 3
 
 API_KEY = ""
-ITERATIONS = 1000000
 
 
 def init(api_key: str, iterations: int = 1000000):
@@ -128,6 +129,19 @@ class RqHandle:
     def __repr__(self):
         return f"RqHandle({self.api_key}"
 
+    @staticmethod
+    def validate_basic_energy(e_type_id: str):
+        if e_type_id in BASIC_ENERGY.keys():
+            return True
+
+    @staticmethod
+    def get_basic_energy_list():
+        yield from BASIC_ENERGY.items()
+
+    @staticmethod
+    def get_basic_energy(e_type_id):
+        return BASIC_ENERGY.get(e_type_id, False)
+
 
 class DbHandleBase:
     """
@@ -135,7 +149,7 @@ class DbHandleBase:
         stores and organizes the log data in a pickle file
     """
 
-    def __init__(self, file: str, psswrd: str, rq: RqHandle, has_encryption: bool):
+    def __init__(self, file: str, psswrd: str, rq: RqHandle):
         """
         Description:
             Constructor method
@@ -144,8 +158,6 @@ class DbHandleBase:
             :param psswrd: the password for the database
             :param rq: an instance of RqHandle
         """
-        self.has_encryption = has_encryption
-        self.is_encrypted = True
         self.logfile = file
         self.psswrd = psswrd
         self.rq = rq
@@ -163,7 +175,6 @@ class DbHandleBase:
             self.first_run()
         elif os.path.exists(self.logfile):
             self.logdict = self.read()
-            self.validate()
         else:
             self.logdict = {}
             self.first_run()
@@ -176,19 +187,9 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        self.logdict = {"psswrd": self.key_hash, "failed_login": [], "login_times": [], "log": {}}
+        self.logdict = {"psswrd": self.key_hash, "login_times": [], "log": {}, "energy": {}}
         self.login_setup()
         self.save()
-
-    def validate(self):
-        """
-        Description:
-            Validates the database and password combo. if the password doesn't match, raises ValueError
-        Parameters:
-            :return: None
-        """
-        if self.key_hash != self.logdict["psswrd"]:
-            raise PermissionError
 
     def login_setup(self):
         """
@@ -395,7 +396,8 @@ class DbHandleBase:
             csv_writer.writeheader()
             for row in data:
                 if output:
-                    print(f"adding card with card id {row['card_id']} and print type {row['print_type']}, and quantity of {row['qnty']} to the csv file {output_file}")
+                    print(
+                        f"adding card with card id {row['card_id']} and print type {row['print_type']}, and quantity of {row['qnty']} to the csv file {output_file}")
                 csv_writer.writerow(row)
 
     def close(self):
@@ -474,7 +476,8 @@ class DbHandleBase:
         price_data = cd["tcgplayer"]["prices"][print_type]
         yield from price_data.items()
 
-    def trade(self, other, other_card_id: str, other_print_type: str, other_qnty: int, card_id: str, print_type: str, qnty: int):
+    def trade(self, other, other_card_id: str, other_print_type: str, other_qnty: int, card_id: str, print_type: str,
+              qnty: int):
         """
         Description:
             trades with another user
@@ -505,3 +508,37 @@ class DbHandleBase:
         self.remove_card(card_id, qnty, print_type)
         self.save()
         return TRADE_SUCCESS
+
+    def add_energy_card(self, energy_type: str, qnty: int):
+        if not self.rq.validate_basic_energy(energy_type):
+            return False
+        qnty = self.get_energy_card(energy_type) + qnty
+        self.logdict["energy"].update({energy_type: qnty})
+        self.save()
+        return True
+
+    def remove_energy_card(self, energy_type: str, qnty: int):
+        if not self.rq.validate_basic_energy(energy_type):
+            return False
+        if energy_type not in self.logdict["energy"].keys():
+            return False
+        qnty = self.get_energy_card(energy_type) - qnty
+        qnty = max(qnty, 0)
+        self.logdict["energy"].update({energy_type: qnty})
+        self.save()
+        return True
+
+    def delete_energy_card(self, energy_type: str):
+        if not self.rq.validate_basic_energy(energy_type):
+            return False
+        if energy_type not in self.logdict["energy"].keys():
+            return False
+        _ = self.logdict["energy"].pop(energy_type)
+        return True
+
+    def get_energy_card(self, energy_type: str):
+        if not self.rq.validate_basic_energy(energy_type):
+            return False
+        if energy_type not in self.logdict["energy"].keys():
+            return False
+        return self.logdict["energy"][energy_type]

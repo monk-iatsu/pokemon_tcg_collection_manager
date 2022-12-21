@@ -1,11 +1,13 @@
 """
 Description:
     The library version of Pokémon Card Logger using json
+    (Depreciated)
 Usage:
     from pokemonCardLogger import clss_json as pcl
 """
 import json
 from clss_base import *
+print(" this feature is depreciated. will be removed in the future")
 
 
 class DbHandle(DbHandleBase):

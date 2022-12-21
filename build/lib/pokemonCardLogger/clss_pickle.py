@@ -28,8 +28,7 @@ class DbHandle(DbHandleBase):
             return None
         with open(self.logfile, "wb") as f:
             pickle.dump(self.logdict, f)
-        if self.has_encryption:
-            self.encrypt()
+        self.encrypt()
 
     def read(self):
         """
@@ -38,8 +37,7 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: dictionary consisting of the log data
         """
-        if self.has_encryption:
-            self.decrypt()
+        self.decrypt()
         if self.logfile == ":memory:":
             return None
         with open(self.logfile, "rb") as f:

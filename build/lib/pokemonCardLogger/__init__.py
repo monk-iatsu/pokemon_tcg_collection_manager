@@ -4,8 +4,7 @@ Description:
 Usage:
     To run as a program "python3 main.py"
     To use as a library:
-        "from pokemonCardLogger import clss as pcl" for json storage
-        "from pokemonCardLogger import clss_alt as pcl" for sqlite storage (pre-alpha experimental)
+        "from pokemonCardLogger import clss_pickle as pcl" for pickle storage
     To get just the packs and their ids, run "python3 packRef.py"
 """
-from pokemonCardLogger import *
+from pokemonCardLogger import main, test_api_status, clss_pickle, clss_base, assets, migrate, packRef, post_encrypt, version_test_and_update

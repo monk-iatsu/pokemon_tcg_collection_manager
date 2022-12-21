@@ -72,3 +72,9 @@ version 0.2.11:
     + code cleanup
 version 0.2.11a:
     - major bug fix
+version 0.2.12:
+    - removed json support
+    + mandated encryption (backup before you update then restore with csv)
+    + readability changes
+    + quality of life fixes
+    - bug fixes

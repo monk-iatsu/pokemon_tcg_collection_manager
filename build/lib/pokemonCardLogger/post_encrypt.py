@@ -14,15 +14,14 @@ import base64
 from getpass import getpass
 import clss_base
 import clss_pickle
-import clss_json
 import contextlib
 import pickle
 import json
 import hashlib
+from assets import *
 
 API_KEY = ""
 NO_RESPONSE = ("n", "0", "no", "")
-ITERATIONS = 1000000
 
 
 # noinspection PyGlobalUndefined

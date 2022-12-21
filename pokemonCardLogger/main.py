@@ -13,9 +13,9 @@ import sys
 import datetime as dt
 from getpass import getpass
 import clss_base
-import clss_json
 import clss_pickle
 import test_api_status
+import cryptography
 
 API_KEY = ""
 NO_RESPONSE = ("n", "0", "no", "")
@@ -50,7 +50,7 @@ with contextlib.suppress(FileExistsError):
     os.makedirs(prog_data)
 
 
-def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+def get_card_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         Asks the user for a card id and returns the data received from the pokemonTcgApi
@@ -66,6 +66,7 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
         pack_name = rq.get_pack(pack_id)["data"]["name"]
     except ConnectionError:
         print("Either the pack is invalid, or your connection to the api has failed. Try again.")
+        return False, False
     msg = f"Is the pack name {pack_name}? ('n' or 'y')\n"
     if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
         print("Then try again.")
@@ -108,7 +109,7 @@ def get_card_id_and_print_type(rq: (clss_json.RqHandle, clss_pickle.RqHandle, cl
     return card_id, print_type
 
 
-def list_packs(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+def list_packs(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         Prints out to console, the list of packs and their pack ids
@@ -178,8 +179,8 @@ please select one of the following:
     return mode
 
 
-def get_card_log(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                 rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def get_card_log(db: clss_pickle.DbHandle,
+                 rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                  *args, **kwargs):
     """
     Description:
@@ -197,8 +198,8 @@ def get_card_log(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         print(f"card name: {name} with print type: {print_type}; the pack of the card is: {pack}; count: {qnty}")
 
 
-def get_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-             rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def get_card(db: clss_pickle.DbHandle,
+             rq: (clss_pickle.RqHandle, clss_base.RqHandle),
              *args, **kwargs):
     """
     Description:
@@ -228,8 +229,8 @@ def get_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     print(f"the card {name} in pack {pack} quantity is: {qnty}")
 
 
-def add_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-             rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def add_card(db: clss_pickle.DbHandle,
+             rq: (clss_pickle.RqHandle, clss_base.RqHandle),
              *args, **kwargs):
     """
     Description:
@@ -247,7 +248,7 @@ def add_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     print(f"the process was successful: {db.add_card(card_id, new_count, print_type)}")
 
 
-def test_card_validity(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+def test_card_validity(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         asks user for a suspected card id and tests if it is valid
@@ -288,8 +289,8 @@ def test_card_validity(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.
     print(f"That is a valid card. the card name is {card_data['data']['name']}")
 
 
-def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def remove_card(db: clss_pickle.DbHandle,
+                rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                 *args, **kwargs):
     """
     Description:
@@ -308,8 +309,8 @@ def remove_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     print(f"the process was successful: {db.remove_card(card_id, new_count, print_type)}")
 
 
-def delete_card(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def delete_card(db: clss_pickle.DbHandle,
+                rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                 *args, **kwargs):
     """
     Description:
@@ -346,67 +347,34 @@ def get_user():
     Parameters
         :return: a tuple of two items consisting of instances of RqHandle and DbHandle
     """
-    if clss_json.API_KEY == "":
-        clss_json.init(API_KEY)
     if clss_pickle.API_KEY == "":
         clss_pickle.init(API_KEY)
-    msg1 = "Please enter 1 for json or 2 for pickle (pickle is binary and unreadable outside the program, while json"
-    msg2 = "is not)"
-    msg = f"{msg1} {msg2}"
-    mode = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
-    rq = None
     db = None
-    if mode == 1:
-        rq = clss_json.RqHandle(API_KEY)
-    elif mode == 2:
-        rq = clss_pickle.RqHandle(API_KEY)
-    else:
-        print("Invalid input. Please enter 1 or 2")
+    rq = clss_pickle.RqHandle(API_KEY)
+    msg = "Please enter the name of the user. Enter 'default' for the default insecure no password login\n"
+    user = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
+    user = f"{user}.pcllog"
+    user_file = os.path.join(prog_data, user)
+    if user in ["default.json", "default.pcllog"]:
+        psswrd = "default"
+    print("Please enter password for said user.")
+    psswrd = getpass(">>> ")
+    if not os.path.exists(user_file):
+        db = clss_pickle.DbHandle(user_file, psswrd, rq)
+        return db, rq
+    try:
+        db = clss_pickle.DbHandle(user_file, psswrd, rq)
+    except cryptography.fernet.InvalidToken:
+        print("Invalid password. Try again.")
         try:
             return get_user()
         except RecursionError:
             print("Too many invalid entries. Quitting")
             quit()
-    msg = "Please enter the name of the user. Enter 'default' for the default insecure no password login\n"
-    user = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
-    ext = ""
-    if mode == "1":
-        ext = ".json"
-    elif mode == "2":
-        ext = ".pcllog"
-    user = f"{user}{ext}"
-    user_file = os.path.join(prog_data, user)
-    if user in ["default.json", "default.pcllog"]:
-        psswrd = "default"
-    else:
-        print("Please enter password for said user.")
-        psswrd = getpass(">>> ")
-    msg = "is this an encrypted user? ('y' or 'n')\n"
-    enc = ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False)
-    if mode == 1:
-        try:
-            db = clss_json.DbHandle(user_file, psswrd, rq, has_encryption=enc)
-        except Exception:
-            print("Invalid password. Try again.")
-            try:
-                return get_user()
-            except RecursionError:
-                print("Too many invalid entries Quitting")
-                quit()
-    elif mode == 2:
-        try:
-            db = clss_pickle.DbHandle(user_file, psswrd, rq, has_encryption=enc)
-        except Exception:
-            print("Invalid password. Try again.")
-            try:
-                return get_user()
-            except RecursionError:
-                print("Too many invalid entries. Quitting")
-                quit()
     return db, rq
 
 
-def len_of_log(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
+def len_of_log(db: clss_pickle.DbHandle, *args, **kwargs):
     """
     Description:
         prints the length of the log
@@ -417,8 +385,8 @@ def len_of_log(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     print(f"The size of your logged collection is {len(db)}")
 
 
-def get_collection_value(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                         rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def get_collection_value(db: clss_pickle.DbHandle,
+                         rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                          *args, **kwargs):
     """
     Description:
@@ -445,7 +413,7 @@ def get_collection_value(db: (clss_json.DbHandle, clss_pickle.DbHandle),
     print(f"\nThe value of your collection is ${value}")
 
 
-def get_card_value(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+def get_card_value(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     """
     Description:
         prints the value of a card
@@ -464,7 +432,7 @@ def get_card_value(rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHa
     print(f"The value of {card_id} who's name is {card_name} with print type of {print_type} is ${price}")
 
 
-def list_login(db: (clss_json.DbHandle, clss_pickle.DbHandle),
+def list_login(db: clss_pickle.DbHandle,
                *args, **kwargs):
     """
     Description:
@@ -477,8 +445,8 @@ def list_login(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         print(f"A successful login on {month} / {day} / {year} at {hour} : {minute} : {second}")
 
 
-def get_log_by_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                     rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def get_log_by_price(db: clss_pickle.DbHandle,
+                     rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                      *args, **kwargs):
     """
     Description:
@@ -496,7 +464,7 @@ def get_log_by_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         print(f"card name: {name} with print type: {print_type}; the pack of the card is: {pack}; count: {qnty}")
 
 
-def to_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
+def to_csv(db: clss_pickle.DbHandle, *args, **kwargs):
     """
     Description:
         exports log to csv.
@@ -512,7 +480,7 @@ def to_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     print(f"\nThe location for the output file is in Documents. it is called: {csv_file}")
 
 
-def end(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
+def end(db: clss_pickle.DbHandle, *args, **kwargs):
     """
     Description:
         cleanly ends the program
@@ -524,7 +492,7 @@ def end(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     quit()
 
 
-def from_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
+def from_csv(db: clss_pickle.DbHandle, *args, **kwargs):
     """
     Description:
         imports data to the log from csv
@@ -550,8 +518,8 @@ def from_csv(db: (clss_json.DbHandle, clss_pickle.DbHandle), *args, **kwargs):
     print(f"The process was successful: {db.import_csv(path, output=True)}")
 
 
-def get_card_full_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                        rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def get_card_full_price(db: clss_pickle.DbHandle,
+                        rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                         *args, **kwargs):
     card_id, print_type = get_card_id_and_print_type(rq)
     cd = rq.get_card(card_id)["data"]
@@ -562,8 +530,8 @@ def get_card_full_price(db: (clss_json.DbHandle, clss_pickle.DbHandle),
         print(msg)
 
 
-def get_full_price_in_collection(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-                                 rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def get_full_price_in_collection(db: clss_pickle.DbHandle,
+                                 rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                                  *args, **kwargs):
     print("")
     for row in db.get_log():
@@ -579,8 +547,8 @@ def get_full_price_in_collection(db: (clss_json.DbHandle, clss_pickle.DbHandle),
             print(msg)
 
 
-def trade(db: (clss_json.DbHandle, clss_pickle.DbHandle),
-          rq: (clss_json.RqHandle, clss_pickle.RqHandle, clss_base.RqHandle),
+def trade(db: clss_pickle.DbHandle,
+          rq: (clss_pickle.RqHandle, clss_base.RqHandle),
           *args, **kwargs):
     other_db = clss_pickle.DbHandle(":memory:", "default", rq, False)
     msg = "Please enter the path to the user two's csv file. Enter nothing to try again later.\n"
