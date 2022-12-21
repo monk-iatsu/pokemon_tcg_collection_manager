@@ -279,7 +279,7 @@ def test_card_validity(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **
     if num is None:
         print("Canceled.")
         return
-    card_id = f"{pack}-{num}"
+    card_id = f"{pack_id}-{num}"
     card_data = {}
     try:
         card_data = rq.get_card(card_id)
@@ -332,8 +332,8 @@ def delete_card(db: clss_pickle.DbHandle,
     if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
         print("Then try again.")
         return
-    msg = "are you sure you want to do this? it cannot be undone.\n"
-    if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
+    msg = "are you sure you want to do this? it cannot be undone. ('y' or 'n')\n"
+    if ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
         print(f"the process was successful: {db.delete_card(card_id, print_type)}")
     else:
         print("Canceled.")
@@ -550,7 +550,7 @@ def get_full_price_in_collection(db: clss_pickle.DbHandle,
 def trade(db: clss_pickle.DbHandle,
           rq: (clss_pickle.RqHandle, clss_base.RqHandle),
           *args, **kwargs):
-    other_db = clss_pickle.DbHandle(":memory:", "default", rq, False)
+    other_db = clss_pickle.DbHandle(":memory:", "default", rq)
     msg = "Please enter the path to the user two's csv file. Enter nothing to try again later.\n"
     csv_path = ctt.get_user_input(msg, ctt.STR_TYPE)
     if csv_path is None:
@@ -583,11 +583,11 @@ def trade(db: clss_pickle.DbHandle,
     if not ctt.get_user_input(msg, ctt.BOOL_TYPE):
         print("Canceled.")
         return
-    trade_code = db.trade(other_db, other_card_id, other_print_type, other_qnty, card_id, print_type, qnty, csv_path)
+    trade_code = db.trade(other_db, other_card_id, other_print_type, other_qnty, card_id, print_type, qnty)
     if trade_code != clss_base.TRADE_SUCCESS:
         print(f"Process failed. Fail code {trade_code}")
     else:
-        print("Process successful. Saving updated csv.")
+        print("Process successful. Saving user two's updated csv.")
         other_db.export_csv(csv_path)
 
 

@@ -11,7 +11,6 @@ import base64
 import hashlib
 import sys
 from assets import *
-from version_test_and_update import update
 
 TRADE_SUCCESS = 0
 TRADE_CODE_CARD_NOT_IN_LOG = 1
