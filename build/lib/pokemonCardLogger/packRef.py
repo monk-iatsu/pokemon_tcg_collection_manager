@@ -6,13 +6,14 @@ Usage:
 """
 import clss_base
 import test_api_status
+import cliTextTools as ctt
 try:
     # noinspection PyUnresolvedReferences
     import config
     key = config.API_KEY
 except ImportError:
-    print("please enter your api key for pokemonTcgApi")
-    key = input(">>> ")
+    msg = "Please enter you pokemontcgapi key. if you do not have one you can get one for free at 'https://dev.pokemontcg.io/': "
+    API_KEY = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
 
 
 if __name__ == "__main__":

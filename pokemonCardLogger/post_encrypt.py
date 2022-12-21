@@ -19,6 +19,7 @@ import pickle
 import json
 import hashlib
 from assets import *
+import cliTextTools as ctt
 
 API_KEY = ""
 NO_RESPONSE = ("n", "0", "no", "")
@@ -43,8 +44,8 @@ try:
 except ImportError:
 
     if __name__ == "__main__":
-        print("Please enter you pokemontcgapi key: ")
-        API_KEY = input(">>> ")
+        msg = "Please enter you pokemontcgapi key. if you do not have one you can get one for free at 'https://dev.pokemontcg.io/': "
+        API_KEY = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
 
 pltfrm = sys.platform
 home = os.environ["HOME"]

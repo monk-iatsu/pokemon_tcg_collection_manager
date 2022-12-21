@@ -11,6 +11,7 @@ import base64
 import hashlib
 import sys
 from assets import *
+import cliTextTools as ctt
 
 TRADE_SUCCESS = 0
 TRADE_CODE_CARD_NOT_IN_LOG = 1
@@ -38,8 +39,8 @@ try:
 except ImportError:
 
     if __name__ == "__main__":
-        print("Please enter you pokemontcgapi key: ")
-        API_KEY = input(">>> ")
+        msg = "Please enter you pokemontcgapi key. if you do not have one you can get one for free at 'https://dev.pokemontcg.io/': "
+        API_KEY = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
 
 pltfrm = sys.platform
 home = os.environ["HOME"]
