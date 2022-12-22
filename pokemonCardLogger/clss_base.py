@@ -12,6 +12,7 @@ import hashlib
 import sys
 from assets import *
 import cliTextTools as ctt
+import functools
 
 TRADE_SUCCESS = 0
 TRADE_CODE_CARD_NOT_IN_LOG = 1
@@ -73,6 +74,7 @@ class RqHandle:
         self.api_key = api_key
         self.headers = {"X-Api-Key": self.api_key}
 
+    @functools.lru_cache(65536)
     def get_card(self, card_id: str):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -91,6 +93,7 @@ class RqHandle:
         else:
             raise ConnectionError
 
+    @functools.lru_cache(65536)
     def get_pack(self, pack_id: str):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -109,6 +112,7 @@ class RqHandle:
         else:
             raise ConnectionError
 
+    @functools.lru_cache(1)
     def get_all_sets(self):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -356,7 +360,7 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        return {"psswrd": self.psswrd_hash, "login_times": [], "log": {}}
+        return {"psswrd": self.psswrd_hash, "login_times": [], "log": {}, "energy": {}}
 
     def log_with_prices(self, log_list: iter):
         """
@@ -461,6 +465,7 @@ class DbHandleBase:
                 if output:
                     print(f"adding card with card id {card_id} and print type {print_type}, and quantity of {qnty}")
                 self.add_card(card_id, qnty, print_type)
+        self.save()
         return True
 
     def get_full_price_data(self, card_id: str, print_type: str):
@@ -472,7 +477,10 @@ class DbHandleBase:
             :param print_type: the print type of the card to return
             :return: generator consisting of a tuple containing the price key and the price
         """
-        cd = self.rq.get_card(card_id)["data"]
+        try:
+            cd = self.rq.get_card(card_id)["data"]
+        except ConnectionError:
+            return (None, None), (None, None)
         price_data = cd["tcgplayer"]["prices"][print_type]
         yield from price_data.items()
 

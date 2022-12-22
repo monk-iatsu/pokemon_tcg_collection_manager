@@ -82,3 +82,8 @@ version 0.2.13:
     - bug fixes
 version 0.2.13a:
     - bug fixes
+version 0.2.14:
+    + speed increase
+    - bug fixes
+    + readability changes
+    + quality of life fixes
