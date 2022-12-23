@@ -6,6 +6,7 @@ pokemonCardLogger/assets.py
 pokemonCardLogger/clss_base.py
 pokemonCardLogger/clss_json.py
 pokemonCardLogger/clss_pickle.py
+pokemonCardLogger/config.py
 pokemonCardLogger/main.py
 pokemonCardLogger/migrate.py
 pokemonCardLogger/packRef.py

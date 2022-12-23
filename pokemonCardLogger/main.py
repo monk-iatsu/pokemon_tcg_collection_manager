@@ -147,6 +147,7 @@ please select one of the following:
 14: get a cards full price data
 15: get full price data on all cards in collection
 16: trade with another user
+17: get full price data on all cards in collection and giving a total value for each
 """
     mode = ctt.get_user_input(info, ctt.INT_TYPE)
     switch = {
@@ -166,7 +167,8 @@ please select one of the following:
         13: "from csv",
         14: "full price",
         15: "full collection",
-        16: "csv trade"
+        16: "csv trade",
+        17: "total collection"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
@@ -547,6 +549,34 @@ def get_full_price_in_collection(db: clss_pickle.DbHandle,
             print(msg)
 
 
+def get_full_price_in_collection_and_collection_value(db: clss_pickle.DbHandle,
+                                                      rq: (clss_pickle.RqHandle, clss_base.RqHandle),
+                                                      *args, **kwargs):
+    print("")
+    full_collection = {}
+    print("The full collection:")
+    for row in db.get_log():
+        card_id = row[0]
+        print_type = row[1]
+        qnty = row[2]
+        card_data = rq.get_card(card_id)["data"]
+        card_name = card_data["name"]
+        msg = f"\tThe card id of the card is {card_id} card name is {card_name}, the current print type is {print_type}:"
+        print(msg)
+        for key, price in db.get_full_price_data(card_id, print_type):
+            msg = f"\t\tThe price data is {key} has a price of ${price} with a quantity of {qnty} the value of this card is ${round((price * qnty), 2)}"
+            print(msg)
+            fc = full_collection.get(key, {"fc": 0})["fc"]
+            fc = round(((price * qnty) + fc), 2)
+            count = full_collection.get(key, {"count": 0})["count"]
+            full_collection[key] = {"fc": fc, "count": count+qnty}
+    print("All prices put together: ")
+    for key, value in full_collection.items():
+        count = value["count"]
+        price = value["fc"]
+        print(f"\tAll {key} prices added up = ${round((price * qnty), 2)}. There are {count} cards with this price category")
+
+
 def trade(db: clss_pickle.DbHandle,
           rq: (clss_pickle.RqHandle, clss_base.RqHandle),
           *args, **kwargs):
@@ -619,6 +649,7 @@ def main():
         "from csv": from_csv,
         "full price": get_card_full_price,
         "full collection": get_full_price_in_collection,
+        "total collection": get_full_price_in_collection_and_collection_value,
         "csv trade": trade
     }
     while True:
