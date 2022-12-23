@@ -12,4 +12,5 @@ BASIC_ENERGY = {
 ENERGY_TYPES = BASIC_ENERGY
 ENERGY_TYPES["dn"] = "Dragon"
 ENERGY_TYPES["cs"] = "Colorless"
+ENERGY_PRINT_TYPES = ("normal", "reverseHolofoil")
 ITERATIONS = 1000000

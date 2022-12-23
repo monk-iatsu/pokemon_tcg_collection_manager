@@ -16,6 +16,7 @@ import clss_base
 import clss_pickle
 import test_api_status
 import cryptography
+from assets import *
 
 API_KEY = ""
 NO_RESPONSE = ("n", "0", "no", "")
@@ -148,6 +149,13 @@ please select one of the following:
 15: get full price data on all cards in collection
 16: trade with another user
 17: get full price data on all cards in collection and giving a total value for each
+18: list all the names and ids of energy cards
+19: add energy card to the log
+20: remove energy card from the log
+21: deletes energy card entry from the log
+22: gets the count of a given energy card
+23: gets the counts of the entire energy log
+24: gets the length of the energy card log
 """
     mode = ctt.get_user_input(info, ctt.INT_TYPE)
     switch = {
@@ -168,7 +176,14 @@ please select one of the following:
         14: "full price",
         15: "full collection",
         16: "csv trade",
-        17: "total collection"
+        17: "total collection",
+        18: "list energy",
+        19: "add energy",
+        20: "remove energy",
+        21: "delete energy",
+        22: "get energy",
+        23: "energy log",
+        24: "len energy"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
@@ -621,6 +636,75 @@ def trade(db: clss_pickle.DbHandle,
         other_db.export_csv(csv_path)
 
 
+def get_energy_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    msg = "please enter the card id of the energy card. please use option 18 from the main menu. enter nothing to cancel"
+    card_id = ctt.get_user_input(msg, ctt.STR_TYPE)
+    if card_id is None:
+        print("Canceled")
+        return None
+    if not rq.validate_basic_energy(card_id):
+        print("Invalid card id. Try again. See option 18 from the main menu")
+        try:
+            return get_energy_id_and_print_type(rq)
+        except RecursionError:
+            print("Too many invalid entries. Try again.")
+    msg = "please select a print type from one of the following options: "
+    for i, print_type in enumerate(ENERGY_PRINT_TYPES):
+        msg = f"{msg}\n{i} = {print_type}"
+    index = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    print_type = ENERGY_PRINT_TYPES[index]
+    return card_id, print_type
+
+
+def get_energy_log(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    for card_id, print_type, qnty in db.get_energy_log():
+        energy_name = rq.get_basic_energy(card_id)
+        msg = f"the energy card {energy_name} with print type {print_type} has a quantity of {qnty}"
+        print(msg)
+
+
+def energy_log_len(db: clss_pickle.DbHandle, *args, **kwargs):
+    qnty = 0
+    for _, _, q in db.get_energy_log():
+        qnty += q
+
+    msg = f"The length of the energy log is {qnty}"
+    print(msg)
+
+
+def add_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    card_id, print_type = get_energy_id_and_print_type(rq)
+    msg = "How many energy do you wish to add?"
+    qnty = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    f"The process was successful: {db.add_energy_card(card_id, print_type, qnty)}"
+
+
+def get_energy_ids(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    for card_id, name in rq.get_basic_energy_list():
+        print(f"the card id {card_id} is {name} energy")
+
+
+def remove_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    card_id, print_type = get_energy_id_and_print_type(rq)
+    msg = "How many energy do you wish to remove?"
+    qnty = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    f"The process was successful: {db.remove_energy_card(card_id, print_type, qnty)}"
+
+
+def delete_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    card_id, print_type = get_energy_id_and_print_type(rq)
+    msg = "this is permanent. do yuo wish to continue? ('y' or 'n')"
+    if not ctt.get_user_input(msg, ctt.BOOL_TYPE):
+        return
+    f"The process was successful: {db.delete_energy_card(card_id, print_type)}"
+
+
+def get_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    card_id, print_type = get_energy_id_and_print_type(rq)
+    qnty = db.get_energy_card(card_id, print_type)
+    print(f"the count of energy card {rq.get_basic_energy(card_id)} with print type {print_type} is {qnty}")
+
+
 def main():
     """
     Description:
@@ -650,7 +734,14 @@ def main():
         "full price": get_card_full_price,
         "full collection": get_full_price_in_collection,
         "total collection": get_full_price_in_collection_and_collection_value,
-        "csv trade": trade
+        "csv trade": trade,
+        "list energy": get_energy_ids,
+        "add energy": add_energy,
+        "remove energy": remove_energy,
+        "delete energy": delete_energy,
+        "get energy": get_energy,
+        "energy log": get_energy_log,
+        "len energy": energy_log_len
     }
     while True:
         mode = get_mode()

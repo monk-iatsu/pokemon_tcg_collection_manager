@@ -94,3 +94,8 @@ version 0.2.15:
     + total of option 15 feature in main
 version 0.2.15a:
     - bug fixes
+version 0.2.16:
+    + energy logging support
+    - bug fixes
+    + readability changes
+    + quality of life fixes

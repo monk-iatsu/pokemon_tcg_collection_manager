@@ -133,17 +133,39 @@ class RqHandle:
     def __repr__(self):
         return f"RqHandle({self.api_key}"
 
-    @staticmethod
-    def validate_basic_energy(e_type_id: str):
+    @functools.lru_cache(65536)
+    def validate_basic_energy(self, e_type_id: str):
+        # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
+        """
+        Description:
+            validates a basic energy id
+        Parameters:
+            :param e_type_id: the energy id of the card
+            :return: bool based on if the energy id is valid
+        """
         if e_type_id in BASIC_ENERGY.keys():
             return True
+        return False
 
-    @staticmethod
-    def get_basic_energy_list():
+    @functools.lru_cache(1)
+    def get_basic_energy_list(self):
+        """
+        Description:
+            returns a generator of the energy id and energy name
+        Parameters:
+            :return: a generator that yields a tuple consisting of the energy id and energy name
+        """
         yield from BASIC_ENERGY.items()
 
-    @staticmethod
-    def get_basic_energy(e_type_id):
+    @functools.lru_cache(65536)
+    def get_basic_energy(self, e_type_id):
+        """
+        Description:
+            returns the name of a given energy id 
+        Parameters:
+            :param e_type_id: the energy id
+            :return: a string that is the name of the energy
+        """
         return BASIC_ENERGY.get(e_type_id, False)
 
 
@@ -517,36 +539,89 @@ class DbHandleBase:
         self.save()
         return TRADE_SUCCESS
 
-    def add_energy_card(self, energy_type: str, qnty: int):
+    def add_energy_card(self, energy_type: str, print_type: str, qnty: int):
+        """
+        Description:
+            adds an energy card to the log
+        Parameters:
+            :param energy_type: the energy card id of the card
+            :param print_type: the print type of the energy card
+            :param qnty: the nuber of card you wish to add
+            :return: bool based on the successfulness of the process
+        """
         if not self.rq.validate_basic_energy(energy_type):
             return False
-        qnty = self.get_energy_card(energy_type) + qnty
-        self.logdict["energy"].update({energy_type: qnty})
+        qnty = self.get_energy_card(energy_type, print_type) + qnty
+        self.logdict["energy"].update({energy_type: {}})
+        self.logdict["energy"][energy_type].update({print_type: qnty})
         self.save()
         return True
 
-    def remove_energy_card(self, energy_type: str, qnty: int):
+    def remove_energy_card(self, energy_type: str, print_type: str, qnty: int):
+        """
+        Description:
+            removes an energy card from the log
+        Parameters:
+            :param energy_type: the energy card id of the card
+            :param print_type: the print type of the energy card
+            :param qnty: the nuber of card you wish to remove
+            :return: bool based on the successfulness of the process
+        """
         if not self.rq.validate_basic_energy(energy_type):
             return False
         if energy_type not in self.logdict["energy"].keys():
             return False
-        qnty = self.get_energy_card(energy_type) - qnty
+        if print_type not in self.logdict["energy"][energy_type]:
+            return False
+        qnty = self.get_energy_card(energy_type, print_type) - qnty
         qnty = max(qnty, 0)
-        self.logdict["energy"].update({energy_type: qnty})
+        self.logdict["energy"][energy_type][print_type] = qnty
         self.save()
         return True
 
-    def delete_energy_card(self, energy_type: str):
+    def delete_energy_card(self, energy_type: str, print_type: str):
+        """
+        Description:
+            deletes an energy card from the log of a given print type
+        Parameters:
+            :param energy_type: the energy card id of the card
+            :param print_type: the print type of the energy card
+            :return: bool based on the successfulness of the process
+        """
         if not self.rq.validate_basic_energy(energy_type):
             return False
         if energy_type not in self.logdict["energy"].keys():
             return False
-        _ = self.logdict["energy"].pop(energy_type)
+        if print_type not in self.logdict["energy"][energy_type]:
+            return False
+        _ = self.logdict["energy"][energy_type].pop(print_type)
+        self.save()
         return True
 
-    def get_energy_card(self, energy_type: str):
+    def get_energy_card(self, energy_type: str, print_type: str):
+        """
+        Description:
+            returns the count of the given energy type
+        Parameters:
+            :param energy_type: the energy card id of the card
+            :param print_type: the print type of the energy card
+            :return: the count of the given card that is in the collection
+        """
         if not self.rq.validate_basic_energy(energy_type):
             return False
         if energy_type not in self.logdict["energy"].keys():
-            return False
-        return self.logdict["energy"][energy_type]
+            return 0
+        if print_type not in self.logdict["energy"][energy_type]:
+            return 0
+        return self.logdict["energy"][energy_type][print_type]
+
+    def get_energy_log(self):
+        """
+        Description:
+            returns a generator that gives the energy log
+        Parameters:
+            :return: returns a generator that yields a tuple consisting of a card id, print type and a count
+        """
+        for card_id, print_types in self.logdict["energy"].items():
+            for print_type, count in print_types.items():
+                yield card_id, print_type, count
