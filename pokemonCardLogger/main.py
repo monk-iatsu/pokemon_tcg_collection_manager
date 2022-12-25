@@ -156,6 +156,7 @@ please select one of the following:
 22: gets the count of a given energy card
 23: gets the counts of the entire energy log
 24: gets the length of the energy card log
+25: entire log size
 """
     mode = ctt.get_user_input(info, ctt.INT_TYPE)
     switch = {
@@ -183,7 +184,8 @@ please select one of the following:
         21: "delete energy",
         22: "get energy",
         23: "energy log",
-        24: "len energy"
+        24: "len energy",
+        25: "len max"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
@@ -399,7 +401,7 @@ def len_of_log(db: clss_pickle.DbHandle, *args, **kwargs):
         :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
-    print(f"The size of your logged collection is {len(db)}")
+    print(f"The size of your logged collection is {db.reg_log_size}")
 
 
 def get_collection_value(db: clss_pickle.DbHandle,
@@ -538,7 +540,18 @@ def from_csv(db: clss_pickle.DbHandle, *args, **kwargs):
 def get_card_full_price(db: clss_pickle.DbHandle,
                         rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                         *args, **kwargs):
+    """
+    Description:
+        gets the full price data of a card and prints it out to the user
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     card_id, print_type = get_card_id_and_print_type(rq)
+    if not card_id:
+        print("Canceled")
+        return
     cd = rq.get_card(card_id)["data"]
     card_name = cd["name"]
     print("")
@@ -550,6 +563,14 @@ def get_card_full_price(db: clss_pickle.DbHandle,
 def get_full_price_in_collection(db: clss_pickle.DbHandle,
                                  rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                                  *args, **kwargs):
+    """
+    Description:
+        gets the full price data of the full collection and prints it out to the user
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     print("")
     for row in db.get_log():
         card_id = row[0]
@@ -567,6 +588,14 @@ def get_full_price_in_collection(db: clss_pickle.DbHandle,
 def get_full_price_in_collection_and_collection_value(db: clss_pickle.DbHandle,
                                                       rq: (clss_pickle.RqHandle, clss_base.RqHandle),
                                                       *args, **kwargs):
+    """
+    Description:
+        Gets the full log, and gets full price of each card, while adding them all up and prints it out to the user.
+    Parameters:
+        :param db: an instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     print("")
     full_collection = {}
     print("The full collection:")
@@ -595,6 +624,14 @@ def get_full_price_in_collection_and_collection_value(db: clss_pickle.DbHandle,
 def trade(db: clss_pickle.DbHandle,
           rq: (clss_pickle.RqHandle, clss_base.RqHandle),
           *args, **kwargs):
+    """
+    Description:
+        trades a card with another user using a csv file for user two
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq:  instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     other_db = clss_pickle.DbHandle(":memory:", "default", rq)
     msg = "Please enter the path to the user two's csv file. Enter nothing to try again later."
     csv_path = ctt.get_user_input(msg, ctt.STR_TYPE)
@@ -637,6 +674,13 @@ def trade(db: clss_pickle.DbHandle,
 
 
 def get_energy_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    """
+    Description:
+        gets an energy and print type from the user
+    Parameters:
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return:
+    """
     msg = "please enter the card id of the energy card. please use option 18 from the main menu. enter nothing to cancel"
     card_id = ctt.get_user_input(msg, ctt.STR_TYPE)
     if card_id is None:
@@ -657,6 +701,14 @@ def get_energy_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle),
 
 
 def get_energy_log(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    """
+    Description:
+        prints out to the user the logged energy cards
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return:
+    """
     for card_id, print_type, qnty in db.get_energy_log():
         energy_name = rq.get_basic_energy(card_id)
         msg = f"the energy card {energy_name} with print type {print_type} has a quantity of {qnty}"
@@ -664,15 +716,25 @@ def get_energy_log(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_bas
 
 
 def energy_log_len(db: clss_pickle.DbHandle, *args, **kwargs):
-    qnty = 0
-    for _, _, q in db.get_energy_log():
-        qnty += q
-
-    msg = f"The length of the energy log is {qnty}"
-    print(msg)
+    """
+    Description:
+        prints out the size of the energy log
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :return: None
+    """
+    print(f"The length of the energy log is {db.energy_log_size}")
 
 
 def add_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    """
+    Description:
+        adds to the energy log
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     card_id, print_type = get_energy_id_and_print_type(rq)
     msg = "How many energy do you wish to add?"
     qnty = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
@@ -680,11 +742,26 @@ def add_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.Rq
 
 
 def get_energy_ids(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    """
+    Description:
+        prints out the energy cards and their ids
+    Parameters:
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     for card_id, name in rq.get_basic_energy_list():
         print(f"the card id {card_id} is {name} energy")
 
 
 def remove_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    """
+    Description:
+        removes cards from the energy log
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     card_id, print_type = get_energy_id_and_print_type(rq)
     msg = "How many energy do you wish to remove?"
     qnty = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
@@ -692,6 +769,14 @@ def remove_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base
 
 
 def delete_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    """
+    Description:
+        deletes an entire entry in the energy log
+    Parameters
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     card_id, print_type = get_energy_id_and_print_type(rq)
     msg = "this is permanent. do yuo wish to continue? ('y' or 'n')"
     if not ctt.get_user_input(msg, ctt.BOOL_TYPE):
@@ -700,9 +785,28 @@ def delete_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base
 
 
 def get_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    """
+    Description:
+        gets an energy count from the energy log
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
+        :return: None
+    """
     card_id, print_type = get_energy_id_and_print_type(rq)
     qnty = db.get_energy_card(card_id, print_type)
     print(f"the count of energy card {rq.get_basic_energy(card_id)} with print type {print_type} is {qnty}")
+
+
+def full_len(db: clss_pickle.DbHandle, *args, **kwargs):
+    """
+    Description:
+        prints out the full length of the log
+    Parameters:
+        :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
+        :return: None
+    """
+    print(f"The full size of the log including energy log and regular log, is {len(db)}")
 
 
 def main():
@@ -741,7 +845,8 @@ def main():
         "delete energy": delete_energy,
         "get energy": get_energy,
         "energy log": get_energy_log,
-        "len energy": energy_log_len
+        "len energy": energy_log_len,
+        "len max": full_len,
     }
     while True:
         mode = get_mode()

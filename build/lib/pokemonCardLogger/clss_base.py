@@ -22,17 +22,19 @@ TRADE_CODE_CARD_NOT_IN_LOG_QNTY = 3
 API_KEY = ""
 
 
-def init(api_key: str, iterations: int = 1000000):
+def init(api_key: str, iterations: int = 1000000, lru: int = LRU_CACHE_EXPO):
     """
     Description:
         sets the module global variables, so it can be used
     :param api_key: string containing the api key for pokemon tcg api
     :param iterations: iterations used for the password encryption
+    :param lru: the new lru cache expo
     :return: None
     """
-    global API_KEY, ITERATIONS
+    global API_KEY, ITERATIONS, LRU_CACHE_EXPO
     API_KEY = api_key
     ITERATIONS = iterations
+    LRU_CACHE_EXPO = lru
 
 
 try:
@@ -74,7 +76,7 @@ class RqHandle:
         self.api_key = api_key
         self.headers = {"X-Api-Key": self.api_key}
 
-    @functools.lru_cache(65536)
+    @functools.lru_cache(2**LRU_CACHE_EXPO)
     def get_card(self, card_id: str):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -93,7 +95,7 @@ class RqHandle:
         else:
             raise ConnectionError
 
-    @functools.lru_cache(65536)
+    @functools.lru_cache(2**LRU_CACHE_EXPO)
     def get_pack(self, pack_id: str):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -133,7 +135,7 @@ class RqHandle:
     def __repr__(self):
         return f"RqHandle({self.api_key}"
 
-    @functools.lru_cache(65536)
+    @functools.lru_cache(2**LRU_CACHE_EXPO)
     def validate_basic_energy(self, e_type_id: str):
         # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
         """
@@ -157,7 +159,7 @@ class RqHandle:
         """
         yield from BASIC_ENERGY.items()
 
-    @functools.lru_cache(65536)
+    @functools.lru_cache(2**LRU_CACHE_EXPO)
     def get_basic_energy(self, e_type_id):
         """
         Description:
@@ -213,7 +215,7 @@ class DbHandleBase:
         Parameters:
             :return: None
         """
-        self.logdict = {"psswrd": self.key_hash, "login_times": [], "log": {}, "energy": {}}
+        self.logdict = {"login_times": [], "log": {}, "energy": {}}
         self.login_setup()
         self.save()
 
@@ -342,8 +344,9 @@ class DbHandleBase:
         except ConnectionError:
             return False
 
-    def __len__(self):
-        return len(list(self.get_log()))
+    @property
+    def reg_log_size(self):
+        return sum(q for _, _, q in self.get_log())
 
     def save(self):
         """
@@ -625,3 +628,10 @@ class DbHandleBase:
         for card_id, print_types in self.logdict["energy"].items():
             for print_type, count in print_types.items():
                 yield card_id, print_type, count
+
+    @propery
+    def energy_log_size(self):
+        return sum(q for _, _, q in self.get_energy_log())
+
+    def __len__(self):
+        return self.energy_log_size + self.reg_log_size
