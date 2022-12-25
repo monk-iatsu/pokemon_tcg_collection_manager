@@ -76,6 +76,15 @@ class RqHandle:
         self.api_key = api_key
         self.headers = {"X-Api-Key": self.api_key}
 
+    def wait_for_con(self):
+        while True:
+            try:
+                if not requests.get(f"{self.card_url}/swsh1-1").ok:
+                    continue
+            except requests.exceptions.ConnectionError:
+                continue
+            break
+
     @functools.lru_cache(2**LRU_CACHE_EXPO)
     def get_card(self, card_id: str):  # sourcery skip: raise-from-previous-error
         """

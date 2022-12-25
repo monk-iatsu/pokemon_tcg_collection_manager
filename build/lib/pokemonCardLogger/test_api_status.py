@@ -35,41 +35,16 @@ except ImportError:
         API_KEY = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
 
 
-def with_output():
-    """
-    Description:
-        tests whether the api can be accessed, with output to console
-    :return: None
-    """
-    rq = RqHandle(API_KEY)
-    while True:
-        try:
-            _ = rq.get_card("swsh1-1")
-        except ConnectionError:
-            time.sleep(SLEEP_TIME)
-            print("connection is down")
-            continue
-        print("connection is up")
-        break
-
-
-def without_output():
+def test():
     """
     Description:
         tests whether the api can be accessed, without output to console
     :return: None
     """
-    rq = RqHandle(API_KEY)
-    while True:
-        try:
-            _ = rq.get_card("swsh1-1")
-        except ConnectionError:
-            time.sleep(SLEEP_TIME)
-            continue
-        break
+    RqHandle(API_KEY).test_con()
 
 
 if __name__ == "__main__":
     # main_without_output()
-    with_output()
+    test()
     quit()

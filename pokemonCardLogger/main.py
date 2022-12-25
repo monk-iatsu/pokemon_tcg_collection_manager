@@ -816,10 +816,9 @@ def main():
     Parameters:
         :return: None
     """
-    print("waiting for api connection")
-    test_api_status.init(API_KEY)
-    test_api_status.without_output()
     db, rq = get_user()
+    print("waiting for api connection")
+    rq.wait_for_con()
     switch = {
         "end prog": end,
         "get card": get_card,
