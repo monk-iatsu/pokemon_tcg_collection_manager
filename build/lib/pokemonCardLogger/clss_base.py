@@ -13,6 +13,7 @@ import sys
 from assets import *
 import cliTextTools as ctt
 import functools
+import time
 
 TRADE_SUCCESS = 0
 TRADE_CODE_CARD_NOT_IN_LOG = 1
@@ -78,6 +79,7 @@ class RqHandle:
 
     def wait_for_con(self):
         while True:
+            time.sleep(1)
             try:
                 if not requests.get(f"{self.card_url}/swsh1-1").ok:
                     continue
@@ -85,7 +87,7 @@ class RqHandle:
                 continue
             break
 
-    @functools.lru_cache(2**LRU_CACHE_EXPO)
+    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def get_card(self, card_id: str):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -104,7 +106,7 @@ class RqHandle:
         else:
             raise ConnectionError
 
-    @functools.lru_cache(2**LRU_CACHE_EXPO)
+    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def get_pack(self, pack_id: str):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -144,7 +146,7 @@ class RqHandle:
     def __repr__(self):
         return f"RqHandle({self.api_key}"
 
-    @functools.lru_cache(2**LRU_CACHE_EXPO)
+    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def validate_basic_energy(self, e_type_id: str):
         # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
         """
@@ -168,7 +170,7 @@ class RqHandle:
         """
         yield from BASIC_ENERGY.items()
 
-    @functools.lru_cache(2**LRU_CACHE_EXPO)
+    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def get_basic_energy(self, e_type_id):
         """
         Description:
@@ -638,7 +640,7 @@ class DbHandleBase:
             for print_type, count in print_types.items():
                 yield card_id, print_type, count
 
-    @propery
+    @property
     def energy_log_size(self):
         return sum(q for _, _, q in self.get_energy_log())
 

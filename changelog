@@ -112,3 +112,5 @@ version 0.2.17:
     + readability changes
     + quality of life fixes
     + code cleanup
+version 0.2.18:
+    - major bug fix
