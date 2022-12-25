@@ -679,7 +679,7 @@ def get_energy_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle),
         gets an energy and print type from the user
     Parameters:
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
-        :return:
+        :return: None
     """
     msg = "please enter the card id of the energy card. please use option 18 from the main menu. enter nothing to cancel"
     card_id = ctt.get_user_input(msg, ctt.STR_TYPE)
@@ -707,7 +707,7 @@ def get_energy_log(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_bas
     Parameters:
         :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
-        :return:
+        :return: None
     """
     for card_id, print_type, qnty in db.get_energy_log():
         energy_name = rq.get_basic_energy(card_id)
