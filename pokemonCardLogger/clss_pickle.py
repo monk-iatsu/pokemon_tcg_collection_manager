@@ -7,6 +7,7 @@ Usage:
 """
 import pickle
 from clss_base import *
+from delayedKeyInt import DelayedKeyboardInterrupt
 
 
 class DbHandle(DbHandleBase):
@@ -22,13 +23,14 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: None
         """
-        for i in [card for card, qnty in self.logdict["log"].items() if qnty == 0]:
-            _ = self.logdict["log"].pop(i)
-        if self.logfile == ":memory:":
-            return None
-        with open(self.logfile, "wb") as f:
-            pickle.dump(self.logdict, f)
-        self.encrypt()
+        with DelayedKeyboardInterrupt():
+            for i in [card for card, qnty in self.logdict["log"].items() if qnty == 0]:
+                _ = self.logdict["log"].pop(i)
+            if self.logfile == ":memory:":
+                return None
+            with open(self.logfile, "wb") as f:
+                pickle.dump(self.logdict, f)
+            self.encrypt()
 
     def read(self):
         """
@@ -37,18 +39,19 @@ class DbHandle(DbHandleBase):
         Parameters:
             :return: dictionary consisting of the log data
         """
-        self.decrypt()
-        if self.logfile == ":memory:":
-            return None
-        with open(self.logfile, "rb") as f:
-            try:
-                ld = pickle.load(f)
-            except pickle.PickleError:
-                if self.has_encryption:
-                    self.encrypt()
-                    raise PermissionError
-                raise pickle.PickleError
-        return ld
+        with DelayedKeyboardInterrupt():
+            self.decrypt()
+            if self.logfile == ":memory:":
+                return None
+            with open(self.logfile, "rb") as f:
+                try:
+                    ld = pickle.load(f)
+                except pickle.PickleError:
+                    if self.has_encryption:
+                        self.encrypt()
+                        raise PermissionError
+                    raise pickle.PickleError
+            return ld
 
 
 if __name__ == "__main__":

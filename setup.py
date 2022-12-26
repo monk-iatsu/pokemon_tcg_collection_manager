@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-VERSION = '0.2.18'
+VERSION = '0.2.19'
 DESCRIPTION = 'Log Pokemon cards'
 LONG_DESCRIPTION = 'a module to log and manage a pokemon card collection'
 
@@ -15,7 +15,7 @@ setup(
     long_description_content_type="text/markdown",
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    install_requires=["requests", "cliTextTools"],
+    install_requires=["requests", "cliTextTools", "delayedKeyInt"],
     keywords=['python', 'pokemon', 'card', 'tcg'],
     classifiers=[
         "Development Status :: 4 - Beta",

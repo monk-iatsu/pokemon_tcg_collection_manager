@@ -589,6 +589,8 @@ class DbHandleBase:
             return False
         qnty = self.get_energy_card(energy_type, print_type) - qnty
         qnty = max(qnty, 0)
+        if qnty == 0:
+            _ = self.logdict["energy"][energy_type].pop(print_type)
         self.logdict["energy"][energy_type][print_type] = qnty
         self.save()
         return True
