@@ -12,5 +12,5 @@ A cli tool/library to manage, store and analyze a pokemon card collection
 ## Use as a program
 * zipped install version is required
 * in the install directory:
-** run `python3 pokemonCardLogger/main.py` for unix/mac 
-** run `python3 pokemonCardLogger\main.py` for windows
+  * run `python3 pokemonCardLogger/main.py` for unix/mac 
+  * run `python3 pokemonCardLogger\main.py` for windows
