@@ -122,43 +122,13 @@ def list_packs(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
         print(f"the pack {name}'s id is: {pack_id}")
 
 
-def get_mode():
+def switch_mode(mode: int = 0):
     """
     Description:
         Asks the user what they wish to do
     Parameters:
         :return: a string stating the option chose by the user
     """
-    info = """
-please select one of the following:
-0:  quit
-1:  add card
-2:  remove a card from count
-3:  delete card from database
-4:  list packs
-5:  get card count
-6:  list log
-7:  log size
-8:  collection value
-9:  card value
-10: list login
-11: test card validity
-12: export to csv
-13: import from csv
-14: get a cards full price data
-15: get full price data on all cards in collection
-16: trade with another user
-17: get full price data on all cards in collection and giving a total value for each
-18: list all the names and ids of energy cards
-19: add energy card to the log
-20: remove energy card from the log
-21: deletes energy card entry from the log
-22: gets the count of a given energy card
-23: gets the counts of the entire energy log
-24: gets the length of the energy card log
-25: entire log size
-"""
-    mode = ctt.get_user_input(info, ctt.INT_TYPE)
     switch = {
         0: "end prog",
         1: "add card",
@@ -185,7 +155,11 @@ please select one of the following:
         22: "get energy",
         23: "energy log",
         24: "len energy",
-        25: "len max"
+        25: "len max",
+        26: "init load",
+        27: "avg price",
+        28: "avg full",
+        29: "go back"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
@@ -196,6 +170,140 @@ please select one of the following:
             print("Too many invalid entries. Quitting.")
             return "end"
     return mode
+
+
+def io_menu():
+    menu = """
+Import/Export Menu:
+    0: Go back
+    1: Export
+    2: Import
+            """
+    switch = {
+        0: 0,
+        1: 12,
+        2: 13
+    }
+    mode = switch.get(ctt.get_user_input(menu, ctt.INT_TYPE), 29)
+    return switch_mode(mode)
+
+
+def r_menu():
+    menu = """
+Resource Menu:
+    0: Go back
+    1: List packs
+    2: List energies
+    3: Preload card and pack data (Takes a while, but saves internet usage)
+        """
+    switch = {
+        0: 29,
+        1: 4,
+        2: 18,
+        3: 26
+    }
+    mode = switch.get(ctt.get_user_input(menu, ctt.INT_TYPE), 29)
+    return switch_mode(mode)
+
+
+def ci_menu():
+    menu = """
+Collection Info Menu:
+    0:  Go Back
+    1:  List the log
+    2:  Regular card log length
+    3:  Collection value using market value
+    4:  Collection list using all price data
+    5:  Collection value using all price data
+    6:  List energy log
+    7:  Length of the energy log
+    8:  Length of both logs combined
+    9:  Average price of the log using market price
+    10: Average price of the log using all price data
+    """
+    switch = {
+        0: 29,
+        1: 6,
+        2: 7,
+        3: 8,
+        4: 15,
+        5: 17,
+        6: 23,
+        7: 24,
+        8: 25,
+        9: 27,
+        10: 28
+    }
+    mode = switch.get(ctt.get_user_input(menu, ctt.INT_TYPE), 29)
+    return switch_mode(mode)
+
+
+def gd_menu():
+    menu = """
+Get Data Menu:
+    0: Go back
+    1: Get card count
+    2: Get energy count
+    3: Get card value
+    4: Get the full price data of a card
+    """
+    switch = {
+        0: 29,
+        1: 5,
+        2: 22,
+        3: 9,
+        4: 14
+    }
+    mode = switch.get(ctt.get_user_input(menu, ctt.INT_TYPE), 29)
+    return switch_mode(mode)
+
+
+def ard_menu():
+    menu = """
+Add/Remove/Delete Menu:
+    0: Go Back
+    1: Add card
+    2: Remove card
+    3: Delete card
+    4: Add Energy
+    5: Remove Energy
+    6: Delete Energy
+    7: Trade
+    """
+    switch = {
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 19,
+        5: 20,
+        6: 21,
+        7: 16,
+        0: 29
+    }
+    mode = switch.get(ctt.get_user_input(menu, ctt.INT_TYPE), 29)
+    return switch_mode(mode)
+
+
+def menu_mode():
+    menu = """
+MAIN MENU:
+    0: Quit
+    1: Add/Remove/Delete Cards.
+    2: Get Data.
+    3: Collection Info.
+    4: Import Export.
+    5: Resources.
+    """
+    main_menu = {
+        0: switch_mode,
+        1: ard_menu,
+        2: gd_menu,
+        3: ci_menu,
+        4: io_menu,
+        5: r_menu
+    }
+    func = main_menu.get(ctt.get_user_input(menu, ctt.INT_TYPE), 0)
+    return func()
 
 
 def get_card_log(db: clss_pickle.DbHandle,
@@ -211,7 +319,11 @@ def get_card_log(db: clss_pickle.DbHandle,
     """
     print("This may take some time")
     for card_id, print_type, qnty in db.get_log():
-        data = rq.get_card(card_id)["data"]
+        try:
+            data = rq.get_card(card_id)
+        except ConnectionError:
+            print("Connection Error. Try again.")
+            return
         name = data["name"]
         pack = data["set"]["name"]
         print(f"card name: {name} with print type: {print_type}; the pack of the card is: {pack}; count: {qnty}")
@@ -232,7 +344,11 @@ def get_card(db: clss_pickle.DbHandle,
     card_id, print_type = get_card_id_and_print_type(rq)
     if not card_id:
         return
-    card_name = rq.get_card(card_id)["data"]["name"]
+    try:
+        card_name = rq.get_card(card_id)["data"]["name"]
+    except ConnectionError:
+        print("Connection Error. Try again.")
+        return
     msg = "Would you like to use print type as well?('y' or 'n')"
     if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
         total_qnty = 0
@@ -242,7 +358,11 @@ def get_card(db: clss_pickle.DbHandle,
         print(f"for all of {card_name}, card id: {card_id}, you have {total_qnty}")
         return
     qnty = db.get_card_qnty(card_id, print_type)
-    data = rq.get_card(card_id)["data"]
+    try:
+        data = rq.get_card(card_id)
+    except ConnectionError:
+        print("Connection Error. Try again.")
+        return
     name = data["name"]
     pack = data["set"]["name"]
     print(f"the card {name} in pack {pack} quantity is: {qnty}")
@@ -347,6 +467,7 @@ def delete_card(db: clss_pickle.DbHandle,
         card_name = rq.get_card(card_id)["data"]["name"]
     except ConnectionError:
         print("Your connection to the api has failed. Try again.")
+        return
     msg = f"is {card_name} the name of the card?('y' or 'n')"
     if not ctt.get_user_input(msg, ctt.BOOL_TYPE, can_cancel=False):
         print("Then try again.")
@@ -418,7 +539,11 @@ def get_collection_value(db: clss_pickle.DbHandle,
     print("This may take some time. Please wait.")
     value = 0.00
     for card_id, print_type, qnty in db.get_log():
-        data = rq.get_card(card_id)
+        try:
+            data = rq.get_card(card_id)
+        except ConnectionError:
+            print("Connection Error. Try again.")
+            return
         price = data["data"]["tcgplayer"]["prices"][print_type]["market"]
         value = round((value + price), 2)
         card_name = data["data"]["name"]
@@ -445,7 +570,11 @@ def get_card_value(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwar
         print("Canceled.")
         return None
     # noinspection PyUnreachableCode
-    data = rq.get_card(card_id)
+    try:
+        data = rq.get_card(card_id)
+    except ConnectionError:
+        print("Connection Error. Try again.")
+        return
     card_name = data["data"]["name"]
     price = data["data"]["tcgplayer"]["prices"][print_type]["market"]
     print(f"The value of {card_id} who's name is {card_name} with print type of {print_type} is ${price}")
@@ -477,7 +606,11 @@ def get_log_by_price(db: clss_pickle.DbHandle,
     """
     print("This may take a while. Please be patient")
     for card_id, print_type, qnty in db.get_log_by_total_value():
-        data = rq.get_card(card_id)["data"]
+        try:
+            data = rq.get_card(card_id)["data"]
+        except ConnectionError:
+            print("Connection Error. Try again.")
+            return
         name = data["name"]
         pack = data["set"]["name"]
         print(f"card name: {name} with print type: {print_type}; the pack of the card is: {pack}; count: {qnty}")
@@ -552,7 +685,11 @@ def get_card_full_price(db: clss_pickle.DbHandle,
     if not card_id:
         print("Canceled")
         return
-    cd = rq.get_card(card_id)["data"]
+    try:
+        cd = rq.get_card(card_id)["data"]
+    except ConnectionError:
+        print("Connection Error. Try again.")
+        return
     card_name = cd["name"]
     print("")
     for key, price in db.get_full_price_data(card_id, print_type):
@@ -576,7 +713,11 @@ def get_full_price_in_collection(db: clss_pickle.DbHandle,
         card_id = row[0]
         print_type = row[1]
         qnty = row[2]
-        card_data = rq.get_card(card_id)["data"]
+        try:
+            card_data = rq.get_card(card_id)["data"]
+        except ConnectionError:
+            print("Connection Error. Try again.")
+            return
         card_name = card_data["name"]
         msg = f"The card id of the card is {card_id} card name is {card_name}, the current print type is {print_type}:"
         print(msg)
@@ -599,11 +740,12 @@ def get_full_price_in_collection_and_collection_value(db: clss_pickle.DbHandle,
     print("")
     full_collection = {}
     print("The full collection:")
-    for row in db.get_log():
-        card_id = row[0]
-        print_type = row[1]
-        qnty = row[2]
-        card_data = rq.get_card(card_id)["data"]
+    for card_id, print_type, qnty in db.get_log():
+        try:
+            card_data = rq.get_card(card_id)["data"]
+        except ConnectionError:
+            print("Connection Error. Try again.")
+            return
         card_name = card_data["name"]
         msg = f"\tThe card id of the card is {card_id} card name is {card_name}, the current print type is {print_type}:"
         print(msg)
@@ -632,6 +774,7 @@ def trade(db: clss_pickle.DbHandle,
         :param rq:  instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
+    print("")
     other_db = clss_pickle.DbHandle(":memory:", "default", rq)
     msg = "Please enter the path to the user two's csv file. Enter nothing to try again later."
     csv_path = ctt.get_user_input(msg, ctt.STR_TYPE)
@@ -681,6 +824,7 @@ def get_energy_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle),
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
+    print("")
     msg = "please enter the card id of the energy card. please use option 18 from the main menu. enter nothing to cancel"
     card_id = ctt.get_user_input(msg, ctt.STR_TYPE)
     if card_id is None:
@@ -709,6 +853,7 @@ def get_energy_log(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_bas
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
+    print("")
     for card_id, print_type, qnty in db.get_energy_log():
         energy_name = rq.get_basic_energy(card_id)
         msg = f"the energy card {energy_name} with print type {print_type} has a quantity of {qnty}"
@@ -723,7 +868,7 @@ def energy_log_len(db: clss_pickle.DbHandle, *args, **kwargs):
         :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
-    print(f"The length of the energy log is {db.energy_log_size}")
+    print(f"\nThe length of the energy log is {db.energy_log_size}")
 
 
 def add_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
@@ -735,6 +880,7 @@ def add_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.Rq
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
+    print("")
     card_id, print_type = get_energy_id_and_print_type(rq)
     msg = "How many energy do you wish to add?"
     qnty = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
@@ -749,6 +895,7 @@ def get_energy_ids(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwar
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
+    print("")
     for card_id, name in rq.get_basic_energy_list():
         print(f"the card id {card_id} is {name} energy")
 
@@ -762,6 +909,7 @@ def remove_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
+    print("")
     card_id, print_type = get_energy_id_and_print_type(rq)
     msg = "How many energy do you wish to remove?"
     qnty = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
@@ -777,6 +925,7 @@ def delete_energy(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base
         :param rq: instance of pokemonCardLogger.clss_json.RqHandle or pokemonCardLogger.clss_pickle.RqHandle
         :return: None
     """
+    print("")
     card_id, print_type = get_energy_id_and_print_type(rq)
     msg = "this is permanent. do yuo wish to continue? ('y' or 'n')"
     if not ctt.get_user_input(msg, ctt.BOOL_TYPE):
@@ -806,7 +955,85 @@ def full_len(db: clss_pickle.DbHandle, *args, **kwargs):
         :param db: instance of pokemonCardLogger.clss_json.DbHandle or pokemonCardLogger.clss_pickle.DbHandle
         :return: None
     """
-    print(f"The full size of the log including energy log and regular log, is {len(db)}")
+    print(f"\nThe full size of the log including energy log and regular log, is {len(db)}")
+
+
+def preload_log(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    print("\nThis may take a while. Please wait.")
+    print("Loading packs.")
+    for id, _ in rq.get_all_sets():
+        try:
+            _ = rq.get_pack(id)
+        except ConnectionError:
+            print(f"Failed on pack {id}. Retrying.")
+            try:
+                return preload_log(db, rq)
+            except RecursionError:
+                print("Too many retries. Canceled.")
+                return
+    print("Loading cards in log.")
+    for card_id, _, _ in db.get_log():
+        try:
+            _ = rq.get_card(card_id)
+        except ConnectionError:
+            print(f"Failed on card {card_id}. Retrying.")
+            try:
+                return preload_log(db, rq)
+            except RecursionError:
+                print("Too many retries. Canceled.")
+                return
+    print("Successful log preload.")
+
+
+def collection_price_average_full(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    print("")
+    full_collection = {}
+    print("The full collection:")
+    for card_id, print_type, qnty in db.get_log():
+        try:
+            card_data = rq.get_card(card_id)["data"]
+        except ConnectionError:
+            print("Connection Error. Try again.")
+            return
+        card_name = card_data["name"]
+        msg = f"\tThe card id of the card is {card_id} card name is {card_name}, the current print type is {print_type}:"
+        print(msg)
+        for key, price in db.get_full_price_data(card_id, print_type):
+            msg = f"\t\tThe price data is {key} has a price of ${price} with a quantity of {qnty} the value of this card is ${round((price * qnty), 2)}"
+            print(msg)
+            fc = full_collection.get(key, {"fc": 0})["fc"]
+            fc = round(((price * qnty) + fc), 2)
+            count = full_collection.get(key, {"count": 0})["count"]
+            full_collection[key] = {"fc": fc, "count": count + qnty}
+    print("All prices put together: ")
+    for key, value in full_collection.items():
+        count = value["count"]
+        price = value["fc"]
+        print(
+            f"\tAll {key} prices added up = ${round((price * qnty), 2)}. There are {count} cards with this price category")
+        print(f"\tThe average of {key} prices are ${round(((price * qnty) / count), 2)}")
+
+
+def collection_average_price(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
+    print("")
+    print("Full collection:")
+    t_price = 0
+    count = 0
+    for card_id, print_type, qnty, price in db.log_with_prices(db.get_log()):
+        t_price += price
+        count += qnty
+        try:
+            card_name = rq.get_card(card_id)["data"]["name"]
+        except ConnectionError:
+            print("Connection Error. Try again.")
+            return
+        msg = f"\tThe card {card_id} who's card name is {card_name}, has a price of ${round(price, 2)}, with a quantity of {qnty}, the value is {round((price * qnty), 2)}"
+        print(msg)
+    print(f"\nThe average market price of your log is ${round((t_price / count), 2)} based on a price of ${round(t_price, 2)} amd a count of {count}")
+
+
+def dummy(*args, **kwargs):
+    pass
 
 
 def main():
@@ -846,9 +1073,13 @@ def main():
         "energy log": get_energy_log,
         "len energy": energy_log_len,
         "len max": full_len,
+        "init load": preload_log,
+        "avg full": collection_price_average_full,
+        "avg price": collection_average_price,
+        "go back": dummy
     }
     while True:
-        mode = get_mode()
+        mode = menu_mode()
         func = switch[mode]
         func(db=db, rq=rq)
 

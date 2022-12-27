@@ -116,3 +116,10 @@ version 0.2.18:
     - major bug fix
 version 0.2.19:
     - major bug fix
+version 0.2.20:
+    + added menus
+    + added average price support
+    - bug fixes
+    + readability changes
+    + quality of life fixes
+    + code cleanup
