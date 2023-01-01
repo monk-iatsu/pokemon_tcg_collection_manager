@@ -6,9 +6,7 @@ Usage:
     Fill out the prompts to use.
 """
 import cliTextTools as ctt
-import contextlib
 import os
-import sys
 # noinspection PyUnresolvedReferences
 import datetime as dt
 from getpass import getpass
@@ -35,20 +33,6 @@ except ImportError:
     if __name__ == "__main__":
         msg = "Please enter you pokemontcgapi key. if you do not have one you can get one for free at 'https://dev.pokemontcg.io/':"
         API_KEY = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
-
-pltfrm = sys.platform
-home = os.environ["HOME"]
-documents_dir = os.path.join(home, "Documents")
-prog_data = ""
-if pltfrm == "linux":
-    prog_data = os.path.join(os.path.join(home, ".config"), "POKEMON_TCG_LOG")
-elif pltfrm in ["win32", "cygwin", "darwin"]:
-    prog_data = os.path.join(os.path.join(home, "Documents"), "POKEMON_TCG_LOG")
-else:
-    print("your system is not supported. quitting")
-    quit(1)
-with contextlib.suppress(FileExistsError):
-    os.makedirs(prog_data)
 
 
 def get_card_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
@@ -159,7 +143,9 @@ def switch_mode(mode: int = 0):
         26: "init load",
         27: "avg price",
         28: "avg full",
-        29: "go back"
+        29: "go back",
+        30: "backup put",
+        31: "backup get"
     }
     mode = switch.get(mode, "invalid entry")
     if mode == "invalid entry":
@@ -178,11 +164,15 @@ Import/Export Menu:
     0: Go back
     1: Export
     2: Import
+    3: Backup
+    4: Restore 
             """
     switch = {
-        0: 0,
+        0: 29,
         1: 12,
-        2: 13
+        2: 13,
+        3: 30,
+        4: 31
     }
     mode = switch.get(ctt.get_user_input(menu, ctt.INT_TYPE), 29)
     return switch_mode(mode)
@@ -260,7 +250,7 @@ Get Data Menu:
 
 def ard_menu():
     menu = """
-Add/Remove/Delete Menu:
+Edit Menu:
     0: Go Back
     1: Add card
     2: Remove card
@@ -288,7 +278,7 @@ def menu_mode():
     menu = """
 MAIN MENU:
     0: Quit
-    1: Add/Remove/Delete Cards.
+    1: Edit Cards.
     2: Get Data.
     3: Collection Info.
     4: Import Export.
@@ -625,9 +615,7 @@ def to_csv(db: clss_pickle.DbHandle, *args, **kwargs):
         :return: None
     """
     print("This may take a while. Please wait.")
-    _, lf = os.path.split(db.logfile)
-    user, _ = lf.split(".")
-    csv_file = f"pcllog-{user}.csv"
+    csv_file = f"pcllog-{db.user}.csv"
     db.export_csv(os.path.join(documents_dir, csv_file))
     print(f"\nThe location for the output file is in Documents. it is called: {csv_file}")
 
@@ -1036,6 +1024,27 @@ def dummy(*args, **kwargs):
     pass
 
 
+def backup(db: clss_pickle.DbHandle, *args, **kwargs):
+    print("\nIf you haven't initialized the backup server by backing up or restoring from it, this will take a while to start. Please wait.")
+    month, day, year, index = db.save_backup()
+    msg = f"the date used is {month}/{day}/{year} at index {index}"
+    print(msg)
+
+
+def restore(db: clss_pickle.DbHandle, *args, **kwargs):
+    print("\nIf you haven't initialized the backup server by backing up or restoring from it, this will take a while to start. Please wait.")
+    msg = "Enter the month of the restore point:"
+    month = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    msg = "Enter what day of the month of the restore point:"
+    day = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    msg = "Enter the year of the restore point:"
+    year = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    msg = "Enter the index of the restore point:"
+    index = ctt.get_user_input(msg, ctt.INT_TYPE, can_cancel=False)
+    s = db.reload_backup(index, day, month, year)
+    print(f"The process was successful: {s}")
+
+
 def main():
     """
     Description:
@@ -1076,7 +1085,9 @@ def main():
         "init load": preload_log,
         "avg full": collection_price_average_full,
         "avg price": collection_average_price,
-        "go back": dummy
+        "go back": dummy,
+        "backup put": backup,
+        "backup get": restore
     }
     while True:
         mode = menu_mode()

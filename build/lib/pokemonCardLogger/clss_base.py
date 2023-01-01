@@ -14,6 +14,7 @@ from assets import *
 import cliTextTools as ctt
 import functools
 import time
+import backup
 
 TRADE_SUCCESS = 0
 TRADE_CODE_CARD_NOT_IN_LOG = 1
@@ -188,7 +189,7 @@ class DbHandleBase:
         stores and organizes the log data in a pickle file
     """
 
-    def __init__(self, file: str, psswrd: str, rq: RqHandle):
+    def __init__(self, file: str, psswrd: str, rq: RqHandle, use_backup: bool = False):
         """
         Description:
             Constructor method
@@ -197,7 +198,12 @@ class DbHandleBase:
             :param psswrd: the password for the database
             :param rq: an instance of RqHandle
         """
+        self.use_backup = use_backup
+        if self.use_backup:
+            backup.init()
         self.logfile = file
+        _, lf = os.path.split(self.logfile)
+        self.user, _ = lf.split(".")
         self.psswrd = psswrd
         self.rq = rq
         self.kdf = PBKDF2HMAC(
@@ -218,6 +224,18 @@ class DbHandleBase:
             self.logdict = {}
             self.first_run()
         self.login_setup()
+
+    def reload_backup(self, index: int, day: int, month: int, year: int):
+        if not self.use_backup:
+            backup.init()
+            self.use_backup = True
+        return backup.get(self.logfile, self.key_hash, self.user, day, month, year, index)
+
+    def save_backup(self):
+        if not self.use_backup:
+            backup.init()
+            self.use_backup = True
+        return backup.put(self.logfile, self.key_hash, self.user)
 
     def first_run(self):
         """

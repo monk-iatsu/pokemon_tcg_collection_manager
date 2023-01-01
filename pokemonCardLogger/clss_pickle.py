@@ -8,6 +8,7 @@ Usage:
 import pickle
 from clss_base import *
 from delayedKeyInt import DelayedKeyboardInterrupt
+import backup
 
 
 class DbHandle(DbHandleBase):
