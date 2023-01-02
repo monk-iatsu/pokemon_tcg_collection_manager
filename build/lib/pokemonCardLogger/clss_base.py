@@ -77,6 +77,36 @@ class RqHandle:
         """
         self.api_key = api_key
         self.headers = {"X-Api-Key": self.api_key}
+        self.pack_data = {}
+        self.card_data = {}
+
+    def _store_result(self, t: str, name: str, data: dict):
+        if t == "card":
+            used_data = self.card_data
+        elif t == "pack":
+            used_data = self.pack_data
+        else:
+            raise NotImplementedError
+        if name not in used_data.keys():
+            used_data[name] = {}
+            for k, v in data.items():
+                used_data[k] = v
+        else:
+            for k, v in data.items():
+                if k not in used_data[name].keys():
+                    used_data[name][k] = v
+
+    def _get_prev_result(self, t: str, name: str):
+        if t == "card":
+            used_data = self.card_data
+        elif t == "pack":
+            used_data = self.pack_data
+        else:
+            raise NotImplementedError
+        if name in used_data.keys():
+            return used_data[name]
+        else:
+            return False
 
     def wait_for_con(self):
         while True:
@@ -88,40 +118,70 @@ class RqHandle:
                 continue
             break
 
-    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
-    def get_card(self, card_id: str):  # sourcery skip: raise-from-previous-error
+    def get_card(self, card_id: str, select: (bool, iter) = None):    # sourcery skip: raise-from-previous-error
         """
         Description:
             Requests from pokemonTcgApi the data for a specific card and returns that data as a dictionary
             If the data is bad raises ValueError
         Parameters:
+            :param select: an iterable or bool of True, setting if a query is to be used and what query, default of none and if bool True using name, set, and tcgplayer
             :param card_id: a string that represents the card according to pokemonTcgApi
             :return: dict of the data from pokemonTcgApi
         """
+        data = self._get_prev_result("card", card_id)
+        if data:
+            return data
+        query = ""
+        if select is None:
+            query = ""
+        elif select and isinstance(select , bool):
+            query = "?select=name,set,tcgplayer,"
+        else:
+            query = "?select="
+            if not isinstance(select, str):
+                for i in select:
+                    query = f"{query}{i},"
+        r = f"{self.card_url}/{card_id}{query}"
         try:
-            data = requests.get(f"{self.card_url}/{card_id}", headers=self.headers)
+            data = requests.get(r, headers=self.headers)
         except requests.exceptions.ConnectionError:
             raise ConnectionError
         if data.ok:
+            self._store_result("card", card_id, data.json())
             return data.json()
         else:
             raise ConnectionError
 
-    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
-    def get_pack(self, pack_id: str):  # sourcery skip: raise-from-previous-error
+    def get_pack(self, pack_id: str, select: (bool, iter) = None):  # sourcery skip: raise-from-previous-error
         """
         Description:
             Requests from pokemonTcgApi the data for a specific pack and returns that data as a dictionary
             If the data is bad raises ValueError
         Parameters:
+            :param select: an iterable or bool of True, setting if a query is to be used and what query, default of none and if bool True using name, and id
             :param pack_id: a string that represents the pack according to pokemonTcgApi
             :return: dict of the data from pokemonTcgApi
         """
+        data = self._get_prev_result("pack", pack_id)
+        if data:
+            return data
+        query = ""
+        if select is None:
+            query = ""
+        elif select and isinstance(select , bool):
+            query = "?select=name,id"
+        else:
+            query = "?select="
+            if not isinstance(select, str):
+                for i in select:
+                    query = f"{query}{i},"
+        r = f"{self.pack_url}/{pack_id}{query}"
         try:
-            data = requests.get(f"{self.pack_url}/{pack_id}", headers=self.headers)
+            data = requests.get(f"{self.pack_url}/{pack_id}{query}", headers=self.headers)
         except requests.exceptions.ConnectionError:
             raise ConnectionError
         if data.ok:
+            self._store_result("pack", pack_id, data.json())
             return data.json()
         else:
             raise ConnectionError
@@ -147,7 +207,6 @@ class RqHandle:
     def __repr__(self):
         return f"RqHandle({self.api_key}"
 
-    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def validate_basic_energy(self, e_type_id: str):
         # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
         """
@@ -161,7 +220,6 @@ class RqHandle:
             return True
         return False
 
-    @functools.lru_cache(1)
     def get_basic_energy_list(self):
         """
         Description:
@@ -171,7 +229,6 @@ class RqHandle:
         """
         yield from BASIC_ENERGY.items()
 
-    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def get_basic_energy(self, e_type_id):
         """
         Description:
