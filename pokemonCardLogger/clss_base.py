@@ -77,36 +77,6 @@ class RqHandle:
         """
         self.api_key = api_key
         self.headers = {"X-Api-Key": self.api_key}
-        self.pack_data = {}
-        self.card_data = {}
-
-    def _store_result(self, t: str, name: str, data: dict):
-        if t == "card":
-            used_data = self.card_data
-        elif t == "pack":
-            used_data = self.pack_data
-        else:
-            raise NotImplementedError
-        if name not in used_data.keys():
-            used_data[name] = {}
-            for k, v in data.items():
-                used_data[k] = v
-        else:
-            for k, v in data.items():
-                if k not in used_data[name].keys():
-                    used_data[name][k] = v
-
-    def _get_prev_result(self, t: str, name: str):
-        if t == "card":
-            used_data = self.card_data
-        elif t == "pack":
-            used_data = self.pack_data
-        else:
-            raise NotImplementedError
-        if name in used_data.keys():
-            return used_data[name]
-        else:
-            return False
 
     def wait_for_con(self):
         while True:
@@ -118,6 +88,7 @@ class RqHandle:
                 continue
             break
 
+    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def get_card(self, card_id: str, select: (bool, iter) = None):    # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -128,14 +99,11 @@ class RqHandle:
             :param card_id: a string that represents the card according to pokemonTcgApi
             :return: dict of the data from pokemonTcgApi
         """
-        data = self._get_prev_result("card", card_id)
-        if data:
-            return data
         query = ""
         if select is None:
             query = ""
-        elif select and isinstance(select , bool):
-            query = "?select=name,set,tcgplayer,"
+        elif select and isinstance(select, bool):
+            query = "?select=name,tcgplayer"
         else:
             query = "?select="
             if not isinstance(select, str):
@@ -147,11 +115,11 @@ class RqHandle:
         except requests.exceptions.ConnectionError:
             raise ConnectionError
         if data.ok:
-            self._store_result("card", card_id, data.json())
             return data.json()
         else:
             raise ConnectionError
 
+    @functools.lru_cache(2 ** LRU_CACHE_EXPO)
     def get_pack(self, pack_id: str, select: (bool, iter) = None):  # sourcery skip: raise-from-previous-error
         """
         Description:
@@ -162,13 +130,10 @@ class RqHandle:
             :param pack_id: a string that represents the pack according to pokemonTcgApi
             :return: dict of the data from pokemonTcgApi
         """
-        data = self._get_prev_result("pack", pack_id)
-        if data:
-            return data
         query = ""
         if select is None:
             query = ""
-        elif select and isinstance(select , bool):
+        elif select and isinstance(select, bool):
             query = "?select=name,id"
         else:
             query = "?select="
@@ -181,7 +146,6 @@ class RqHandle:
         except requests.exceptions.ConnectionError:
             raise ConnectionError
         if data.ok:
-            self._store_result("pack", pack_id, data.json())
             return data.json()
         else:
             raise ConnectionError
@@ -207,7 +171,8 @@ class RqHandle:
     def __repr__(self):
         return f"RqHandle({self.api_key}"
 
-    def validate_basic_energy(self, e_type_id: str):
+    @staticmethod
+    def validate_basic_energy(e_type_id: str):
         # sourcery skip: assign-if-exp, boolean-if-exp-identity, reintroduce-else, remove-unnecessary-cast
         """
         Description:
@@ -220,7 +185,8 @@ class RqHandle:
             return True
         return False
 
-    def get_basic_energy_list(self):
+    @staticmethod
+    def get_basic_energy_list():
         """
         Description:
             returns a generator of the energy id and energy name
@@ -229,7 +195,8 @@ class RqHandle:
         """
         yield from BASIC_ENERGY.items()
 
-    def get_basic_energy(self, e_type_id):
+    @staticmethod
+    def get_basic_energy(e_type_id):
         """
         Description:
             returns the name of a given energy id 

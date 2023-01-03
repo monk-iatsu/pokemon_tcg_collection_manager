@@ -48,7 +48,7 @@ def get_card_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *
     if pack_id is None:
         return False, False
     try:
-        pack_name = rq.get_pack(pack_id, select=["name",])["data"]["name"]
+        pack_name = rq.get_pack(pack_id, select=("name", ))["data"]["name"]
     except ConnectionError:
         print("Either the pack is invalid, or your connection to the api has failed. Try again.")
         return False, False
@@ -64,7 +64,7 @@ def get_card_id_and_print_type(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *
     card_num = ctt.get_user_input(msg, ctt.STR_TYPE, can_cancel=False)
     card_id = f"{pack_id}-{card_num}"
     try:
-        card_data = rq.get_card(card_id, select=["name", "tcgplayer"])
+        card_data = rq.get_card(card_id, select=("name", "tcgplayer"))
     except ConnectionError:
         print("Either the card is invalid, or your connection to the api has failed. Try again.")
         return False, False
@@ -310,7 +310,7 @@ def get_card_log(db: clss_pickle.DbHandle,
     print("This may take some time")
     for card_id, print_type, qnty in db.get_log():
         try:
-            data = rq.get_card(card_id, select=["name", "set"])["data"]
+            data = rq.get_card(card_id, select=("name", "set"))["data"]
         except ConnectionError:
             print("Connection Error. Try again.")
             return
@@ -335,7 +335,7 @@ def get_card(db: clss_pickle.DbHandle,
     if not card_id:
         return
     try:
-        data = rq.get_card(card_id, select=["name", "set"])["data"]
+        data = rq.get_card(card_id, select=("name", "set"))["data"]
         name = data["name"]
         pack = data["set"]["name"]
     except ConnectionError:
@@ -386,7 +386,7 @@ def test_card_validity(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **
         print("Canceled.")
         return
     try:
-        pack_name = rq.get_pack(pack_id, select=["name", ])["data"]["name"]
+        pack_name = rq.get_pack(pack_id, select=("name", ))["data"]["name"]
     except ConnectionError:
         print("Either the pack is invalid, or your connection to the api has failed. Try again.")
         return
@@ -406,7 +406,7 @@ def test_card_validity(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **
     card_id = f"{pack_id}-{num}"
     card_data = {}
     try:
-        card_data = rq.get_card(card_id, select=["name", ])["data"]
+        card_data = rq.get_card(card_id, select=("name", ))["data"]
     except ConnectionError:
         print("Either the card is invalid, or your connection to the api has failed. Try again.")
         return
@@ -449,7 +449,7 @@ def delete_card(db: clss_pickle.DbHandle,
         print("Canceled")
         return
     try:
-        card_name = rq.get_card(card_id, select=["name", ])["data"]["name"]
+        card_name = rq.get_card(card_id, select=("name", ))["data"]["name"]
     except ConnectionError:
         print("Your connection to the api has failed. Try again.")
         return
@@ -525,7 +525,7 @@ def get_collection_value(db: clss_pickle.DbHandle,
     value = 0.00
     for card_id, print_type, qnty in db.get_log():
         try:
-            data = rq.get_card(card_id, select=["name", "tcgplayer"])["data"]
+            data = rq.get_card(card_id, select=("name", "tcgplayer"))["data"]
         except ConnectionError:
             print("Connection Error. Try again.")
             return
@@ -556,7 +556,7 @@ def get_card_value(rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwar
         return None
     # noinspection PyUnreachableCode
     try:
-        data = rq.get_card(card_id, select=["name", "tcgplayer"])["data"]
+        data = rq.get_card(card_id, select=("name", "tcgplayer"))["data"]
     except ConnectionError:
         print("Connection Error. Try again.")
         return
@@ -592,7 +592,7 @@ def get_log_by_price(db: clss_pickle.DbHandle,
     print("This may take a while. Please be patient")
     for card_id, print_type, qnty in db.get_log_by_total_value():
         try:
-            data = rq.get_card(card_id, select=["name", "set"])["data"]
+            data = rq.get_card(card_id, select=("name", "set"))["data"]
         except ConnectionError:
             print("Connection Error. Try again.")
             return
@@ -669,7 +669,7 @@ def get_card_full_price(db: clss_pickle.DbHandle,
         print("Canceled")
         return
     try:
-        cd = rq.get_card(card_id, select=["name", ])["data"]
+        cd = rq.get_card(card_id, select=("name", ))["data"]
     except ConnectionError:
         print("Connection Error. Try again.")
         return
@@ -697,7 +697,7 @@ def get_full_price_in_collection(db: clss_pickle.DbHandle,
         print_type = row[1]
         qnty = row[2]
         try:
-            card_data = rq.get_card(card_id, select=["name", ])["data"]
+            card_data = rq.get_card(card_id, select=("name", ))["data"]
         except ConnectionError:
             print("Connection Error. Try again.")
             return
@@ -725,7 +725,7 @@ def get_full_price_in_collection_and_collection_value(db: clss_pickle.DbHandle,
     print("The full collection:")
     for card_id, print_type, qnty in db.get_log():
         try:
-            card_data = rq.get_card(card_id, select=["name", ])["data"]
+            card_data = rq.get_card(card_id, select=("name", ))["data"]
         except ConnectionError:
             print("Connection Error. Try again.")
             return
@@ -776,8 +776,8 @@ def trade(db: clss_pickle.DbHandle,
     print("Select a card for user two")
     other_card_id, other_print_type = get_card_id_and_print_type(rq)
     other_qnty = ctt.get_user_input(msg, ctt.INT_TYPE)
-    other_card_data = rq.get_card(other_card_id, select=["tcgplayer", ])["data"]
-    card_data = rq.get_card(card_id, select=["tcgplayer", ])["data"]
+    other_card_data = rq.get_card(other_card_id, select=("tcgplayer", ))["data"]
+    card_data = rq.get_card(card_id, select=("tcgplayer", ))["data"]
     other_price_data = other_card_data["tcgplayer"]["prices"][print_type]["market"]
     price_data = card_data["tcgplayer"]["prices"][print_type]["market"]
     trade_value = round((price_data - other_price_data), 2)
@@ -944,20 +944,33 @@ def full_len(db: clss_pickle.DbHandle, *args, **kwargs):
 def preload_log(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle, clss_base.RqHandle), *args, **kwargs):
     print("\nThis may take a while. Please wait.")
     print("Loading packs.")
-    for pid, _ in rq.get_all_sets():
-        try:
-            _ = rq.get_pack(pid)
-        except ConnectionError:
-            print(f"Failed on pack {pid}. Retrying.")
+    try:
+        for pid, _ in rq.get_all_sets():
             try:
-                return preload_log(db, rq)
-            except RecursionError:
-                print("Too many retries. Canceled.")
-                return
+                _ = rq.get_pack(pid)
+                _ = rq.get_pack(pid, select=("name", ))
+            except ConnectionError:
+                print(f"Failed on pack {pid}. Retrying.")
+                try:
+                    return preload_log(db, rq)
+                except RecursionError:
+                    print("Too many retries. Canceled.")
+                    return
+    except ConnectionError:
+        print("Failed to load pack list, trying again.")
+        try:
+            return preload_log(db, rq)
+        except RecursionError:
+            print("Too many retries, canceled.")
+            return
     print("Loading cards in log.")
     for card_id, _, _ in db.get_log():
         try:
             _ = rq.get_card(card_id)
+            _ = rq.get_card(card_id, select=("name", "tcgplayer"))
+            _ = rq.get_card(card_id, select=("name", "set"))
+            _ = rq.get_card(card_id, select=("name", ))
+            _ = rq.get_card(card_id, select=("tcgplayer", ))
         except ConnectionError:
             print(f"Failed on card {card_id}. Retrying.")
             try:
@@ -974,7 +987,7 @@ def collection_price_average_full(db: clss_pickle.DbHandle, rq: (clss_pickle.RqH
     print("The full collection:")
     for card_id, print_type, qnty in db.get_log():
         try:
-            card_data = rq.get_card(card_id, select=["name", ])["data"]
+            card_data = rq.get_card(card_id, select=("name", ))["data"]
         except ConnectionError:
             print("Connection Error. Try again.")
             return
@@ -1006,7 +1019,7 @@ def collection_average_price(db: clss_pickle.DbHandle, rq: (clss_pickle.RqHandle
         t_price += price
         count += qnty
         try:
-            card_name = rq.get_card(card_id, select=["name", ])["data"]["name"]
+            card_name = rq.get_card(card_id, select=("name", ))["data"]["name"]
         except ConnectionError:
             print("Connection Error. Try again.")
             return

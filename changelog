@@ -132,3 +132,5 @@ version 0.2.22:
     + code optimization changes
     - bug fixes
     + quality of life changes
+version 0.2.23:
+    + major bug fix

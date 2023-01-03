@@ -18,7 +18,7 @@ ENERGY_TYPES["dn"] = "Dragon"
 ENERGY_TYPES["cs"] = "Colorless"
 ENERGY_PRINT_TYPES = ("normal", "reverseHolofoil")
 ITERATIONS = 1000000
-LRU_CACHE_EXPO = 15
+LRU_CACHE_EXPO = 18
 
 pltfrm = sys.platform
 home = os.environ["HOME"]
