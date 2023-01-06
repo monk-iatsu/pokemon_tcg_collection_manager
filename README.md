@@ -14,3 +14,10 @@ A cli tool/library to manage, store and analyze a pokemon card collection
 * in the install directory:
   * run `python3 pokemonCardLogger/main.py` for unix/mac 
   * run `python3.exe pokemonCardLogger\main.py` for windows
+## To permannently set your api key:
+* method 1:
+  * make a file in the main package called "config.py"
+  * enter in the file `API_KEY = "<your api key here>"`
+  * save
+* method 2:
+  * set a enviroment variable: `API_KEY='<your api key here>'`
