@@ -152,6 +152,13 @@ class DbHandle:
     # Todo write handlers.DbHandle
     # Todo write handlers.DbHandle docstring
 
+    _DATA_FRAME_GEN_DICT = {
+        "card-id": pd.Series(dtype="str"),
+        "print-type": pd.Series(dtype="int"),
+        "is-energy": pd.Series(dtype="bool"),
+        "qnty": pd.Series(dtype="int")
+    }
+
     def __init__(self, rq: RqHandle, uname: str, file: str, psswrd: str):
         # TODO write handlers.DbHandle.__init__ docstring
         self.logfile = file
@@ -166,14 +173,7 @@ class DbHandle:
         )
         self.key = base64.urlsafe_b64encode(kdf.derive(psswrd.encode("utf-8")))
         self.fernet = Fernet(self.key)
-        self.data = pd.DataFrame(
-            {
-                "card-id": pd.Series(dtype="str"),
-                "print-type": pd.Series(dtype="int"),
-                "is-energy": pd.Series(dtype="bool"),
-                "qnty": pd.Series(dtype="int")
-            }
-        )
+        self.data = pd.DataFrame(self._DATA_FRAME_GEN_DICT)
         if os.path.isfile(self.logfile):
             self.data = self._read_file()
 
@@ -190,7 +190,7 @@ class DbHandle:
         with DelayedKeyboardInterrupt():
             with open(self.logfile, "rb") as f:
                 contents = f.read()
-            contents = self.fernet.decrypt()
+            contents = self.fernet.decrypt(contents)
             with open(self.logfile, "wb") as f:
                 f.write(contents)
 
@@ -225,34 +225,32 @@ class DbHandle:
     def add_card(self, card_id: str, print_type: str, is_energy: bool, qnty: int):
         cq = self.get_card(card_id, print_type, is_energy)
         if cq == -1:
-            self.data.append(
-                {
-                    "card-id": card_id,
-                    "print-type": print_type,
-                    "is-energy": is_energy,
-                    "qnty": qnty
-                },
-                ignore_index=True
-            )
-            self._save_file()
-            return
-        self._edit_card(card_id, print_type, is_energy, qnty)
+            new_data = {
+                "card-id": card_id,
+                "print-type": print_type,
+                "is-energy": is_energy,
+                "qnty": qnty
+            }
+            new_data = pd.Series(new_data)
+            pd.concat([new_data, ], self.data, ignore_index=True)
+        else:
+            self._edit_card(card_id, print_type, is_energy, qnty)
+        self._save_file()
 
     def remove_card(self, card_id: str, print_type: str, is_energy: bool, qnty: int):
         cq = self.get_card(card_id, print_type, is_energy)
         if cq == -1:
-            self.data.append(
-                {
-                    "card-id": card_id,
-                    "print-type": print_type,
-                    "is-energy": is_energy,
-                    "qnty": 0
-                },
-                ignore_index=True
-            )
-            self._save_file()
-            return
-        self._edit_card(card_id, print_type, is_energy, qnty * -1)
+            new_data = {
+                "card-id": card_id,
+                "print-type": print_type,
+                "is-energy": is_energy,
+                "qnty": 0
+            }
+            new_data = pd.Series(new_data)
+            pd.concat([new_data, ], self.data, ignore_index=True)
+        else:
+            self._edit_card(card_id, print_type, is_energy, qnty * -1)
+        self._save_file()
 
     def delete_card(self, card_id: str, print_type: str, is_energy: bool):
         c = self.get_card(card_id, print_type, is_energy)
