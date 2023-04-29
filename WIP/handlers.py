@@ -6,6 +6,7 @@ import pandas as pd
 import os
 import datetime as dt
 import csv
+from cryptography import exceptions
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
@@ -19,6 +20,8 @@ from pokemontcgsdk import Set, Card, RestClient
 import time
 from delayedKeyInt import DelayedKeyboardInterrupt
 from tqdm import tqdm
+import random
+import secrets
 
 API_KEY = ""
 
@@ -164,18 +167,43 @@ class DbHandle:
         self.logfile = file
         self.user = uname
         self.rq = rq
-        kdf = PBKDF2HMAC(
-            algorithm=hashes.SHA3_512,
-            length=32,
-            salt="b".encode("utf- 8"),
-            iterations=ITERATIONS,
-            backend=default_backend()
-        )
-        self.key = base64.urlsafe_b64encode(kdf.derive(psswrd.encode("utf-8")))
-        self.fernet = Fernet(self.key)
-        self.data = pd.DataFrame(self._DATA_FRAME_GEN_DICT)
         if os.path.isfile(self.logfile):
-            self.data = self._read_file()
+            for i in SALT_LIST:
+                i = i.encode("utf-8")
+                kdf = PBKDF2HMAC(
+                    algorithm=hashes.SHA3_512,
+                    length=32,
+                    salt=i,
+                    iterations=ITERATIONS,
+                    backend=default_backend()
+                )
+                self.key = base64.urlsafe_b64encode(kdf.derive(psswrd.encode("utf-8")))
+                self.fernet = Fernet(self.key)
+                try:
+                    self.data = self._read_file()
+                except exceptions.InvalidSignature:
+                    continue
+                break
+        else:
+            token = secrets.token_urlsafe(256)
+            random.seed(token)
+            gen = random.randrange(MIN_SEED, MAX_SEED)
+            gen = 2 ** gen
+            for _ in range(gen):
+                byte_count = random.randrange(32, 64)
+                _ = [random.randint() for i in range(byte_count)]
+            salt = random.choice(SALT_LIST)
+                kdf = PBKDF2HMAC(
+                    algorithm=hashes.SHA3_512,
+                    length=32,
+                    salt=i,
+                    iterations=ITERATIONS,
+                    backend=default_backend()
+                )
+                self.key = base64.urlsafe_b64encode(kdf.derive(psswrd.encode("utf-8")))
+                self.fernet = Fernet(self.key)
+                self.data = pd.DataFrame(self._DATA_FRAME_GEN_DICT)
+                self._save_file()
 
     def _encrypt(self):
         # todo write handlers.DbHandle._encrypt docstring
@@ -232,7 +260,7 @@ class DbHandle:
                 "qnty": qnty
             }
             new_data = pd.Series(new_data)
-            pd.concat([new_data, ], self.data, ignore_index=True)
+            pd.concat([new_data, self.data], ignore_index=True)
         else:
             self._edit_card(card_id, print_type, is_energy, qnty)
         self._save_file()
@@ -247,7 +275,7 @@ class DbHandle:
                 "qnty": 0
             }
             new_data = pd.Series(new_data)
-            pd.concat([new_data, ], self.data, ignore_index=True)
+            pd.concat([new_data, self.data], ignore_index=True)
         else:
             self._edit_card(card_id, print_type, is_energy, qnty * -1)
         self._save_file()

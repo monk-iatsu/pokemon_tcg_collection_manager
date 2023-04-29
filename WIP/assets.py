@@ -88,3 +88,6 @@ ITERATIONS = 1000000
 LRU_CACHE_EXPO = 18
 API_KEY_SITE = "'https://dev.pokemontcg.io/'"
 CANCEL_WAIT = 10
+SALT_LIST = (i for i in f"{digits}{ascii_letters}")
+MIN_SEED = 16
+MAX_SEED = 32
