@@ -193,17 +193,17 @@ class DbHandle:
                 byte_count = random.randrange(32, 64)
                 _ = [random.randint() for i in range(byte_count)]
             salt = random.choice(SALT_LIST)
-                kdf = PBKDF2HMAC(
-                    algorithm=hashes.SHA3_512,
-                    length=32,
-                    salt=i,
-                    iterations=ITERATIONS,
-                    backend=default_backend()
-                )
-                self.key = base64.urlsafe_b64encode(kdf.derive(psswrd.encode("utf-8")))
-                self.fernet = Fernet(self.key)
-                self.data = pd.DataFrame(self._DATA_FRAME_GEN_DICT)
-                self._save_file()
+            kdf = PBKDF2HMAC(
+                algorithm=hashes.SHA3_512,
+                length=32,
+                salt=i,
+                iterations=ITERATIONS,
+                backend=default_backend()
+            )
+            self.key = base64.urlsafe_b64encode(kdf.derive(psswrd.encode("utf-8")))
+            self.fernet = Fernet(self.key)
+            self.data = pd.DataFrame(self._DATA_FRAME_GEN_DICT)
+            self._save_file()
 
     def _encrypt(self):
         # todo write handlers.DbHandle._encrypt docstring
