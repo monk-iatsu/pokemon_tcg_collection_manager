@@ -1,3 +1,4 @@
+from string import digits, ascii_letters
 import sys
 import os
 import contextlib
