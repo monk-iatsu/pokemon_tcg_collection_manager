@@ -6,7 +6,7 @@ import pandas as pd
 import os
 import datetime as dt
 import csv
-from cryptography import exceptions
+import cryptography
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
@@ -181,7 +181,7 @@ class DbHandle:
                 self.fernet = Fernet(self.key)
                 try:
                     self.data = self._read_file()
-                except exceptions.InvalidSignature:
+                except cryptography.fernet.InvalidToken:
                     continue
                 break
         else:
@@ -190,13 +190,13 @@ class DbHandle:
             gen = random.randrange(MIN_SEED, MAX_SEED)
             gen = 2 ** gen
             for _ in range(gen):
-                byte_count = random.randrange(32, 64)
-                _ = [random.randint() for i in range(byte_count)]
+                byte_count = random.randrange(MIN_SEED, MAX_SEED)
+                _ = [random.randint(2**MIN_SEED, 2**+MAX_SEED) for i in range(byte_count)]
             salt = random.choice(SALT_LIST)
             kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA3_512,
                 length=32,
-                salt=i,
+                salt=salt.encode("utf-8"),
                 iterations=ITERATIONS,
                 backend=default_backend()
             )
