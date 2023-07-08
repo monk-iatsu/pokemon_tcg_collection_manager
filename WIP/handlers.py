@@ -1,27 +1,21 @@
 # todo write docstring for handlers
-import contextlib
-import pdb
-import numpy as np
-import pandas as pd
-import os
-import datetime as dt
+import base64
 import csv
+import random
+import secrets
+import time
+import cliTextTools as ctt
 import cryptography
+import pandas as pd
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-import base64
-import hashlib
-import sys
-from assets import *
-import cliTextTools as ctt
-from pokemontcgsdk import Set, Card, RestClient
-import time
 from delayedKeyInt import DelayedKeyboardInterrupt
+from pokemontcgsdk import Set, Card, RestClient
 from tqdm import tqdm
-import random
-import secrets
+
+from assets import *
 
 API_KEY = ""
 
@@ -30,7 +24,7 @@ def init(api_key: str, iterations: int = 1000000, lru: int = 15):
     """
     Description:
         sets the module global variables, so it can be used
-    :param api_key: string containing the api key for pokemon tcg api
+    :param api_key: string containing the api key for Pokémon tcg api
     :param iterations: iterations used for the password encryption
     :param lru: the new lru cache expo
     :return: None
@@ -162,16 +156,16 @@ class DbHandle:
         "qnty": pd.Series(dtype="int")
     }
 
-    def __init__(self, rq: RqHandle, uname: str, file: str, psswrd: str):
+    def __init__(self, rq: RqHandle, uname: str, file: str, psswrd: str, salt_list: (str, list, tuple)):
         # TODO write handlers.DbHandle.__init__ docstring
         self.logfile = file
         self.user = uname
         self.rq = rq
         if os.path.isfile(self.logfile):
-            for i in SALT_LIST:
+            for i in salt_list:
                 i = i.encode("utf-8")
                 kdf = PBKDF2HMAC(
-                    algorithm=hashes.SHA3_512,
+                    algorithm=hashes.SHA256,
                     length=32,
                     salt=i,
                     iterations=ITERATIONS,
@@ -191,10 +185,10 @@ class DbHandle:
             gen = 2 ** gen
             for _ in range(gen):
                 byte_count = random.randrange(MIN_SEED, MAX_SEED)
-                _ = [random.randint(2**MIN_SEED, 2**+MAX_SEED) for i in range(byte_count)]
-            salt = random.choice(SALT_LIST)
+                _ = [random.randint(2 ** MIN_SEED, 2 ** +MAX_SEED) for i in range(byte_count)]
+            salt = random.choice(salt_list)
             kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA3_512,
+                algorithm=hashes.SHA256,
                 length=32,
                 salt=salt.encode("utf-8"),
                 iterations=ITERATIONS,
@@ -204,6 +198,15 @@ class DbHandle:
             self.fernet = Fernet(self.key)
             self.data = pd.DataFrame(self._DATA_FRAME_GEN_DICT)
             self._save_file()
+
+    def __len__(self):
+        if not self.data_has_data:
+            return 0
+        count = [int(data["qnty"]) for data in self.list_log_all()]
+        return sum(count)
+
+    def __repr__(self):
+        return f"DbHandle({self.rq.__repr__()}, {self.user}, {self.logfile}, REDACTED)"
 
     def _encrypt(self):
         # todo write handlers.DbHandle._encrypt docstring
@@ -222,6 +225,14 @@ class DbHandle:
             with open(self.logfile, "wb") as f:
                 f.write(contents)
 
+    @property
+    def data_has_data(self):
+        try:
+            _ = self.data.iterrows()
+        except AttributeError:
+            return False
+        return True
+
     def _read_file(self):
         with DelayedKeyboardInterrupt():
             self._decrypt()
@@ -235,24 +246,26 @@ class DbHandle:
             self._encrypt()
 
     def unique_len(self):
-        s, _ = self.data.size
+        if not self.data_has_data:
+            return 0
+        s = len(self.data.index)
         return s
 
     def _edit_card(self, cid: str, pt: str, ie: bool, qnty: int):
         current = self.get_card(cid, pt, ie)
         edit_index = self.data.loc[
-            self.data[
-                (self.data["card-id"] == cid) &
-                (self.data["print-type"] == pt) &
-                (self.data["is-energy"] == ie)
-            ]:
-            self.data,
-            ["qnty"]
-        ] = current + qnty
+                     self.data[
+                         (self.data["card-id"] == cid) &
+                         (self.data["print-type"] == pt) &
+                         (self.data["is-energy"] == ie)
+                         ]:
+                     self.data,
+                     ["qnty"]
+                     ] = current + qnty
 
     def add_card(self, card_id: str, print_type: str, is_energy: bool, qnty: int):
         cq = self.get_card(card_id, print_type, is_energy)
-        if cq == -1:
+        if cq == -1 or not self.data_has_data:
             new_data = {
                 "card-id": card_id,
                 "print-type": print_type,
@@ -267,7 +280,7 @@ class DbHandle:
 
     def remove_card(self, card_id: str, print_type: str, is_energy: bool, qnty: int):
         cq = self.get_card(card_id, print_type, is_energy)
-        if cq == -1:
+        if cq == -1 or not self.data_has_data:
             new_data = {
                 "card-id": card_id,
                 "print-type": print_type,
@@ -282,47 +295,46 @@ class DbHandle:
 
     def delete_card(self, card_id: str, print_type: str, is_energy: bool):
         c = self.get_card(card_id, print_type, is_energy)
-        if c != -1:
-            index = df.query(f"card-id == {card_id} & print-type == {print_type} & is-energy == {is_energy}")
+        if c != -1 or not self.data_has_data:
+            index = self.data.query(f"card-id == {card_id} & print-type == {print_type} & is-energy == {is_energy}")
             self.data.drop(index=index)
         self._save_file()
 
     def list_log_reg(self):
-        yield from self.data[(not self.data["is-energy"])]
+        yield from (row for row in self.data.iterrows() if row["is-energy"])
 
     def list_log_energy(self):
-        yield from self.data[(self.data["is-energy"])]
+        yield from (row for row in self.data.iterrows() if not row["is-energy"])
 
     def list_log_all(self):
-        yield from self.data
-
-    def __len__(self):
-        count = [data["qnty"] for data in self.data]
-        return sum(count)
+        yield from self.data.iterrows()
 
     def len_log_reg(self):
-        count = [data["qnty"] for data in self.data[(not self.data["is-energy"])]]
+        if not self.data_has_data:
+            return 0
+        count = [int(data["qnty"]) for data in self.list_log_reg()]
         return sum(count)
 
     def len_log_energy(self):
-        count = [data["qnty"] for data in self.data[(self.data["is-energy"])]]
+        if not self.data_has_data:
+            return 0
+        count = [int(data["qnty"]) for data in self.list_log_energy()]
         return sum(count)
 
     def get_card(self, card_id: str, print_type: str, is_energy: bool):
+        if not self.data_has_data:
+            return 0
         data = self.data[
             (self.data["card-id"] == card_id) &
             (self.data["print-type"] == print_type) &
             (self.data["is-energy"] == is_energy)
-        ]
-        lngth, _ = data.shape
+            ]
+        lngth = len(data.index)
         if lngth > 1:
             raise ValueError
         if lngth == 0:
             return -1
         return int(data["qnty"])
-
-    def __repr__(self):
-        return f"self = DbHandle({self.rq}, {self.user}, {self.logfile}, REDACTED):\n\tself.data = {self.data}"
 
     def trade(self, other, user_1_trade: list, user_2_trade: list, user_2_file: str):
         # TODO write handlers.DbHandle.trade docstring
@@ -335,7 +347,7 @@ class DbHandle:
             print_type = row["print-type"]
             qnty = row["quantity"]
             is_energy = row["is-energy"]
-            if not qnty < self.get_card_qnty(card_id, print_type, is_energy):
+            if not qnty < self.get_card(card_id, print_type, is_energy):
                 undo_bool = True
                 break
             self.remove_card(card_id, print_type, is_energy, qnty)
@@ -383,7 +395,7 @@ class DbHandle:
                             return self.import_csv(file)
                         except RecursionError:
                             continue
-                    self.delete_entry(card_data, print_type, is_energy)
+                    self.delete_card(card_data, print_type, is_energy)
                     self.add_card(card_id, qnty, print_type, is_energy)
             self._save_file()
 
@@ -393,53 +405,57 @@ class DbHandle:
     def export_prices_csv(self, loc: str):
         data = pd.DataFrame(
             {
-                "card-id": "str",
-                "print-type": "str",
-                "is-energy": "bool",
-                "qnty": "int",
-                "price-low-base": "float",
-                "price-mid-base": "float",
-                "price-high-base": "float",
-                "price-direct-base": "float",
-                "price-market-base": "float",
-                "price-low-calc": "float",
-                "price-mid-calc": "float",
-                "price-high-calc": "float",
-                "price-direct-calc": "float",
-                "price-market-calc": "float"
+                "card-id": pd.Series(dtype="str"),
+                "print-type": pd.Series(dtype="str"),
+                "is-energy": pd.Series(dtype="bool"),
+                "qnty": pd.Series(dtype="int"),
+                "price-low-base": pd.Series(dtype="float"),
+                "price-mid-base": pd.Series(dtype="float"),
+                "price-high-base": pd.Series(dtype="float"),
+                "price-direct-base": pd.Series(dtype="float"),
+                "price-market-base": pd.Series(dtype="float"),
+                "price-low-calc": pd.Series(dtype="float"),
+                "price-mid-calc": pd.Series(dtype="float"),
+                "price-high-calc": pd.Series(dtype="float"),
+                "price-direct-calc": pd.Series(dtype="float"),
+                "price-market-calc": pd.Series(dtype="float")
             }
         )
-        for row in self.data:
+        for index, row in enumerate(self.data.iterrows()):
             card_id = row["card-id"]
             print_type = row["print-type"]
             is_energy = row["is-energy"]
             qnty = row["qnty"]
-            if is_energy:
-                data.append(
-                    {
-                        "price-low-base": None, "price-mid-base": None, "price-high-base": None,
-                        "price-direct-base": None, "price-market-base": None, "price-low-calc": None,
-                        "price-mid-calc": None, "price-high-calc": None, "price-direct-calc": None,
-                        "price-market-calc": None, "card-id": card_id, "print-type": print_type,
-                        "is-energy": True, "qnty": qnty
-                    },
-                    ignore_index=True
-                )
-                continue
-            card_data = self.rq.get_card(card_id)
-            if card_data is None:
-                return False
-            price_data = not card_data.tcgplayer.prices.__getattribute__(print_type)
-            p_data = {
-                "price-low-base": price_data.low, "price-mid-base": price_data.mid,
-                "price-high-base": price_data.high, "price-direct-base": price_data.directLow,
-                "price-market-base": price_data.market, "price-low-calc": round(price_data.low * qnty, 2),
-                "price-mid-calc": round(price_data.mid * qnty,), "price-high-calc": round(price_data.high * qnty, 2),
-                "price-direct-calc": round(price_data.directLow * qnty, 2),
-                "price-market-calc": (roundprice_data.market * qnty, 2), "card-id": card_id, "print-type": print_type,
-                "is-energy": False, "qnty": qnty
+            new_data = {
+                "card-id": card_id,
+                "print-type": print_type,
+                "is-energy": True,
+                "qnty": qnty
             }
-            data.append(p_data, ignore_index=True)
+            if is_energy:
+                p = {
+                    "price-low-base": None, "price-mid-base": None, "price-high-base": None,
+                    "price-direct-base": None, "price-market-base": None, "price-low-calc": None,
+                    "price-mid-calc": None, "price-high-calc": None, "price-direct-calc": None,
+                    "price-market-calc": None
+                }
+                new_data.update(p)
+            else:
+                card_data = self.rq.get_card(card_id)
+                if card_data is None:
+                    return False
+                price_data = card_data.tcgplayer.prices.__getattribute__(print_type)
+                p = {
+                    "price-low-base": price_data.low, "price-mid-base": price_data.mid,
+                    "price-high-base": price_data.high, "price-direct-base": price_data.directLow,
+                    "price-market-base": price_data.market, "price-low-calc": round(price_data.low * qnty, 2),
+                    "price-mid-calc": round(price_data.mid * qnty, ),
+                    "price-high-calc": round(price_data.high * qnty, 2),
+                    "price-direct-calc": round(price_data.directLow * qnty, 2),
+                    "price-market-calc": round(price_data.market * qnty, 2)
+                }
+                new_data.update(p)
+            data = pd.concat([data, new_data], ignore_index=True)
         data.to_csv(loc)
         self._save_file()
         return True
@@ -449,3 +465,6 @@ if __name__ == "__main__":
     name = "test"
     file = os.path.join(PROG_DATA, f"{name}.pcldata")
     psswrd = "test1234"
+    rq = RqHandle(API_KEY)
+    db = DbHandle(rq, name, file, psswrd, BASIC_SALT_LIST)
+    db.add_card("swsh1-1", "holofoil", False, 10)

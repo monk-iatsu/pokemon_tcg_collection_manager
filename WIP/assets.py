@@ -1,4 +1,4 @@
-from string import digits, ascii_letters
+from string import printable, digits, ascii_letters
 import sys
 import os
 import contextlib
@@ -85,10 +85,10 @@ BASIC_ENERGY = {
 ENERGY_PRINT_TYPES = (0, 2)
 
 ITERATIONS = 1000000
-
+SECURITY_SALT_LIST = printable
+BASIC_SALT_LIST = f"{digits}{ascii_letters}-_"
 LRU_CACHE_EXPO = 18
 API_KEY_SITE = "'https://dev.pokemontcg.io/'"
 CANCEL_WAIT = 10
-SALT_LIST = [i for i in f"{digits}{ascii_letters}"]
-MIN_SEED = 16
-MAX_SEED = 32
+MIN_SEED = 4
+MAX_SEED = 8
